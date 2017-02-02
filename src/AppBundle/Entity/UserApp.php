@@ -25,6 +25,8 @@ class UserApp
 
     protected $deleted;
 
+    protected $email;
+
     protected $dependsOfUser;
 
     protected $roles;
@@ -91,6 +93,22 @@ class UserApp
     public function setDeleted($deleted)
     {
         $this->deleted = $deleted;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
     }
 
     /**

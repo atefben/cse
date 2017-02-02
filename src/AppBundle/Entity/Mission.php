@@ -15,8 +15,8 @@ class Mission
     protected $id;
     protected $dateDebut;
     protected $dateFin;
-    protected $userCollab;
-    protected $userCommercial;
+    protected $collaborateur;
+    protected $commercial;
     protected $commentaire;
 
     /**
@@ -54,33 +54,33 @@ class Mission
     /**
      * @return mixed
      */
-    public function getUserCollab()
+    public function getCollaborateur()
     {
-        return $this->userCollab;
+        return $this->collaborateur;
     }
 
     /**
-     * @param mixed $userCollab
+     * @param mixed $collaborateur
      */
-    public function setUserCollab($userCollab)
+    public function setCollaborateur(Collaborateur $collaborateur)
     {
-        $this->userCollab = $userCollab;
+        $this->collaborateur = $collaborateur;
     }
 
     /**
      * @return mixed
      */
-    public function getUserCommercial()
+    public function getCommercial()
     {
-        return $this->userCommercial;
+        return $this->commercial;
     }
 
     /**
-     * @param mixed $userCommercial
+     * @param mixed $commercial
      */
-    public function setUserCommercial($userCommercial)
+    public function setCommercial(UserApp $commercial)
     {
-        $this->userCommercial = $userCommercial;
+        $this->commercial = $commercial;
     }
 
     /**
