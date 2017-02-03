@@ -10,25 +10,45 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM;
 
-
+/**
+ * Class Criteria
+ * @package AppBundle\Entity
+ * @ORM\Table(name="CST_CUSTOMER")
+ */
 class Customer
 {
     /**
      * @ORM\Id
+     * @ORM\Column(name="CST_ID", type="integer")
      */
     protected $id;
 
-    protected $rcs;
-
+    /**
+     * @var string
+     * @ORM\Column(name="CRT_LABEL", type="varchar", length=50)
+     **/
     protected $name;
 
+    /**
+     * @var string
+     * @ORM\Column(name="CRT_ADDRESS", type="varchar", length=255)
+     **/
     protected $address;
 
+    /**
+     * @var string
+     * @ORM\Column(name="CRT_CONTACT", type="varchar", length=50)
+     **/
     protected $contact;
 
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="CRT_DATE_INSERTION", type="datetime")
+     **/
     protected $dtInsertion;
 
-    protected $userInsertion;
+
+//    protected $userInsertion;
 
     /**
      * @return mixed

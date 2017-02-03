@@ -10,16 +10,51 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM;
 
+/**
+ * Class Criteria
+ * @package AppBundle\Entity
+ * @ORM\Table(name="CRT_CRITERIA")
+ */
 class Criteria
 {
     const COLLABORATEUR_CRITERIA = 1;
     const CLIENT_CRITERIA = 2;
 
+    /**
+     * @var int
+     * @ORM\Id
+     * @ORM\Column(name="CRT_ID", type="integer")
+     **/
     protected $id;
+
+    /**
+     * @var string
+     * @ORM\Column(name="CRT_LABEL", type="varchar", length=20)
+     **/
     protected $label;
+
+    /**
+     * @var string
+     * @ORM\Column(name="CRT_COMMENTAIRES", type="text")
+     **/
     protected $commentaires;
+
+    /**
+     * @var
+     * @ORM\Column(name="CRT_COEFFICIENT", type="integer")
+     */
     protected $coefficient;
+
+    /**
+     * @var boolean
+     * @ORM\Column(name="CRT_REQUIRED", type="boolean")
+     */
     protected $required;
+
+    /**
+     * @var boolean
+     * @ORM\Column(name="CRT_TYPE", type="integer")
+     */
     protected $criteriaType;
 
     /**

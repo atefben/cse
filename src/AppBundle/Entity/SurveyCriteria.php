@@ -8,12 +8,43 @@
 
 namespace AppBundle\Entity;
 
-
+/**
+ * Class SurveyCriteria
+ * @package AppBundle\Entity
+ * @ORM\Table(name="SCR_SURVEY_CRITERIA")
+ */
 class SurveyCriteria
 {
+    /**
+     * @var
+     * @ORM\Id
+     * @ORM\Column(name="SCR_ID")
+     */
     protected $id;
+
+    /**
+     * @var
+     * @ORM\Column(name="SCR_SCORE",type="integer",required=true)
+     */
     protected $score;
+
+    /**
+     * @var
+     * @ORM\Column(name="SCR_COEFFICIENT",type="integer",required=true)
+     */
+    protected $coefficient;
+
+    /**
+     * @var
+     * @ORM\JoinColumn(name="SRV_ID",referencedColumnName="SRV_ID")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Survey")
+     */
     protected $survey;
+
+    /**
+     * @var
+     * @ORM\Column(name="SCR_ADDITIONAL_NOTE",referencedColumnName="SCR_ADDITIONAL_NOTE",type="text")
+     */
     protected $additionalNote;
 
     /**
@@ -30,6 +61,22 @@ class SurveyCriteria
     public function setScore($score)
     {
         $this->score = $score;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCoefficient()
+    {
+        return $this->coefficient;
+    }
+
+    /**
+     * @param mixed $coefficient
+     */
+    public function setCoefficient($coefficient)
+    {
+        $this->coefficient = $coefficient;
     }
 
     /**

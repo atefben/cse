@@ -15,21 +15,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class Collaborateur
  * @package AppBundle\Entity
-* @ORM\Table(name="collaborateur")
+ * @ORM\Table(name="CLR_COLLABORATEUR")
  */
 class Collaborateur
 {
     /**
      * @var int
      * @ORM\Id
-     * @ORM\Column(name="ID", type="varchar", length=20)
-     * @Assert\NotBlank(message="L'identifiant everwin est obligatoire.")
+     * @ORM\Column(name="CLR_ID", type="integer")
      **/
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(name="EVERWIN_ID", type="varchar", length=20)
+     * @ORM\Column(name="CLR_EVERWIN_ID", type="varchar", length=20)
      * @Assert\NotBlank(message="L'identifiant everwin est obligatoire.")
     **/
     protected $everwinId;
@@ -37,26 +36,26 @@ class Collaborateur
 
     /**
      * @var string
-     * @ORM\Column(name="FIRST_NAME", type="varchar", length=50)
+     * @ORM\Column(name="CLR_FIRST_NAME", type="varchar", length=50)
      **/
     protected $firstName;
 
     /**
      * @var string
-     * @ORM\Column(name="LAST_NAME", type="varchar", length=50)
+     * @ORM\Column(name="CLR_LAST_NAME", type="varchar", length=50)
      **/
     protected $lastName;
 
     /**
      * @var string
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserApp")
-     * @ORM\JoinColumn(name="MGR_ID", referencedColumnName="ID")
+     * @ORM\JoinColumn(name="MANAGER_UAP_ID", referencedColumnName="UAP_ID")
      **/
     protected $userManager;
 
     /**
      * @var boolean
-     * @ORM\Column(name="DELETED", type="boolean", default=false)
+     * @ORM\Column(name="CLR_DELETED", type="boolean", default=false)
      **/
     protected $deleted;
 
@@ -67,7 +66,7 @@ class Collaborateur
     }
 
     /**
-     * @param mixed $everwinId
+     * @param string $everwinId
      */
     public function setEverwinId($everwinId)
     {

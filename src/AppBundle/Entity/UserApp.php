@@ -11,24 +11,55 @@ namespace AppBundle\Entity;
 use Doctrine\ORM;
 use Symfony\Component\Security\Core\User\User;
 
-
+/**
+ * Class UserApp
+ * @package AppBundle\Entity
+ * @ORM\Table(name="UAP_USER_APP")
+ */
 class UserApp
 {
     /**
      * @ORM\Id
+     * @ORM\Column(name="UAP_ID")
      */
     protected $id;
 
+    /**
+     * @var string
+     * @ORM\Column(name="UAP_FIRST_NAME", type="varchar", length=50)
+     **/
     protected $firstName;
 
+    /**
+     * @var string
+     * @ORM\Column(name="UAP_LAST_NAME", type="varchar", length=50)
+     **/
     protected $lastName;
 
+    /**
+     * @var string
+     * @ORM\Column(name="UAP_DELETED", type="boolean", default=false)
+     **/
     protected $deleted;
 
+    /**
+     * @var string
+     * @ORM\Column(name="UAP_EMAIL", type="varchar", length=100)
+     **/
     protected $email;
 
+    /**
+     * @var
+     * @ORM\JoinColumn(name="UAP_ID",referencedColumnName="UAP_ID")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserApp")
+     */
     protected $dependsOfUser;
 
+    /**
+     * @var
+     * @ORM\JoinColumn(name="UAP_ID",referencedColumnName="UAP_ID")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserApp")
+     */
     protected $roles;
 
     /**

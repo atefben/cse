@@ -10,13 +10,51 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM;
 
+/**
+ * Class Mission
+ * @package AppBundle\Entity
+ * @ORM\Table(name="MSN_MISSION")
+ */
 class Mission
 {
+    /**
+     * @var
+     * @ORM\Column(name="MSN_ID",type="integer")
+     * @ORM\Id
+     */
     protected $id;
+
+    /**
+     * @var
+     * @ORM\Column(name="MSN_DATE_DEBUT",type="datetime")
+    */
     protected $dateDebut;
+
+    /**
+     * @var
+     * @ORM\Column(name="MSN_DATE_FIN",type="datetime")
+    */
     protected $dateFin;
+
+
+    /**
+     * @var
+     * @ORM\JoinColumn(name="CLR_ID",referencedColumnName="CLR_ID")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Collaborateur")
+     */
     protected $collaborateur;
+
+    /**
+     * @var
+     * @ORM\JoinColumn(name="CLR_ID",referencedColumnName="CLR_ID")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserApp")
+     */
     protected $commercial;
+
+    /**
+     * @var
+     * @ORM\Column(name="MSN_COMMENTAIRE",type="text")
+     */
     protected $commentaire;
 
     /**
