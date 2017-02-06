@@ -26,3 +26,4 @@ fos_user_change_password:
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+

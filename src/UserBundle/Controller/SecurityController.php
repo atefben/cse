@@ -16,6 +16,7 @@ class SecurityController extends BaseSecurityController
      */
     protected function renderLogin(array $data)
     {
+
         return $this->container->get('templating')->renderResponse('UserBundle:Security:login.html.twig', $data);
     }
 }
