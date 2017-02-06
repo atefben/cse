@@ -1,29 +1,108 @@
-# To get started with security, check out the documentation:
-# http://symfony.com/doc/current/security.html
 security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
 
-    roles:
-        ROLE_SUPER_ADMIN : [ROLE_ADMIN]
-        ROLE_RESPONSABLE_AGENCE : [ROLE_COMMERCIAL]
-        ROLE_ADMIN : [ROLE_RESPONSABLE_AGENCE,ROLE_COMMERCIAL]
-        ROLE_COMMERCIAL : []
-    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    role_hierarchy:
+        ROLE_USER:        [ROLE_USER]
+        ROLE_ADMIN:       [ROLE_ADMIN]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
     providers:
-        in_memory:
-            memory: ~
+        fos_userbundle:
+            id: fos_user.user_provider.username_email
 
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        # login area for backoffice users
         main:
-            anonymous: ~
-            # activate different ways to authenticate
+            context: primary_auth
+            pattern:            ^/
+            form_login:
+                provider:       fos_userbundle
+                login_path:     sf_security_login
+                use_forward:    true
+                use_referer:    true
+                check_path:     sf_security_check
+                failure_path:   sf_security_login
+                default_target_path: user_homepage
+            logout:
+                path: sf_security_logout
+                target: sf_security_login
+            anonymous:    true
 
-            # http_basic: ~
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+    access_control:
+        # back-office
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_ADMIN }
 
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+#
+#security:
+#
+#    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+#    providers:
+#        in_memory:
+#            memory: ~
+#
+#    firewalls:
+#        # disables authentication for assets and the profiler, adapt it according to your needs
+#        dev:
+#            pattern: ^/(_(profiler|wdt)|css|images|js)/
+#            security: false
+#
+#        main:
+#            anonymous: ~
+#            # activate different ways to authenticate
+#
+#            # http_basic: ~
+#            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+#
+#            # form_login: ~
+#            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+
+
+# To get started with security, check out the documentation:
+## http://symfony.com/doc/current/security.html
+#security:
+#
+#    roles:
+#        ROLE_SUPER_ADMIN : [ROLE_ADMIN]
+#        ROLE_RESPONSABLE_AGENCE : [ROLE_COMMERCIAL]
+#        ROLE_ADMIN : [ROLE_RESPONSABLE_AGENCE,ROLE_COMMERCIAL]
+#        ROLE_COMMERCIAL : []
+#    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+#    providers:
+#        in_memory:
+#            memory: ~
+#
+#    firewalls:
+#        # disables authentication for assets and the profiler, adapt it according to your needs
+#        dev:
+#            pattern: ^/(_(profiler|wdt)|css|images|js)/
+#            security: false
+#
+#        main:
+#            anonymous: ~
+#            # activate different ways to authenticate
+#
+#            # http_basic: ~
+#            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+#
+#            # form_login: ~
+#            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
