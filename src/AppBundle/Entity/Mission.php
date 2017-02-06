@@ -8,11 +8,12 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Mission
  * @package AppBundle\Entity
+ * @ORM\Entity
  * @ORM\Table(name="MSN_MISSION")
  */
 class Mission
@@ -46,7 +47,7 @@ class Mission
 
     /**
      * @var
-     * @ORM\JoinColumn(name="CLR_ID",referencedColumnName="CLR_ID")
+     * @ORM\JoinColumn(name="UAP_ID",referencedColumnName="UAP_ID")
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserApp")
      */
     protected $commercial;

@@ -8,11 +8,12 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Criteria
  * @package AppBundle\Entity
+ * @ORM\Entity
  * @ORM\Table(name="CRT_CRITERIA")
  */
 class Criteria
@@ -29,7 +30,7 @@ class Criteria
 
     /**
      * @var string
-     * @ORM\Column(name="CRT_LABEL", type="varchar", length=20)
+     * @ORM\Column(name="CRT_LABEL", type="string", length=20)
      **/
     protected $label;
 

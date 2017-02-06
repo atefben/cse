@@ -8,9 +8,12 @@
 
 namespace AppBundle\Entity;
 
+
+use Doctrine\ORM\Mapping as ORM;
 /**
  * Class SurveyCriteria
  * @package AppBundle\Entity
+ * @ORM\Entity
  * @ORM\Table(name="SCR_SURVEY_CRITERIA")
  */
 class SurveyCriteria
@@ -24,13 +27,13 @@ class SurveyCriteria
 
     /**
      * @var
-     * @ORM\Column(name="SCR_SCORE",type="integer",required=true)
+     * @ORM\Column(name="SCR_SCORE",type="integer",nullable=false)
      */
     protected $score;
 
     /**
      * @var
-     * @ORM\Column(name="SCR_COEFFICIENT",type="integer",required=true)
+     * @ORM\Column(name="SCR_COEFFICIENT",type="integer",nullable=false)
      */
     protected $coefficient;
 
@@ -43,7 +46,7 @@ class SurveyCriteria
 
     /**
      * @var
-     * @ORM\Column(name="SCR_ADDITIONAL_NOTE",referencedColumnName="SCR_ADDITIONAL_NOTE",type="text")
+     * @ORM\Column(name="SCR_ADDITIONAL_NOTE",type="text")
      */
     protected $additionalNote;
 

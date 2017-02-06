@@ -8,7 +8,7 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Collaborateur
  * @package AppBundle\Entity
  * @ORM\Table(name="CLR_COLLABORATEUR")
+ * @ORM\Entity
  */
 class Collaborateur
 {
@@ -28,7 +29,7 @@ class Collaborateur
 
     /**
      * @var string
-     * @ORM\Column(name="CLR_EVERWIN_ID", type="varchar", length=20)
+     * @ORM\Column(name="CLR_EVERWIN_ID", type="string", length=20)
      * @Assert\NotBlank(message="L'identifiant everwin est obligatoire.")
     **/
     protected $everwinId;
@@ -36,13 +37,13 @@ class Collaborateur
 
     /**
      * @var string
-     * @ORM\Column(name="CLR_FIRST_NAME", type="varchar", length=50)
+     * @ORM\Column(name="CLR_FIRST_NAME", type="string", length=50)
      **/
     protected $firstName;
 
     /**
      * @var string
-     * @ORM\Column(name="CLR_LAST_NAME", type="varchar", length=50)
+     * @ORM\Column(name="CLR_LAST_NAME", type="string", length=50)
      **/
     protected $lastName;
 
@@ -55,7 +56,7 @@ class Collaborateur
 
     /**
      * @var boolean
-     * @ORM\Column(name="CLR_DELETED", type="boolean", default=false)
+     * @ORM\Column(name="CLR_DELETED", type="boolean")
      **/
     protected $deleted;
 
