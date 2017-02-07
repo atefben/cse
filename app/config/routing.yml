@@ -19,10 +19,10 @@ fos_user_change_password:
     prefix: /change-password
 
 
-user_homepage:
-    path:     /
-    defaults: { _controller: UserBundle:User:index }
+#user_homepage:
+#    path:     /
+#    defaults: { _controller: UserBundle:User:index }
 
-#app:
-#    resource: "@AppBundle/Controller/"
-#    type:     annotation
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
