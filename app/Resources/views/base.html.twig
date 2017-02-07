@@ -321,6 +321,8 @@
                     <ul class="menu-content">
                         <li {% if current_path == path('userapp_index') %}class="active"{% endif %}>
                             <a href="{{ path('userapp_index') }}" data-i18n="nav.dash.project" class="menu-item">Utilisateur</a>
+                        <li class="active">
+                            <a href="{{ path('user_list') }}" data-i18n="nav.dash.project" class="menu-item">Utilisateur</a>
                         </li>
                         <li {% if current_path == path('userapp_index')  %}class="active"{% endif %}><a href="#" data-i18n="nav.dash.ecommerce" class="menu-item">Alerte</a>
                         </li>
