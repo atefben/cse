@@ -1,0 +1,6 @@
+sf_security:
+    resource: "@UserBundle/Resources/config/security.yml"
+
+#user_homepage:
+#    path:     /user
+#    defaults: { _controller: UserBundle:User:index }
