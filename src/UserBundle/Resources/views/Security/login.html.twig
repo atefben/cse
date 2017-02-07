@@ -18,15 +18,18 @@
                             </div>
                             <div class="card-body collapse in">
                                 <div class="card-block">
-                                    <form class="form-horizontal form-simple" action="index.html" novalidate>
+                                    <form class="form-horizontal form-simple" method="post" action="{{ path('fos_user_security_check') }}" novalidate>
+                                        {% if csrf_token %}
+                                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                                        {% endif %}
                                         <fieldset class="form-group has-feedback has-icon-left mb-0">
-                                            <input type="text" class="form-control form-control-lg input-lg" id="user-name" placeholder="Your Username" required>
+                                            <input type="text" class="form-control form-control-lg input-lg" id="username" name="_username" placeholder="Your Username" required>
                                             <div class="form-control-position">
                                                 <i class="icon-head"></i>
                                             </div>
                                         </fieldset>
                                         <fieldset class="form-group has-feedback has-icon-left">
-                                            <input type="password" class="form-control form-control-lg input-lg" id="user-password" placeholder="Enter Password" required>
+                                            <input type="password" class="form-control form-control-lg input-lg" id="password" name="_password" placeholder="Enter Password" required>
                                             <div class="form-control-position">
                                                 <i class="icon-key3"></i>
                                             </div>
@@ -34,7 +37,7 @@
                                         <fieldset class="form-group row">
                                             <div class="col-md-6 col-xs-12 text-xs-center text-md-left">
                                                 <fieldset>
-                                                    <input type="checkbox" id="remember-me" class="chk-remember">
+                                                    <input type="checkbox" id="remember_me" name="_remember_me" class="chk-remember">
                                                     <label for="remember-me"> Remember Me</label>
                                                 </fieldset>
                                             </div>

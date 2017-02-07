@@ -11,6 +11,6 @@ class UserController extends Controller
 
     public function IndexAction()
     {
-    	return $this->render('::Default:index.html.twig');
+    	return $this->render('base.html.twig');
     }
 }
