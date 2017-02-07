@@ -28,6 +28,7 @@
         '@UserBundle/Resources/public/robust-assets/css/plugins/charts/jquery-jvectormap-2.0.3.css'
         '@UserBundle/Resources/public/robust-assets/css/plugins/charts/morris.css'
         '@UserBundle/Resources/public/robust-assets/css/plugins/extensions/unslider.css'
+        '@UserBundle/Resources/public/robust-assets/css/plugins/tables/datatable/dataTables.bootstrap4.min.css'
         '@UserBundle/Resources/public/robust-assets/css/app.min.css'
         '@UserBundle/Resources/public/robust-assets/css/components/weather-icons/climacons.min.css'
         '@UserBundle/Resources/public/assets/css/style.css'
@@ -301,6 +302,7 @@
     <div class="fullscreen-search-overlay"></div>
 
 {% endblock %}
+
 {% block menu %}
     <!-- main menu-->
     <div id="main-menu" data-scroll-to-active="true" class="main-menu menu-dark menu-fixed menu-shadow menu-accordion">
@@ -384,6 +386,8 @@
 {% block javascripts %}
     {% javascripts
     '@UserBundle/Resources/public/robust-assets/js/vendors.min.js'
+    '@UserBundle/Resources/public/robust-assets/js/plugins/tables/jquery.dataTables.min.js'
+    '@UserBundle/Resources/public/robust-assets/js/plugins/tables/datatable/dataTables.bootstrap4.min.js'
     '@UserBundle/Resources/public/robust-assets/js/plugins/extensions/jquery.knob.min.js'
     '@UserBundle/Resources/public/robust-assets/js/plugins/charts/raphael-min.js'
     '@UserBundle/Resources/public/robust-assets/js/plugins/charts/morris.min.js'
@@ -399,6 +403,7 @@
     '@UserBundle/Resources/public/robust-assets/js/plugins/extensions/unslider-min.js'
     '@UserBundle/Resources/public/robust-assets/js/app.min.js'
     '@UserBundle/Resources/public/robust-assets/js/components/pages/dashboard-project.js'
+    '@UserBundle/Resources/public/robust-assets/js/components/tables/datatables/datatable-basic.js'
 
     %}
     <script src="{{ asset_url }}"></script>
