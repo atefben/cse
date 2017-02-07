@@ -48,6 +48,13 @@ class Customer
      **/
     protected $dtInsertion;
 
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
 //    protected $userInsertion;
 

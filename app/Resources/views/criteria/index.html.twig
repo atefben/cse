@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Criterias list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Label</th>
+                <th>Commentaires</th>
+                <th>Coefficient</th>
+                <th>Required</th>
+                <th>Criteriatype</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for criterion in criterias %}
+            <tr>
+                <td><a href="{{ path('criteria_show', { 'id': criterion.id }) }}">{{ criterion.id }}</a></td>
+                <td>{{ criterion.label }}</td>
+                <td>{{ criterion.commentaires }}</td>
+                <td>{{ criterion.coefficient }}</td>
+                <td>{% if criterion.required %}Yes{% else %}No{% endif %}</td>
+                <td>{{ criterion.criteriaType }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('criteria_show', { 'id': criterion.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('criteria_edit', { 'id': criterion.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('criteria_new') }}">Create a new criterion</a>
+        </li>
+    </ul>
+{% endblock %}

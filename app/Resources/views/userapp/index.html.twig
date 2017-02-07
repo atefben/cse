@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Userapps list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Deleted</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for userApp in userApps %}
+            <tr>
+                <td><a href="{{ path('userapp_show', { 'id': userApp.id }) }}">{{ userApp.id }}</a></td>
+                <td>{{ userApp.firstName }}</td>
+                <td>{{ userApp.lastName }}</td>
+                <td>{% if userApp.deleted %}Yes{% else %}No{% endif %}</td>
+                <td>{{ userApp.email }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('userapp_show', { 'id': userApp.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('userapp_edit', { 'id': userApp.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('userapp_new') }}">Create a new userApp</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Missions list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Datedebut</th>
+                <th>Datefin</th>
+                <th>Commentaire</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for mission in missions %}
+            <tr>
+                <td><a href="{{ path('mission_show', { 'id': mission.id }) }}">{{ mission.id }}</a></td>
+                <td>{% if mission.dateDebut %}{{ mission.dateDebut|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if mission.dateFin %}{{ mission.dateFin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ mission.commentaire }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('mission_show', { 'id': mission.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('mission_edit', { 'id': mission.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('mission_new') }}">Create a new mission</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -59,6 +59,14 @@ class Criteria
     protected $criteriaType;
 
     /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @return mixed
      */
     public function getLabel()

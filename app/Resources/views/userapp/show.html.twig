@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Userapp</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ userApp.id }}</td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+                <td>{{ userApp.firstName }}</td>
+            </tr>
+            <tr>
+                <th>Lastname</th>
+                <td>{{ userApp.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Deleted</th>
+                <td>{% if userApp.deleted %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ userApp.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('userapp_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('userapp_edit', { 'id': userApp.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

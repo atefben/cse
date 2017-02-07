@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Criterion</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ criterion.id }}</td>
+            </tr>
+            <tr>
+                <th>Label</th>
+                <td>{{ criterion.label }}</td>
+            </tr>
+            <tr>
+                <th>Commentaires</th>
+                <td>{{ criterion.commentaires }}</td>
+            </tr>
+            <tr>
+                <th>Coefficient</th>
+                <td>{{ criterion.coefficient }}</td>
+            </tr>
+            <tr>
+                <th>Required</th>
+                <td>{% if criterion.required %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Criteriatype</th>
+                <td>{{ criterion.criteriaType }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('criteria_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('criteria_edit', { 'id': criterion.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

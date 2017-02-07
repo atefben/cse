@@ -63,8 +63,7 @@ class Survey
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\SurveyCriteria", mappedBy="surveyCriterias")
-     * @ORM\JoinColumn(name="SRV_ID", referencedColumnName="SRV_ID")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\SurveyCriteria", mappedBy="survey")
      */
     protected $surveyCriterias;
 
@@ -73,6 +72,14 @@ class Survey
         $this->surveyCriterias = new ArrayCollection();
     }
 
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
     /**
      * @return mixed
      */

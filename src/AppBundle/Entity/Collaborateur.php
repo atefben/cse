@@ -60,6 +60,14 @@ class Collaborateur
      **/
     protected $deleted;
 
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
 
     public function getEverwinId()
     {

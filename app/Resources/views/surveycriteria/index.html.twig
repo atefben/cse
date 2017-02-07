@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Surveycriterias list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Score</th>
+                <th>Coefficient</th>
+                <th>Additionalnote</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for surveyCriterium in surveyCriterias %}
+            <tr>
+                <td><a href="{{ path('surveycriteria_show', { 'id': surveyCriterium.id }) }}">{{ surveyCriterium.id }}</a></td>
+                <td>{{ surveyCriterium.score }}</td>
+                <td>{{ surveyCriterium.coefficient }}</td>
+                <td>{{ surveyCriterium.additionalNote }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('surveycriteria_show', { 'id': surveyCriterium.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('surveycriteria_edit', { 'id': surveyCriterium.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('surveycriteria_new') }}">Create a new surveyCriterium</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -40,7 +40,7 @@ class SurveyCriteria
     /**
      * @var
      * @ORM\JoinColumn(name="SRV_ID",referencedColumnName="SRV_ID")
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Survey")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Survey", inversedBy="surveyCriterias")
      */
     protected $survey;
 
@@ -49,6 +49,15 @@ class SurveyCriteria
      * @ORM\Column(name="SCR_ADDITIONAL_NOTE",type="text")
      */
     protected $additionalNote;
+
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @return mixed

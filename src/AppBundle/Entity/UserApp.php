@@ -9,6 +9,7 @@
 namespace AppBundle\Entity;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 //use Symfony\Component\Security\Core\User\User;
 
@@ -22,7 +23,7 @@ class UserApp
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="UAP_ID")
+     * @ORM\Column(name="UAP_ID", type="integer")
      */
     protected $id;
 
@@ -50,6 +51,13 @@ class UserApp
      **/
     protected $email;
 
+    /**
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\MailGroup", inversedBy="users")
+     * @ORM\JoinTable(name="UMG_USER_MAIL_GROUP")
+     */
+    protected $mailGroups;
+
 //    /**
 //     * @var
 //     * @ORM\JoinColumn(name="UAP_ID",referencedColumnName="UAP_ID")
@@ -63,6 +71,11 @@ class UserApp
 //     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserApp")
 //     */
 //    protected $roles;
+
+    public function __construct()
+    {
+        $this->mailGroups = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -135,6 +148,23 @@ class UserApp
     {
         $this->email = $email;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMailGroups()
+    {
+        return $this->mailGroups;
+    }
+
+    /**
+     * @param mixed $mailGroups
+     */
+    public function setMailGroups($mailGroups)
+    {
+        $this->mailGroups = $mailGroups;
+    }
+
 
 //    /**
 //     * @return mixed
