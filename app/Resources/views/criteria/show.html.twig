@@ -5,48 +5,40 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Criterion</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ criterion.id }}</td>
-            </tr>
-            <tr>
-                <th>Label</th>
-                <td>{{ criterion.label }}</td>
-            </tr>
-            <tr>
-                <th>Commentaires</th>
-                <td>{{ criterion.commentaires }}</td>
-            </tr>
-            <tr>
-                <th>Coefficient</th>
-                <td>{{ criterion.coefficient }}</td>
-            </tr>
-            <tr>
-                <th>Required</th>
-                <td>{% if criterion.required %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Criteriatype</th>
-                <td>{{ criterion.criteriaType }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('criteria_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('criteria_edit', { 'id': criterion.id }) }}">Edit</a>
-        </li>
-        <li>
+
+    <dl class="row">
+        <dt class="col-sm-3">Titre</dt>
+        <dd class="col-sm-9">{{ criterion.label }}</dd>
+
+        <dt class="col-sm-3">Type du critère</dt>
+        <dd class="col-sm-9">{% if criterion.criteriaType == 1 %}
+                Collaborateur
+            {% else %}
+                Client
+            {% endif %}
+        </dd>
+
+        <dt class="col-sm-3">Descritpion</dt>
+        <dd class="col-sm-9">{{ criterion.description }}</dd>
+
+    </dl>
+
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{{ path('criteria_index') }}">
+                <button type="button" class="btn btn-info btn-min-width btn-round mr-1 mb-1">Retour à la liste</button>
+            </a>
+            <a href="{{ path('criteria_edit', { 'id': criterion.id }) }}">
+                <button type="button" class="btn btn-primary btn-min-width btn-round mr-1 mb-1">Edition</button>
+            </a>
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+            <input type="submit" value="Delete" class="btn btn-danger btn-min-width btn-round mr-1 mb-1">
             {{ form_end(delete_form) }}
-        </li>
-    </ul>
+        </div>
+
+    </div>
+
+
 {% endblock %}

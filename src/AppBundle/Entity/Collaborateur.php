@@ -47,12 +47,6 @@ class Collaborateur
      **/
     protected $lastName;
 
-    /**
-     * @var string
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserApp")
-     * @ORM\JoinColumn(name="MANAGER_UAP_ID", referencedColumnName="UAP_ID")
-     **/
-    protected $userManager;
 
     /**
      * @var boolean
@@ -114,21 +108,7 @@ class Collaborateur
         $this->lastName = $lastName;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUserManager()
-    {
-        return $this->userManager;
-    }
 
-    /**
-     * @param mixed $userManager
-     */
-    public function setUserManager($userManager)
-    {
-        $this->userManager = $userManager;
-    }
 
     /**
      * @return mixed

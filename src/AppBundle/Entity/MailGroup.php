@@ -40,10 +40,6 @@ class MailGroup
     protected $active;
 
 
-    /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\UserApp", mappedBy="mailGroups")
-     */
-    protected $users;
 
     public function __construct()
     {

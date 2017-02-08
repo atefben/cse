@@ -45,12 +45,7 @@ class Mission
      */
     protected $collaborateur;
 
-    /**
-     * @var
-     * @ORM\JoinColumn(name="UAP_ID",referencedColumnName="UAP_ID")
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserApp")
-     */
-    protected $commercial;
+
 
     /**
      * @var
