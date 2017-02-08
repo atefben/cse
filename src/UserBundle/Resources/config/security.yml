@@ -1,0 +1,13 @@
+sf_security_login:
+    path:     /login
+    defaults: { _controller: UserBundle:Security:login }
+
+sf_security_check:
+    path:     /login-check
+    defaults: { _controller: UserBundle:Security:check }
+    requirements:
+        _method: POST
+
+sf_security_logout:
+    path:     /logout
+    defaults: { _controller: UserBundle:Security:logout }
