@@ -2,8 +2,11 @@
 
 namespace UserBundle\Entity;
 
+
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+
+use Gedmo\Mapping\Annotation as Gedmo;
 
 
 /**
@@ -11,6 +14,7 @@ use FOS\UserBundle\Model\User as BaseUser;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class User extends BaseUser
 {
@@ -35,6 +39,11 @@ class User extends BaseUser
      * @ORM\Column(name="lastname", type="string")
      */
     private $lastname;
+
+    /**
+     * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
+     */
+    private $deletedAt;
 
 
     public function __construct() {
@@ -87,5 +96,29 @@ class User extends BaseUser
     public function getLastname()
     {
         return $this->lastname;
+    }
+
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     *
+     * @return User
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
     }
 }
