@@ -1,0 +1,114 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+
+    <div class="robust-content content container-fluid">
+        <div class="content-wrapper">
+            <div class="content-body"><!-- Zero configuration table -->
+                <section id="configuration">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Ajout d'un utilisateur</h4>
+                                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                                    <div class="heading-elements">
+                                        <ul class="list-inline mb-0">
+                                            <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                            <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                            <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                            <li><a data-action="close"><i class="icon-cross2"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body collapse in">
+                                    <div class="card-block card-dashboard">
+
+                                        {{ form_start(form,  { 'attr': {'class': 'form'} }) }}
+                                            <div class="form-body">
+                                                <h4 class="form-section"><i class="icon-head"></i> Information de l'utilisateur</h4>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="projectinput1">First Name</label>
+                                                            {{ form_widget(form.firstname,  { 'attr': {'class': 'form-control', 'placeholder':"First Name"}}) }}
+                                                            {#<input type="text" id="projectinput1" class="form-control" placeholder="First Name" name="fname">#}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="projectinput2">Last Name</label>
+                                                            {{ form_widget(form.lastname,  { 'attr': {'class': 'form-control', 'placeholder':"Last Name"}}) }}
+                                                            {#<input type="text" id="projectinput2" class="form-control" placeholder="Last Name" name="lname">#}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="projectinput3">E-mail</label>
+                                                            {{ form_widget(form.email,  { 'attr': {'class': 'form-control', 'placeholder':"E-mail"}}) }}
+                                                            {#<input type="text" id="projectinput3" class="form-control" placeholder="E-mail" name="email">#}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="projectinput3">Username</label>
+                                                            {{ form_widget(form.username,  { 'attr': {'class': 'form-control', 'placeholder':"User Name"}}) }}
+                                                            {#<input type="text" id="projectinput3" class="form-control" placeholder="E-mail" name="email">#}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <h4 class="form-section"><i class="icon-clipboard4"></i> Role et mot de passe</h4>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="companyName">Role</label>
+                                                            {{ form_widget(form.roles) }}
+                                                            {#<input type="text" id="companyName" class="form-control" placeholder="Company Name" name="company">#}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="projectinput3">Mot de passe</label>
+                                                            {{ form_widget(form.plainPassword,  { 'attr': {'class': 'form-control', 'placeholder':"Mot de passe"}}) }}
+                                                            {#<input type="text" id="projectinput3" class="form-control" placeholder="E-mail" name="email">#}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+
+                                            </div>
+
+                                            <div class="form-actions">
+                                                <button type="button" class="btn btn-warning mr-1">
+                                                    <i class="icon-cross2"></i> Cancel
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="icon-check2"></i> Save
+                                                </button>
+                                            </div>
+                                        {{ form_end(form) }}
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

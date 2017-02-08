@@ -9,11 +9,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM;
+
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Survey
  * @package AppBundle\Entity
+ * @ORM\Entity
  * @ORM\Table(name="SRV_SURVEY")
  */
 class Survey
@@ -48,20 +50,20 @@ class Survey
 
     /**
      * @var
-     * @ORM\Column(name="MSN_SIGNATURE_CLIENT", type="longtext")
+     * @ORM\Column(name="MSN_SIGNATURE_CLIENT", type="text")
      */
     protected $signatureClient;
 
     /**
      * @var
-     * @ORM\Column(name="MSN_SIGNATURE_RESP_AGENCE", type="longtext")
+     * @ORM\Column(name="MSN_SIGNATURE_RESP_AGENCE", type="text")
      */
     protected $signatureResponsableAgence;
 
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\SurveyCriteria", mappedBy="surveyCriterias"
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\SurveyCriteria", mappedBy="surveyCriterias")
      * @ORM\JoinColumn(name="SRV_ID", referencedColumnName="SRV_ID")
      */
     protected $surveyCriterias;

@@ -8,11 +8,12 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Criteria
  * @package AppBundle\Entity
+ * @ORM\Entity
  * @ORM\Table(name="CST_CUSTOMER")
  */
 class Customer
@@ -25,19 +26,19 @@ class Customer
 
     /**
      * @var string
-     * @ORM\Column(name="CRT_LABEL", type="varchar", length=50)
+     * @ORM\Column(name="CRT_LABEL", type="string", length=50)
      **/
     protected $name;
 
     /**
      * @var string
-     * @ORM\Column(name="CRT_ADDRESS", type="varchar", length=255)
+     * @ORM\Column(name="CRT_ADDRESS", type="string", length=255)
      **/
     protected $address;
 
     /**
      * @var string
-     * @ORM\Column(name="CRT_CONTACT", type="varchar", length=50)
+     * @ORM\Column(name="CRT_CONTACT", type="string", length=50)
      **/
     protected $contact;
 

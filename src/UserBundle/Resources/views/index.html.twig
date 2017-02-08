@@ -1,0 +1,138 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+
+    <div class="robust-content content container-fluid">
+        <div class="content-wrapper">
+            {#<div class="content-header row">
+                <div class="breadcrumb-wrapper col-xs-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="#">DataTables</a>
+                        </li>
+                        <li class="breadcrumb-item active">Basic DataTables
+                        </li>
+                    </ol>
+                </div>
+                <div class="content-header-left col-md-6 col-xs-12">
+                    <h3 class="content-header-title mb-0">Basic DataTables</h3>
+                    <p class="text-muted mb-0">Basic initialisation of DataTables</p>
+                </div>
+                <div class="content-header-right col-md-6 col-xs-12">
+                    <div role="group" aria-label="Button group with nested dropdown" class="btn-group float-md-right mt-1">
+                        <div role="group" class="btn-group">
+                            <button id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false"
+                                    class="btn btn-outline-primary dropdown-toggle dropdown-menu-right"><i
+                                        class="icon-cog3 icon-left"></i> Settings
+                            </button>
+                            <div aria-labelledby="btnGroupDrop1" class="dropdown-menu"><a href="card-advance.html"
+                                                                                          class="dropdown-item">Advanced
+                                    Card</a><a href="component-buttons-extended.html" class="dropdown-item">Buttons Extended</a>
+                            </div>
+                        </div>
+                        <a href="calendars-clndr.html" class="btn btn-outline-primary"><i class="icon-calendar5"></i></a><a
+                                href="timeline-center.html" class="btn btn-outline-primary"><i class="icon-bar-graph-2"></i></a>
+                    </div>
+                </div>
+                <div class="content-header-lead col-xs-12 mt-1">
+                    <p class="lead">DataTables is very simple to use as a jQuery plug-in with a huge range of customisable
+                        option. The examples in this section demonstrate basic initialisation of DataTables and how it can
+                        be easily customised by passing an object with the options you want.</p>
+                </div>
+            </div>#}
+
+            <div class="content-body"><!-- Zero configuration table -->
+                <section id="configuration">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Liste des utilisateurs</h4>
+                                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                                    <div class="heading-elements">
+                                        <ul class="list-inline mb-0">
+                                            <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                            <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                            <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                            <li><a data-action="close"><i class="icon-cross2"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body collapse in">
+                                    <div class="card-block card-dashboard">
+                                        <a href="{{ path('user_add') }}">
+                                            <button type="button" class="btn btn-success btn-min-width btn-round mr-1 mb-1">Ajouter un utilisteur</button>
+                                        </a>
+                                        <table class="table table-striped table-bordered zero-configuration">
+                                    <thead>
+                                    <tr>
+                                        <th>Firstname</th>
+                                        <th>Lastname</th>
+                                        <th>email</th>
+                                        <th>Roles</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for user in lists %}
+                                            <tr>
+                                                <td>{{ user.firstname }}</td>
+                                                <td>{{ user.lastname }}</td>
+                                                <td>{{ user.email }}</td>
+                                                <td>
+                                                    {% set getRole  = "" %}
+                                                    {% for role in user.roles %}
+                                                        {% if  role != 'ROLE_USER'%}
+                                                            {{ role }}
+                                                            {% set getRole  = role %}
+                                                        {% endif %}
+                                                    {% endfor  %}
+                                                </td>
+                                                <td>
+
+                                                    {% if getRole != "ROLE_SUPER_ADMIN" %}
+                                                    <a href="{{ path('user_edit', {'id': user.id}) }}">
+                                                    <button type="button" class="btn btn-primary btn-min-width btn-round mr-1 mb-1">Edit</button>
+                                                    </a>
+                                                    <a href="{{ path('user_delete', {'id': user.id}) }}">
+                                                    <button type="button" class="btn btn-danger btn-min-width btn-round mr-1 mb-1">Supprimer</button>
+                                                    </a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor  %}
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Firstname</th>
+                                        <th>Lastname</th>
+                                        <th>email</th>
+                                        <th>Roles</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+                </section>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
