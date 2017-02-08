@@ -1,21 +1,6 @@
 sf_security:
     resource: "@UserBundle/Resources/config/security.yml"
 
-user_list:
-    path:     /user-list
-    defaults: { _controller: UserBundle:User:index }
-
-user_add:
-    path:     /user-add
-    defaults: { _controller: UserBundle:User:add }
-
-user_edit:
-    path:     /user-edit/{id}
-    defaults: { _controller: UserBundle:User:edit }
-
-user_delete:
-    path:     /user-delete/{id}
-    defaults: { _controller: UserBundle:User:delete }
 #user_homepage:
 #    path:     /user
 #    defaults: { _controller: UserBundle:User:index }

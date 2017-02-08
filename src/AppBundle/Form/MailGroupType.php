@@ -13,7 +13,8 @@ class MailGroupType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('id')->add('label')->add('active')->add('users')        ;
+        $builder->add('label',null,['required'=>true])
+                ->add('users',null,['attr'=>['class'=>'select2']]);
     }
     
     /**

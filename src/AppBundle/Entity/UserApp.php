@@ -51,12 +51,12 @@ class UserApp
      **/
     protected $email;
 
-    /**
-     * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\MailGroup", inversedBy="users")
-     * @ORM\JoinTable(name="UMG_USER_MAIL_GROUP")
-     */
-    protected $mailGroups;
+//    /**
+//     * Many Users have Many Groups.
+//     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\MailGroup", inversedBy="users")
+//     * @ORM\JoinTable(name="UMG_USER_MAIL_GROUP")
+//     */
+//    protected $mailGroups;
 
 //    /**
 //     * @var
@@ -149,21 +149,21 @@ class UserApp
         $this->email = $email;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMailGroups()
-    {
-        return $this->mailGroups;
-    }
-
-    /**
-     * @param mixed $mailGroups
-     */
-    public function setMailGroups($mailGroups)
-    {
-        $this->mailGroups = $mailGroups;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getMailGroups()
+//    {
+//        return $this->mailGroups;
+//    }
+//
+//    /**
+//     * @param mixed $mailGroups
+//     */
+//    public function setMailGroups($mailGroups)
+//    {
+//        $this->mailGroups = $mailGroups;
+//    }
 
 
 //    /**
