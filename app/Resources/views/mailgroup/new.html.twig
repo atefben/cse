@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
+
 {% block content_title %}
-    Ajouter une mission
+    Nouvelle liste de diffusion
 {% endblock %}
+
 {% block content %}
-    <h1>Mission creation</h1>
+    <h1>Mailgroup creation</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
@@ -12,7 +14,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('mission_index') }}">Back to the list</a>
+            <a href="{{ path('mailgroup_index') }}">Back to the list</a>
         </li>
     </ul>
 {% endblock %}

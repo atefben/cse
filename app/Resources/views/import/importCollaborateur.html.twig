@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    Import collaborateur
+{% endblock %}
+
+{% block content %}
+
+
+                                        {{ form_start(file_form) }}
+                                        {{ form_widget(file_form) }}
+                                        <input type="submit" value="Importer les collaborateurs" />
+                                        {{ form_end(file_form) }}
+{% endblock %}

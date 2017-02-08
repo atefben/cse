@@ -1,8 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Collaborateur creation</h1>
+{% block content_title %}
+    Collaborateur creation
+{% endblock %}
 
+
+{% block content %}
     {{ form_start(form) }}
         {{ form_widget(form) }}
         <input type="submit" value="Create" />

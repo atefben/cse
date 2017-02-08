@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
+{% block content_title %}
+    Edition mission
+{% endblock %}
 
-{% block body %}
-    <h1>Mission edit</h1>
+{% block content %}
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}

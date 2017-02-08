@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Collaborateur edit</h1>
+{% block content_title %}
+Collaborateur edit
+{% endblock %}
+
+{% block content %}
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
@@ -18,4 +21,34 @@
             {{ form_end(delete_form) }}
         </li>
     </ul>
+    <div class="robust-content content container-fluid">
+        <div class="content-wrapper">
+            <div class="content-body">
+                <section id="configuration">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Import des collaborateurs</h4>
+                                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                                </div>
+                                <div class="card-body collapse in">
+                                    <div class="card-block card-dashboard">
+                                        {{ form_start(file_form) }}
+                                        {{ form_widget(file_form) }}
+                                        <input type="submit" value="Importer les collaborateurs" />
+                                        {{ form_end(file_form) }}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+
+        </div>
+    </div>
+
 {% endblock %}

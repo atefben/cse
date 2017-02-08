@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Criterion edit</h1>
+{% block content_title %}
+    Edition critère
+{% endblock %}
 
+{% block content %}
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
         <input type="submit" value="Edit" />

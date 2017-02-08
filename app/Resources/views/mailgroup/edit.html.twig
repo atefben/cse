@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block content_title %}
-    Client
+    Edition Liste de diffusion
 {% endblock %}
 
 {% block content %}
-    <h1>Customer edit</h1>
+    <h1>Mailgroup edit</h1>
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
@@ -14,7 +14,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('customer_index') }}">Back to the list</a>
+            <a href="{{ path('mailgroup_index') }}">Back to the list</a>
         </li>
         <li>
             {{ form_start(delete_form) }}

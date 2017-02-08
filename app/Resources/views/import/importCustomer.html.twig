@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    Import client
+{% endblock %}
+
+{% block content %}
+    <h1>Import des clients</h1>
+
+    {{ form_start(file_form) }}
+        {{ form_widget(file_form) }}
+        <input type="submit" value="Edit" />
+    {{ form_end(file_form) }}
+
+{% endblock %}

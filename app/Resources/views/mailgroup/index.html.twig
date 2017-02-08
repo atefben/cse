@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    Listes de diffusion
+{% endblock %}
+
+{% block content %}
+    <h1>Mailgroups list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Label</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for mailGroup in mailGroups %}
+            <tr>
+                <td><a href="{{ path('mailgroup_show', { 'id': mailGroup.id }) }}">{{ mailGroup.id }}</a></td>
+                <td>{{ mailGroup.label }}</td>
+                <td>{% if mailGroup.active %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('mailgroup_show', { 'id': mailGroup.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('mailgroup_edit', { 'id': mailGroup.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('mailgroup_new') }}">Create a new mailGroup</a>
+        </li>
+    </ul>
+{% endblock %}
