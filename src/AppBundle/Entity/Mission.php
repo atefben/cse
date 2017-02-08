@@ -45,12 +45,12 @@ class Mission
      */
     protected $collaborateur;
 
-    /**
-     * @var
-     * @ORM\JoinColumn(name="UAP_ID",referencedColumnName="UAP_ID")
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserApp")
-     */
-    protected $commercial;
+//    /**
+//     * @var
+//     * @ORM\JoinColumn(name="UAP_ID",referencedColumnName="UAP_ID")
+//     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserApp")
+//     */
+//    protected $commercial;
 
     /**
      * @var
@@ -113,21 +113,21 @@ class Mission
         $this->collaborateur = $collaborateur;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCommercial()
-    {
-        return $this->commercial;
-    }
-
-    /**
-     * @param mixed $commercial
-     */
-    public function setCommercial(UserApp $commercial)
-    {
-        $this->commercial = $commercial;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getCommercial()
+//    {
+//        return $this->commercial;
+//    }
+//
+//    /**
+//     * @param mixed $commercial
+//     */
+//    public function setCommercial(UserApp $commercial)
+//    {
+//        $this->commercial = $commercial;
+//    }
 
     /**
      * @return mixed

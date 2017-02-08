@@ -40,10 +40,10 @@ class MailGroup
     protected $active;
 
 
-    /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\UserApp", mappedBy="mailGroups")
-     */
-    protected $users;
+//    /**
+//     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\UserApp", mappedBy="mailGroups")
+//     */
+//    protected $users;
 
     public function __construct()
     {
@@ -91,21 +91,21 @@ class MailGroup
         $this->active = $active;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
-    /**
-     * @param mixed $users
-     */
-    public function setUsers($users)
-    {
-        $this->users = $users;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getUsers()
+//    {
+//        return $this->users;
+//    }
+//
+//    /**
+//     * @param mixed $users
+//     */
+//    public function setUsers($users)
+//    {
+//        $this->users = $users;
+//    }
 
 
 }
