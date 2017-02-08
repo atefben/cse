@@ -27,14 +27,15 @@
                 {#<td>{{ criterion.desctiption }}</td>#}
                 <td>{% if criterion.criteriaType == 1 %} Collaborateur{% else %} Client {% endif %}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('criteria_show', { 'id': criterion.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('criteria_edit', { 'id': criterion.id }) }}">edit</a>
-                        </li>
-                    </ul>
+
+                            <a href="{{ path('criteria_show', { 'id': criterion.id }) }}">
+                                <button type="button" class="btn btn-info btn-min-width btn-round mr-1 mb-1">Voir</button>
+                            </a>
+
+                            <a href="{{ path('criteria_edit', { 'id': criterion.id }) }}">
+                                <button type="button" class="btn btn-primary btn-min-width btn-round mr-1 mb-1">Edition</button>
+                            </a>
+             
                 </td>
             </tr>
         {% endfor %}
