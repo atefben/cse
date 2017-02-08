@@ -40,6 +40,13 @@ class User extends BaseUser
      */
     private $lastname;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     **/
+    private $userReponsable;
+
     /**
      * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
      */
@@ -120,5 +127,29 @@ class User extends BaseUser
     public function getDeletedAt()
     {
         return $this->deletedAt;
+    }
+
+    /**
+     * Set userReponsable
+     *
+     * @param string $userReponsable
+     *
+     * @return User
+     */
+    public function setUserReponsable($userReponsable)
+    {
+        $this->userReponsable = $userReponsable;
+
+        return $this;
+    }
+
+    /**
+     * Get userReponsable
+     *
+     * @return string
+     */
+    public function getUserReponsable()
+    {
+        return $this->userReponsable;
     }
 }

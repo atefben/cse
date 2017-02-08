@@ -19,9 +19,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Customer
 {
     /**
+     * @var int
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\Column(name="CST_ID", type="integer")
-     */
+     * @ORM\GeneratedValue(strategy="AUTO")
+     **/
     protected $id;
 
     /**
