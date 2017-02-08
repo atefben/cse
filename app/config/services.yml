@@ -4,15 +4,15 @@ parameters:
 #    parameter_name: value
 
 services:
-    app.mail_notifier:
-        class: AppBundle\Services\MailNotifierService
-        arguments: ["@mailer", "@logger"]
-    app.csv_parser:
-        class: AppBundle\Services\CsvFileParserService
-    app.file_upload_handler:
-        class: AppBundle\Handlers\FileUploadHandler
-        arguments:
-            - '%parsed_files_directory%'
+#    app.mail_notifier:
+#        class: AppBundle\Services\MailNotifierService
+#        arguments: ["@mailer", "@logger"]
+#    app.csv_parser:
+#        class: AppBundle\Services\CsvFileParserService
+#    app.file_upload_handler:
+#        class: AppBundle\Handlers\FileUploadHandler
+#        arguments:
+#            - '%parsed_files_directory%'
     gedmo.listener.softdeleteable:
         class:        Gedmo\SoftDeleteable\SoftDeleteableListener
 #    service_name:

@@ -1,28 +1,8 @@
 {% extends '::base.html.twig' %}
 
-{% block content %}
 
-    <div class="robust-content content container-fluid">
-        <div class="content-wrapper">
-            <div class="content-body"><!-- Zero configuration table -->
-                <section id="configuration">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Ajout d'un utilisateur</h4>
-                                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
-                                    <div class="heading-elements">
-                                        <ul class="list-inline mb-0">
-                                            <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
-                                            <li><a data-action="reload"><i class="icon-reload"></i></a></li>
-                                            <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
-                                            <li><a data-action="close"><i class="icon-cross2"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-body collapse in">
-                                    <div class="card-block card-dashboard">
+{% block content_title %}Ajout d'un utilisateur{% endblock %}
+{% block content %}
 
                                         {{ form_start(form,  { 'attr': {'class': 'form'} }) }}
                                             <div class="form-body">
@@ -88,27 +68,13 @@
                                             </div>
 
                                             <div class="form-actions">
-                                                <button type="button" class="btn btn-warning mr-1">
+                                               {# <button type="button" class="btn btn-warning mr-1">
                                                     <i class="icon-cross2"></i> Cancel
-                                                </button>
+                                                </button>#}
                                                 <button type="submit" class="btn btn-primary">
                                                     <i class="icon-check2"></i> Save
                                                 </button>
                                             </div>
                                         {{ form_end(form) }}
-
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </div>
-
-                </section>
-            </div>
-
-        </div>
-    </div>
 
 {% endblock %}
