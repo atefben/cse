@@ -4,6 +4,7 @@ parameters:
 #    parameter_name: value
 
 services:
+
 #    app.mail_notifier:
 #        class: AppBundle\Services\MailNotifierService
 #        arguments: ["@mailer", "@logger"]
@@ -14,7 +15,10 @@ services:
 #        arguments:
 #            - '%parsed_files_directory%'
     gedmo.listener.softdeleteable:
-        class:        Gedmo\SoftDeleteable\SoftDeleteableListener
+        class: Gedmo\SoftDeleteable\SoftDeleteableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

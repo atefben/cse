@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class CriteriaType extends AbstractType
 {
@@ -13,8 +14,17 @@ class CriteriaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('id')->add('label')->add('commentaires')->add('coefficient')->add('required')->add('criteriaType')        ;
+        $builder
+            ->add('label')
+            ->add('description')
+            ->add('criteriaType', ChoiceType::class, array(
+                'choices'  => array(
+                    'Collaborateur' => 1,
+                    'Client' => 2
+                ),
+            ))        ;
     }
+
     
     /**
      * {@inheritdoc}
