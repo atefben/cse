@@ -41,6 +41,7 @@ class CsvFileParserService
             return FALSE;
         }
 
+
         $header = NULL;
         $data = array();
 
