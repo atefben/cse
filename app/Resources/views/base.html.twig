@@ -319,19 +319,20 @@
                         <span data-i18n="nav.dash.main" class="menu-title">Administration</span>
                     </a>
                     <ul class="menu-content">
-                        <li {% if current_path == path('userapp_index') %}class="active"{% endif %}>
-                            <a href="{{ path('userapp_index') }}" data-i18n="nav.dash.project" class="menu-item">Utilisateur</a>
+
                         <li class="active">
                             <a href="{{ path('user_list') }}" data-i18n="nav.dash.project" class="menu-item">Utilisateur</a>
                         </li>
+
                         <li {% if current_path == path('userapp_index')  %}class="active"{% endif %}><a href="#" data-i18n="nav.dash.ecommerce" class="menu-item">Alerte</a>
                         </li>
                         <li {% if current_path == path('criteria_index')  %}class="active"{% endif %}><a href="{{ path('criteria_index') }}" data-i18n="nav.dash.analytics" class="menu-item">Critère</a>
                         </li>
+                        {#
                         <li {% if current_path == path('import_customer')  %}class="active"{% endif %}><a href="{{ path('import_customer') }}" data-i18n="nav.dash.crm" class="menu-item">Update client</a>
                         </li>
                         <li {% if current_path == path('import_collaborateur')  %}class="active"{% endif %}><a href="{{ path('import_collaborateur') }}" data-i18n="nav.dash.fitness" class="menu-item">Update Collaborateur</a>
-                        </li>
+                        </li>#}
                     </ul>
                 </li>
                 {% endif %}
