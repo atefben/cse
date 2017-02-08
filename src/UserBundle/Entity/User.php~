@@ -2,6 +2,7 @@
 
 namespace UserBundle\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
@@ -11,6 +12,7 @@ use FOS\UserBundle\Model\User as BaseUser;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class User extends BaseUser
 {
@@ -35,6 +37,11 @@ class User extends BaseUser
      * @ORM\Column(name="lastname", type="string")
      */
     private $lastname;
+
+    /**
+     * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
+     */
+    private $deletedAt;
 
 
     public function __construct() {

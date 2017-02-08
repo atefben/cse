@@ -31,6 +31,7 @@
         "jms-serializer/serializer-bundle": "1.1.4"
         "friendsofsymfony/user-bundle": "dev-master",
         "symfony/assetic-bundle": "dev-master",
+        "beberlei/DoctrineExtensions": "dev-master",
         "gedmo/doctrine-extensions": "dev-master"
     },
     "require-dev": {

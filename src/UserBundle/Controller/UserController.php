@@ -62,5 +62,17 @@ class UserController extends Controller
 
     public function DeleteAction(Request $request) {
 
+        $em = $this->getDoctrine()->getManager();
+        $em->getEventManager()->addEventSubscriber(new \Gedmo\SoftDeleteable\SoftDeleteableListener());
+
+        $id = $request->get('id');
+
+        $repository = $this->getDoctrine()->getRepository('UserBundle:User');
+        $User =  $repository->find($id);
+
+        $em->remove($User);
+        $em->flush($User);
+
+        return $this->redirectToRoute('user_list');
     }
 }
