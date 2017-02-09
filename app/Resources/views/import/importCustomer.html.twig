@@ -9,7 +9,51 @@
 
     {{ form_start(file_form) }}
         {{ form_widget(file_form) }}
-        <input type="submit" value="Edit" />
+        <input type="submit" value="Import" />
     {{ form_end(file_form) }}
-
+<div class="clear">&nbsp;</div>
+<div class='row'>
+{% for flash_message in app.session.flashBag.get('notice') %}
+    <p class="bg-success">
+        {{ flash_message }}
+    </p>
+{% endfor %}
+{% for flash_message in app.session.flashBag.get('error') %}
+    <p class="bg-red bg-inverse">
+        {{ flash_message }}
+    </p>
+{% endfor %}
+    <table class="table table-striped table-bordered zero-configuration">
+                                    <thead>
+                                    <tr>
+                                        <th>Raison socila</th>
+                                        <th>adresse</th>
+                                        <th>Code postal</th>
+                                        <th>Ville</th>
+                                        <th>Responsable</th>
+                                        
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for customer in lists %}
+                                            <tr>
+                                                <td>{{ customer.name }}</td>
+                                                <td>{{ customer.address }}</td>
+                                                <td>{{ customer.zipCode }}</td>
+                                                <td>{{ customer.city }}</td>
+                                                <td>{{ customer.user }}</td>
+                                            </tr>
+                                        {% endfor  %}
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Firstname</th>
+                                        <th>Lastname</th>
+                                        <th>email</th>
+                                        <th>mobile</th>
+                                        <th>Responsable</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                </div>
 {% endblock %}
