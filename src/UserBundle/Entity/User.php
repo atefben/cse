@@ -48,6 +48,11 @@ class User extends BaseUser
     private $userReponsable;
 
     /**
+     * @ORM\Column(name="code_sx", type="string")
+     */
+    private $codeSX;
+
+    /**
      * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
      */
     private $deletedAt;
@@ -151,5 +156,29 @@ class User extends BaseUser
     public function getUserReponsable()
     {
         return $this->userReponsable;
+    }
+
+    /**
+     * Set codeSX
+     *
+     * @param string $codeSX
+     *
+     * @return User
+     */
+    public function setCodeSX($codeSX)
+    {
+        $this->codeSX = $codeSX;
+
+        return $this;
+    }
+
+    /**
+     * Get codeSX
+     *
+     * @return string
+     */
+    public function getCodeSX()
+    {
+        return $this->codeSX;
     }
 }

@@ -23,6 +23,7 @@ class UserType  extends AbstractType
             ->add('lastname')
             ->add('email')
             ->add('username')
+            ->add('codeSX')
             ->add('plainPassword')
             ->add('enabled', HiddenType::class, array('data' => true ))
             ->add('userReponsable', EntityType::class, array(

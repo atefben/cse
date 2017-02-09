@@ -11,4 +11,43 @@
                                         {{ form_widget(file_form) }}
                                         <input type="submit" value="Importer les collaborateurs" />
                                         {{ form_end(file_form) }}
+
+
+
+
+
+
+
+                                            <table class="table table-striped table-bordered zero-configuration">
+                                    <thead>
+                                    <tr>
+                                        <th>Firstname</th>
+                                        <th>Lastname</th>
+                                        <th>email</th>
+                                        <th>mobile</th>
+                                        <th>Responsable</th>
+                                        
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for user in lists %}
+                                            <tr>
+                                                <td>{{ user.firstname }}</td>
+                                                <td>{{ user.lastname }}</td>
+                                                <td>{{ user.email }}</td>
+                                                <td>{{ user.phone }}</td>
+                                                <td>{{ user.user }}</td>
+                                            </tr>
+                                        {% endfor  %}
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Firstname</th>
+                                        <th>Lastname</th>
+                                        <th>email</th>
+                                        <th>mobile</th>
+                                        <th>Responsable</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
 {% endblock %}

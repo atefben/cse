@@ -47,16 +47,12 @@ class Collaborateur
     protected $firstname;
 
     /**
-     * @var integer
-     * @ORM\Column(name="CRT_CUSTOMER")
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Customer")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      **/
     protected $Customer;
 
     /**
-     * @var integer
-     * @ORM\Column(name="CRT_USER")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      **/
@@ -64,15 +60,10 @@ class Collaborateur
 
     /**
      * @var string
-     * @ORM\Column(name="CRT_EMAIL_PRO", type="string")
+     * @ORM\Column(name="CRT_EMAIL", type="string")
      **/
-    protected $email_pro;
+    protected $email;
 
-    /**
-     * @var string
-     * @ORM\Column(name="CRT_EMAIL_PERSO", type="string")
-     **/
-    protected $email_perso;
 
     /**
      * @var string
@@ -306,5 +297,29 @@ class Collaborateur
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Collaborateur
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 }
