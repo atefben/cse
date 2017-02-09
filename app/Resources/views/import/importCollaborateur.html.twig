@@ -11,4 +11,53 @@
                                         {{ form_widget(file_form) }}
                                         <input type="submit" value="Importer les collaborateurs" />
                                         {{ form_end(file_form) }}
+
+
+
+
+<div class="clear">&nbsp;</div>
+<div class='row'>
+{% for flash_message in app.session.flashBag.get('notice') %}
+    <p class="bg-success">
+        {{ flash_message }}
+    </p>
+{% endfor %}
+{% for flash_message in app.session.flashBag.get('error') %}
+    <p class="bg-red bg-inverse">
+        {{ flash_message }}
+    </p>
+{% endfor %}
+                                <table class="table table-striped table-bordered zero-configuration">
+                                    <thead>
+                                    <tr>
+                                        <th>Firstname</th>
+                                        <th>Lastname</th>
+                                        <th>email</th>
+                                        <th>mobile</th>
+                                        <th>Responsable</th>
+                                        
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for collaborator in lists %}
+                                            <tr>
+                                                <td>{{ collaborator.firstname }}</td>
+                                                <td>{{ collaborator.lastname }}</td>
+                                                <td>{{ collaborator.email }}</td>
+                                                <td>{{ collaborator.phone }}</td>
+                                                <td>{{ collaborator.user }}</td>
+                                            </tr>
+                                        {% endfor  %}
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Firstname</th>
+                                        <th>Lastname</th>
+                                        <th>email</th>
+                                        <th>mobile</th>
+                                        <th>Responsable</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                </div>
 {% endblock %}

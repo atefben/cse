@@ -40,7 +40,7 @@ class Mission
 
     /**
      * @var
-     * @ORM\JoinColumn(name="CLR_ID",referencedColumnName="CLR_ID")
+     * @ORM\JoinColumn(name="CLR_ID")
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Collaborateur")
      */
     protected $collaborateur;

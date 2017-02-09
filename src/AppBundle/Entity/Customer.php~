@@ -54,7 +54,7 @@ class Customer
      * @var string
      * @ORM\Column(name="CRT_CITY", type="string", length=255)
      **/
-    protected $city;
+    protected $ciy;
 
     /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
@@ -72,6 +72,23 @@ class Customer
         return $this->id;
     }
 
+//    protected $userInsertion;
+
+    /**
+     * @return mixed
+     */
+    public function getRcs()
+    {
+        return $this->rcs;
+    }
+
+    /**
+     * @param mixed $rcs
+     */
+    public function setRcs($rcs)
+    {
+        $this->rcs = $rcs;
+    }
 
     /**
      * @return mixed
@@ -107,99 +124,6 @@ class Customer
 
    
 
-    /**
-     * Set codeSX
-     *
-     * @param string $codeSX
-     *
-     * @return Customer
-     */
-    public function setCodeSX($codeSX)
-    {
-        $this->codeSX = $codeSX;
 
-        return $this;
-    }
 
-    /**
-     * Get codeSX
-     *
-     * @return string
-     */
-    public function getCodeSX()
-    {
-        return $this->codeSX;
-    }
-
-    /**
-     * Set zipCode
-     *
-     * @param string $zipCode
-     *
-     * @return Customer
-     */
-    public function setZipCode($zipCode)
-    {
-        $this->zipCode = $zipCode;
-
-        return $this;
-    }
-
-    /**
-     * Get zipCode
-     *
-     * @return string
-     */
-    public function getZipCode()
-    {
-        return $this->zipCode;
-    }
-
-    /**
-     * Set ciy
-     *
-     * @param string $ciy
-     *
-     * @return Customer
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * Get ciy
-     *
-     * @return string
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * Set user
-     *
-     * @param \UserBundle\Entity\User $user
-     *
-     * @return Customer
-     */
-    public function setUser(\UserBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \UserBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
 }

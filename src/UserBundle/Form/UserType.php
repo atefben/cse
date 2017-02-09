@@ -12,6 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class UserType  extends AbstractType
 {
@@ -22,8 +23,14 @@ class UserType  extends AbstractType
             ->add('lastname')
             ->add('email')
             ->add('username')
+            ->add('codeSX')
             ->add('plainPassword')
             ->add('enabled', HiddenType::class, array('data' => true ))
+            ->add('userReponsable', EntityType::class, array(
+              'class' => 'UserBundle:User',
+              'required'    => false,
+              'choice_label' => 'username',
+            ))
 
            ->add('roles',  CollectionType::class, array(
                'entry_type'   => ChoiceType::class,

@@ -43,6 +43,24 @@
 
                                             </div>
 
+                                            <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="projectinput3">Responsable</label>
+                                                            {{ form_widget(form.userReponsable,  { 'attr': {'class': 'form-control', 'placeholder':"Responsable"}}) }}
+                                                            
+                                                        </div>
+                                                    </div> 
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="projectinput3">Code SX</label>
+                                                            {{ form_widget(form.codeSX,  { 'attr': {'class': 'form-control', 'placeholder':"Code SX"}}) }}
+                                                            
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
                                             <h4 class="form-section"><i class="icon-clipboard4"></i> Role et mot de passe</h4>
 
                                             <div class="row">
@@ -75,6 +93,7 @@
                                         </div>
                                         <div style="display: none">
                                             {{ form_widget(form.roles[1]) }}
+                                            {{ form_widget(form.roles[2]) }}
                                         </div>
                                         {{ form_end(form) }}
 
