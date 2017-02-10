@@ -24,14 +24,19 @@
             <h4 class="form-section">
                 <i class="icon-head"></i> Choix des critères
             </h4>
+
+            <div class="criterias" data-prototype='{{ form_widget( form.surveys.vars.prototype.criteria)|e('html_attr') }}'></div>
+            <div class="scores" data-prototype='{{ form_widget( form.surveys.vars.prototype.score)|e('html_attr') }}'></div>
+            <div class="coefficients" data-prototype='{{ form_widget( form.surveys.vars.prototype.coefficient)|e('html_attr') }}'></div>
+
             
-            <div class="row">
+            {#<div class="row">
                 <div class="col-md-6">
 
                     <div class="tags" data-prototype='{{ form_widget( form.surveys.vars.prototype)|e('html_attr') }}'>
                     </div>
                 </div>
-            </div>
+            </div>#}
 
                 <h4 class="form-section"><i class="icon-clipboard4"></i> Complement et signature</h4>
 
