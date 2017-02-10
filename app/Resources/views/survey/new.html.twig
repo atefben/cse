@@ -6,10 +6,98 @@
 
 {% block content %}</h1>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+    {{ form_start(form,  { 'attr': {'class': 'form'} }) }}
+        <div class="form-body">
+
+            <h4 class="form-section">
+                <i class="icon-head"></i> Information
+            </h4>
+
+             <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="companyName">Collaborateur</label>
+                            {{ form_widget(form.collaborateur,  { 'attr': {'class': 'form-control', 'placeholder':"First Name"}}) }}                               
+                        </div>
+                    </div>
+            </div>
+            <h4 class="form-section">
+                <i class="icon-head"></i> Choix des critères
+            </h4>
+            
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="tags" data-prototype='{{ form_widget( form.surveys.vars.prototype)|e('html_attr') }}'>
+                    </div>
+                </div>
+            </div>
+
+                <h4 class="form-section"><i class="icon-clipboard4"></i> Complement et signature</h4>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="companyName">Commentaire</label>
+                            {{ form_widget(form.commentairesClient,  { 'attr': {'class': 'form-control', 'placeholder':"Commentaire du client"}}) }}                               
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="companyName">Signature</label>
+
+                            <style type="text/css">
+
+
+
+
+
+    
+    /*This is the div within which the signature canvas is fitted*/
+    #signature {
+        border: 2px dotted black;
+        background-color:lightgrey;
+    }
+
+    /* Drawing the 'gripper' for touch-enabled devices */ 
+    html.touch #content {
+        float:left;
+        width:92%;
+    }
+    html.touch #scrollgrabber {
+        float:right;
+        width:4%;
+        margin-right:2%;
+        background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAFCAAAAACh79lDAAAAAXNSR0IArs4c6QAAABJJREFUCB1jmMmQxjCT4T/DfwAPLgOXlrt3IwAAAABJRU5ErkJggg==)
+    }
+    html.borderradius #scrollgrabber {
+        border-radius: 1em;
+    }
+     
+</style>
+
+                            <div id='signature'></div>
+                            {{ form_widget(form.signatureClient) }}                               
+                        </div>
+                    </div>
+                </div>
+
+                {{ form_widget(form.surveys) }}  
+
+                <div class="form-actions">
+                    <button type="submit" id="addSurveySave" class="btn btn-primary">
+                        <i class="icon-check2"></i> Save
+                     </button>
+                </div>
     {{ form_end(form) }}
+
+
+
+
+    
 
     <ul>
         <li>

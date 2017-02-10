@@ -55,6 +55,21 @@ class Criteria
      */
     private $deletedAt;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\SurveyCriteria", mappedBy="criteria")
+     */
+    protected $criterias;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->criterias = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
     /**
      * @return int
      */
@@ -149,5 +164,39 @@ class Criteria
     public function getDeletedAt()
     {
         return $this->deletedAt;
+    }
+    
+    /**
+     * Add criteria
+     *
+     * @param \AppBundle\Entity\SurveyCriteria $criteria
+     *
+     * @return Criteria
+     */
+    public function addCriteria(\AppBundle\Entity\SurveyCriteria $criteria)
+    {
+        $this->criterias[] = $criteria;
+
+        return $this;
+    }
+
+    /**
+     * Remove criteria
+     *
+     * @param \AppBundle\Entity\SurveyCriteria $criteria
+     */
+    public function removeCriteria(\AppBundle\Entity\SurveyCriteria $criteria)
+    {
+        $this->criterias->removeElement($criteria);
+    }
+
+    /**
+     * Get criterias
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCriterias()
+    {
+        return $this->criterias;
     }
 }

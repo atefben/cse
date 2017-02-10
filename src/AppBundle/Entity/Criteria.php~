@@ -9,12 +9,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Class Criteria
  * @package AppBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="CRT_CRITERIA")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Criteria
 {
@@ -49,6 +51,17 @@ class Criteria
     protected $criteriaType;
 
     /**
+     * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
+     */
+    private $deletedAt;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\SurveyCriteria", mappedBy="criteria")
+     */
+    protected $criterias;
+
+    /**
      * @return int
      */
     public function getId()
@@ -72,9 +85,75 @@ class Criteria
         $this->label = $label;
     }
 
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Criteria
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
 
+        return $this;
+    }
 
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 
+    /**
+     * Set criteriaType
+     *
+     * @param integer $criteriaType
+     *
+     * @return Criteria
+     */
+    public function setCriteriaType($criteriaType)
+    {
+        $this->criteriaType = $criteriaType;
 
+        return $this;
+    }
 
+    /**
+     * Get criteriaType
+     *
+     * @return integer
+     */
+    public function getCriteriaType()
+    {
+        return $this->criteriaType;
+    }
+
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     *
+     * @return User
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
 }

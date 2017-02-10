@@ -30,3 +30,9 @@ app:
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix: /user
+
+
+
+#customer:
+#    resource: "@AppBundle/Resources/config/routing.yml"
+#    prefix: /customer

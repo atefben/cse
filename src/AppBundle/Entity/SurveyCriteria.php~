@@ -38,13 +38,13 @@ class SurveyCriteria
     protected $coefficient;
 
     /**
-    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Criteria", inversedBy="criterias",cascade={"persist"})
+    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Criteria", inversedBy="criterias")
     * @ORM\JoinColumn(nullable=false)
     */
     protected $criteria;
 
    /**
-    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Survey", inversedBy="surveys",cascade={"persist"})
+    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Survey", inversedBy="surveys")
     * @ORM\JoinColumn(nullable=false)
     */
     protected $survey;
@@ -105,31 +105,21 @@ class SurveyCriteria
         $this->survey = $survey;
     }
 
-   
-
-
-
     /**
-     * Set criteria
-     *
-     * @param \AppBundle\Entity\Criteria $criteria
-     *
-     * @return SurveyCriteria
+     * @return mixed
      */
-    public function setCriteria(\AppBundle\Entity\Criteria $criteria)
+    public function getAdditionalNote()
     {
-        $this->criteria = $criteria;
-
-        return $this;
+        return $this->additionalNote;
     }
 
     /**
-     * Get criteria
-     *
-     * @return \AppBundle\Entity\Criteria
+     * @param mixed $additionalNote
      */
-    public function getCriteria()
+    public function setAdditionalNote($additionalNote)
     {
-        return $this->criteria;
+        $this->additionalNote = $additionalNote;
     }
+
+
 }

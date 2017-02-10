@@ -222,28 +222,4 @@ class Survey
     {
         return $this->surveys;
     }
-
-    /**
-     * Set customer
-     *
-     * @param \AppBundle\Entity\Customer $customer
-     *
-     * @return Survey
-     */
-    public function setCustomer(\AppBundle\Entity\Customer $customer)
-    {
-        $this->customer = $customer;
-
-        return $this;
-    }
-
-    /**
-     * Get customer
-     *
-     * @return \AppBundle\Entity\Customer
-     */
-    public function getCustomer()
-    {
-        return $this->customer;
-    }
 }

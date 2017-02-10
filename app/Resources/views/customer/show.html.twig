@@ -22,16 +22,20 @@
                 <td>{{ customer.address }}</td>
             </tr>
             <tr>
-                <th>Contact</th>
-                <td>{{ customer.contact }}</td>
+                <th>Code postal</th>
+                <td>{{ customer.zipCode }}</td>
             </tr>
             <tr>
-                <th>Dtinsertion</th>
-                <td>{% if customer.dtInsertion %}{{ customer.dtInsertion|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <th>Ville</th>
+                <td>{{ customer.city}}</td>
             </tr>
         </tbody>
     </table>
+    <div>
+        <a href="{{ path('survey_new', { 'id': customer.id }) }}">Add</a>
+    </div>
 
+{#
     <ul>
         <li>
             <a href="{{ path('customer_index') }}">Back to the list</a>
@@ -45,4 +49,5 @@
             {{ form_end(delete_form) }}
         </li>
     </ul>
+    #}
 {% endblock %}

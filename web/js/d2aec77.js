@@ -1075,6 +1075,1470 @@ return a=K(a),this[a+"s"]()}function $c(a){return function(){return this._data[a
 /*! clndr.min.js v1.4.6 2016-08-02 */
 !function(a){"function"==typeof define&&define.amd?define(["jquery","moment"],a):"object"==typeof exports?a(require("jquery"),require("moment")):a(jQuery,moment)}(function(a,b){function c(c,e){var g,h,i;this.element=c,this.options=a.extend(!0,{},f,e),this.options.moment&&(b=this.options.moment),this.constraints={next:!0,today:!0,previous:!0,nextYear:!0,previousYear:!0},this.options.events.length&&(this.options.multiDayEvents?this.options.events=this.addMultiDayMomentObjectsToEvents(this.options.events):this.options.events=this.addMomentObjectToEvents(this.options.events)),this.options.lengthOfTime.months||this.options.lengthOfTime.days?this.options.lengthOfTime.months?(this.options.lengthOfTime.days=null,this.options.lengthOfTime.startDate?this.intervalStart=b(this.options.lengthOfTime.startDate).startOf("month"):this.options.startWithMonth?this.intervalStart=b(this.options.startWithMonth).startOf("month"):this.intervalStart=b().startOf("month"),this.intervalEnd=b(this.intervalStart).add(this.options.lengthOfTime.months,"months").subtract(1,"days"),this.month=this.intervalStart.clone()):this.options.lengthOfTime.days&&(this.options.lengthOfTime.startDate?this.intervalStart=b(this.options.lengthOfTime.startDate).startOf("day"):this.intervalStart=b().weekday(0).startOf("day"),this.intervalEnd=b(this.intervalStart).add(this.options.lengthOfTime.days-1,"days").endOf("day"),this.month=this.intervalStart.clone()):(this.month=b().startOf("month"),this.intervalStart=b(this.month),this.intervalEnd=b(this.month).endOf("month")),this.options.startWithMonth&&(this.month=b(this.options.startWithMonth).startOf("month"),this.intervalStart=b(this.month),this.intervalEnd=this.options.lengthOfTime.days?b(this.month).add(this.options.lengthOfTime.days-1,"days").endOf("day"):b(this.month).endOf("month")),this.options.constraints&&(this.options.constraints.startDate&&(i=b(this.options.constraints.startDate),this.options.lengthOfTime.days?(this.intervalStart.isBefore(i,"week")&&(this.intervalStart=i.startOf("week")),g=this.intervalStart.diff(this.intervalEnd,"days"),(g<this.options.lengthOfTime.days||this.intervalEnd.isBefore(this.intervalStart))&&(this.intervalEnd=b(this.intervalStart).add(this.options.lengthOfTime.days-1,"days").endOf("day"),this.month=this.intervalStart.clone())):(this.intervalStart.isBefore(i,"month")&&(this.intervalStart.set("month",i.month()).set("year",i.year()),this.month.set("month",i.month()).set("year",i.year())),this.intervalEnd.isBefore(i,"month")&&this.intervalEnd.set("month",i.month()).set("year",i.year()))),this.options.constraints.endDate&&(h=b(this.options.constraints.endDate),this.options.lengthOfTime.days?this.intervalStart.isAfter(h,"week")&&(this.intervalStart=b(h).endOf("week").subtract(this.options.lengthOfTime.days-1,"days").startOf("day"),this.intervalEnd=b(h).endOf("week"),this.month=this.intervalStart.clone()):(this.intervalEnd.isAfter(h,"month")&&(this.intervalEnd.set("month",h.month()).set("year",h.year()),this.month.set("month",h.month()).set("year",h.year())),this.intervalStart.isAfter(h,"month")&&this.intervalStart.set("month",h.month()).set("year",h.year())))),this._defaults=f,this._name=d,this.init()}var d="clndr",e="<div class='clndr-controls'><div class='clndr-control-button'><span class='clndr-previous-button'>previous</span></div><div class='month'><%= month %> <%= year %></div><div class='clndr-control-button rightalign'><span class='clndr-next-button'>next</span></div></div><table class='clndr-table' border='0' cellspacing='0' cellpadding='0'><thead><tr class='header-days'><% for(var i = 0; i < daysOfTheWeek.length; i++) { %><td class='header-day'><%= daysOfTheWeek[i] %></td><% } %></tr></thead><tbody><% for(var i = 0; i < numberOfRows; i++){ %><tr><% for(var j = 0; j < 7; j++){ %><% var d = j + i * 7; %><td class='<%= days[d].classes %>'><div class='day-contents'><%= days[d].day %></div></td><% } %></tr><% } %></tbody></table>",f={events:[],ready:null,extras:null,render:null,moment:null,weekOffset:0,constraints:null,forceSixRows:null,selectedDate:null,doneRendering:null,daysOfTheWeek:null,multiDayEvents:null,startWithMonth:null,dateParameter:"date",template:e,showAdjacentMonths:!0,trackSelectedDate:!1,adjacentDaysChangeMonth:!1,ignoreInactiveDaysInSelection:null,lengthOfTime:{days:null,interval:1,months:null},clickEvents:{click:null,today:null,nextYear:null,nextMonth:null,nextInterval:null,previousYear:null,onYearChange:null,previousMonth:null,onMonthChange:null,previousInterval:null,onIntervalChange:null},targets:{day:"day",empty:"empty",nextButton:"clndr-next-button",todayButton:"clndr-today-button",previousButton:"clndr-previous-button",nextYearButton:"clndr-next-year-button",previousYearButton:"clndr-previous-year-button"},classes:{past:"past",today:"today",event:"event",inactive:"inactive",selected:"selected",lastMonth:"last-month",nextMonth:"next-month",adjacentMonth:"adjacent-month"}};c.prototype.init=function(){if(this.daysOfTheWeek=this.options.daysOfTheWeek||[],!this.options.daysOfTheWeek){this.daysOfTheWeek=[];for(var c=0;7>c;c++)this.daysOfTheWeek.push(b().weekday(c).format("dd").charAt(0))}if(this.options.weekOffset&&(this.daysOfTheWeek=this.shiftWeekdayLabels(this.options.weekOffset)),!a.isFunction(this.options.render)){if(this.options.render=null,"undefined"==typeof _)throw new Error("Underscore was not found. Please include underscore.js OR provide a custom render function.");this.compiledClndrTemplate=_.template(this.options.template)}a(this.element).html("<div class='clndr'></div>"),this.calendarContainer=a(".clndr",this.element),this.bindEvents(),this.render(),this.options.ready&&this.options.ready.apply(this,[])},c.prototype.shiftWeekdayLabels=function(a){for(var b=this.daysOfTheWeek,c=0;a>c;c++)b.push(b.shift());return b},c.prototype.createDaysObject=function(c,d){var e,f,g,h,i,j,k=[],l=c.clone();d.diff(c,"days");if(this._currentIntervalStart=c.clone(),this.eventsLastMonth=[],this.eventsNextMonth=[],this.eventsThisInterval=[],this.options.events.length&&(this.eventsThisInterval=a(this.options.events).filter(function(){var a=this._clndrStartDateObject.isAfter(d),b=this._clndrEndDateObject.isBefore(c);return b||a?!1:!0}).toArray(),this.options.showAdjacentMonths&&(e=c.clone().subtract(1,"months").startOf("month"),f=e.clone().endOf("month"),g=d.clone().add(1,"months").startOf("month"),h=g.clone().endOf("month"),this.eventsLastMonth=a(this.options.events).filter(function(){var a=this._clndrEndDateObject.isBefore(e),b=this._clndrStartDateObject.isAfter(f);return a||b?!1:!0}).toArray(),this.eventsNextMonth=a(this.options.events).filter(function(){var a=this._clndrEndDateObject.isBefore(g),b=this._clndrStartDateObject.isAfter(h);return a||b?!1:!0}).toArray())),!this.options.lengthOfTime.days)if(i=l.weekday()-this.options.weekOffset,0>i&&(i+=7),this.options.showAdjacentMonths)for(var m=0;i>m;m++){var n=b([c.year(),c.month(),m-i+1]);k.push(this.createDayObject(n,this.eventsLastMonth))}else for(var m=0;i>m;m++)k.push(this.calendarDay({classes:this.options.targets.empty+" "+this.options.classes.lastMonth}));for(j=c.clone();j.isBefore(d)||j.isSame(d,"day");)k.push(this.createDayObject(j.clone(),this.eventsThisInterval)),j.add(1,"days");if(!this.options.lengthOfTime.days)for(;k.length%7!==0;)this.options.showAdjacentMonths?k.push(this.createDayObject(j.clone(),this.eventsNextMonth)):k.push(this.calendarDay({classes:this.options.targets.empty+" "+this.options.classes.nextMonth})),j.add(1,"days");if(this.options.forceSixRows&&42!==k.length)for(;k.length<42;)this.options.showAdjacentMonths?(k.push(this.createDayObject(j.clone(),this.eventsNextMonth)),j.add(1,"days")):k.push(this.calendarDay({classes:this.options.targets.empty+" "+this.options.classes.nextMonth}));return k},c.prototype.createDayObject=function(a,c){var d,e,f,g=0,h=b(),i=[],j="",k={isToday:!1,isInactive:!1,isAdjacentMonth:!1};for(!a.isValid()&&a.hasOwnProperty("_d")&&void 0!=a._d&&(a=b(a._d)),g;g<c.length;g++){var l=c[g]._clndrStartDateObject,m=c[g]._clndrEndDateObject;(a.isSame(l,"day")||a.isAfter(l,"day"))&&(a.isSame(m,"day")||a.isBefore(m,"day"))&&i.push(c[g])}return h.format("YYYY-MM-DD")==a.format("YYYY-MM-DD")&&(j+=" "+this.options.classes.today,k.isToday=!0),a.isBefore(h,"day")&&(j+=" "+this.options.classes.past),i.length&&(j+=" "+this.options.classes.event),this.options.lengthOfTime.days||(this._currentIntervalStart.month()>a.month()?(j+=" "+this.options.classes.adjacentMonth,k.isAdjacentMonth=!0,j+=this._currentIntervalStart.year()===a.year()?" "+this.options.classes.lastMonth:" "+this.options.classes.nextMonth):this._currentIntervalStart.month()<a.month()&&(j+=" "+this.options.classes.adjacentMonth,k.isAdjacentMonth=!0,j+=this._currentIntervalStart.year()===a.year()?" "+this.options.classes.nextMonth:" "+this.options.classes.lastMonth)),this.options.constraints&&(e=b(this.options.constraints.endDate),d=b(this.options.constraints.startDate),this.options.constraints.startDate&&a.isBefore(d)&&(j+=" "+this.options.classes.inactive,k.isInactive=!0),this.options.constraints.endDate&&a.isAfter(e)&&(j+=" "+this.options.classes.inactive,k.isInactive=!0)),!a.isValid()&&a.hasOwnProperty("_d")&&void 0!=a._d&&(a=b(a._d)),f=b(this.options.selectedDate),this.options.selectedDate&&a.isSame(f,"day")&&(j+=" "+this.options.classes.selected),j+=" calendar-day-"+a.format("YYYY-MM-DD"),j+=" calendar-dow-"+a.weekday(),this.calendarDay({date:a,day:a.date(),events:i,properties:k,classes:this.options.targets.day+j})},c.prototype.render=function(){var a,c,d,e,f,g={},h=null,i=null,j=this.intervalEnd.clone().add(1,"years"),k=this.intervalStart.clone().subtract(1,"years");if(this.calendarContainer.empty(),this.options.lengthOfTime.days)a=this.createDaysObject(this.intervalStart.clone(),this.intervalEnd.clone()),g={days:a,months:[],year:null,month:null,eventsLastMonth:[],eventsNextMonth:[],eventsThisMonth:[],extras:this.options.extras,daysOfTheWeek:this.daysOfTheWeek,intervalEnd:this.intervalEnd.clone(),numberOfRows:Math.ceil(a.length/7),intervalStart:this.intervalStart.clone(),eventsThisInterval:this.eventsThisInterval};else if(this.options.lengthOfTime.months){for(c=[],f=0,e=[],o=0;o<this.options.lengthOfTime.months;o++){var l=this.intervalStart.clone().add(o,"months"),m=l.clone().endOf("month"),a=this.createDaysObject(l,m);e.push(this.eventsThisInterval),c.push({days:a,month:l})}for(o in c)f+=Math.ceil(c[o].days.length/7);g={days:[],year:null,month:null,months:c,eventsThisMonth:[],numberOfRows:f,extras:this.options.extras,intervalEnd:this.intervalEnd,intervalStart:this.intervalStart,daysOfTheWeek:this.daysOfTheWeek,eventsLastMonth:this.eventsLastMonth,eventsNextMonth:this.eventsNextMonth,eventsThisInterval:e}}else a=this.createDaysObject(this.month.clone().startOf("month"),this.month.clone().endOf("month")),d=this.month,g={days:a,months:[],intervalEnd:null,intervalStart:null,year:this.month.year(),eventsThisInterval:null,extras:this.options.extras,month:this.month.format("MMMM"),daysOfTheWeek:this.daysOfTheWeek,eventsLastMonth:this.eventsLastMonth,eventsNextMonth:this.eventsNextMonth,numberOfRows:Math.ceil(a.length/7),eventsThisMonth:this.eventsThisInterval};if(this.options.render?this.calendarContainer.html(this.options.render.apply(this,[g])):this.calendarContainer.html(this.compiledClndrTemplate(g)),this.options.constraints){for(var n in this.options.targets)n!=this.options.targets.day&&this.element.find("."+this.options.targets[n]).toggleClass(this.options.classes.inactive,!1);for(var o in this.constraints)this.constraints[o]=!0;this.options.constraints.startDate&&(i=b(this.options.constraints.startDate)),this.options.constraints.endDate&&(h=b(this.options.constraints.endDate)),i&&(i.isAfter(this.intervalStart)||i.isSame(this.intervalStart,"day"))&&(this.element.find("."+this.options.targets.previousButton).toggleClass(this.options.classes.inactive,!0),this.constraints.previous=!this.constraints.previous),h&&(h.isBefore(this.intervalEnd)||h.isSame(this.intervalEnd,"day"))&&(this.element.find("."+this.options.targets.nextButton).toggleClass(this.options.classes.inactive,!0),this.constraints.next=!this.constraints.next),i&&i.isAfter(k)&&(this.element.find("."+this.options.targets.previousYearButton).toggleClass(this.options.classes.inactive,!0),this.constraints.previousYear=!this.constraints.previousYear),h&&h.isBefore(j)&&(this.element.find("."+this.options.targets.nextYearButton).toggleClass(this.options.classes.inactive,!0),this.constraints.nextYear=!this.constraints.nextYear),(i&&i.isAfter(b(),"month")||h&&h.isBefore(b(),"month"))&&(this.element.find("."+this.options.targets.today).toggleClass(this.options.classes.inactive,!0),this.constraints.today=!this.constraints.today)}this.options.doneRendering&&this.options.doneRendering.apply(this,[])},c.prototype.bindEvents=function(){var b={},c=this,d=a(this.element),e=this.options.targets,f=c.options.classes,g=this.options.useTouchEvents===!0?"touchstart":"click",h=g+".clndr";d.off(h,"."+e.day).off(h,"."+e.empty).off(h,"."+e.nextButton).off(h,"."+e.todayButton).off(h,"."+e.previousButton).off(h,"."+e.nextYearButton).off(h,"."+e.previousYearButton),d.on(h,"."+e.day,function(b){var e,g=a(b.currentTarget);if(c.options.clickEvents.click&&(e=c.buildTargetObject(b.currentTarget,!0),c.options.clickEvents.click.apply(c,[e])),c.options.adjacentDaysChangeMonth&&(g.is("."+f.lastMonth)?c.backActionWithContext(c):g.is("."+f.nextMonth)&&c.forwardActionWithContext(c)),c.options.trackSelectedDate){if(c.options.ignoreInactiveDaysInSelection&&g.hasClass(f.inactive))return;c.options.selectedDate=c.getTargetDateString(b.currentTarget),d.find("."+f.selected).removeClass(f.selected),g.addClass(f.selected)}}),d.on(h,"."+e.empty,function(b){var d,e=a(b.currentTarget);c.options.clickEvents.click&&(d=c.buildTargetObject(b.currentTarget,!1),c.options.clickEvents.click.apply(c,[d])),c.options.adjacentDaysChangeMonth&&(e.is("."+f.lastMonth)?c.backActionWithContext(c):e.is("."+f.nextMonth)&&c.forwardActionWithContext(c))}),b={context:this},d.on(h,"."+e.todayButton,b,this.todayAction).on(h,"."+e.nextButton,b,this.forwardAction).on(h,"."+e.previousButton,b,this.backAction).on(h,"."+e.nextYearButton,b,this.nextYearAction).on(h,"."+e.previousYearButton,b,this.previousYearAction)},c.prototype.buildTargetObject=function(c,d){var e,f,g={date:null,events:[],element:c};return d&&(e=this.getTargetDateString(c),g.date=e?b(e):null,this.options.events&&(f=this.options.multiDayEvents?function(){var a=g.date.isSame(this._clndrStartDateObject,"day"),b=g.date.isAfter(this._clndrStartDateObject,"day"),c=g.date.isSame(this._clndrEndDateObject,"day"),d=g.date.isBefore(this._clndrEndDateObject,"day");return(a||b)&&(c||d)}:function(){var a=this._clndrStartDateObject.format("YYYY-MM-DD");return a==e},g.events=a.makeArray(a(this.options.events).filter(f)))),g},c.prototype.getTargetDateString=function(a){var b=a.className.indexOf("calendar-day-");return-1!==b?a.className.substring(b+13,b+23):null},c.prototype.triggerEvents=function(a,c){var d,e,f,g,h,i,j,k,l,m=a.options.lengthOfTime,n=a.options.clickEvents,o={end:a.intervalEnd,start:a.intervalStart},p=[b(a.intervalStart),b(a.intervalEnd)],q=[b(a.month)];g=o.start.isAfter(c.start)&&(1==Math.abs(o.start.month()-c.start.month())||11===c.start.month()&&0===o.start.month()),h=o.start.isBefore(c.start)&&(1==Math.abs(c.start.month()-o.start.month())||0===c.start.month()&&11===o.start.month()),i=o.start.month()!==c.start.month()||o.start.year()!==c.start.year(),d=o.start.year()-c.start.year()===1||o.end.year()-c.end.year()===1,e=c.start.year()-o.start.year()===1||c.end.year()-o.end.year()===1,f=o.start.year()!==c.start.year(),m.days||m.months?(j=o.start.isAfter(c.start),k=o.start.isBefore(c.start),l=j||k,j&&n.nextInterval&&n.nextInterval.apply(a,p),k&&n.previousInterval&&n.previousInterval.apply(a,p),l&&n.onIntervalChange&&n.onIntervalChange.apply(a,p)):(g&&n.nextMonth&&n.nextMonth.apply(a,q),h&&n.previousMonth&&n.previousMonth.apply(a,q),i&&n.onMonthChange&&n.onMonthChange.apply(a,q),d&&n.nextYear&&n.nextYear.apply(a,q),e&&n.previousYear&&n.previousYear.apply(a,q),f&&n.onYearChange&&n.onYearChange.apply(a,q))},c.prototype.back=function(b){var c=arguments.length>1?arguments[1]:this,d=c.options.lengthOfTime,e={withCallbacks:!1},f={end:c.intervalEnd.clone(),start:c.intervalStart.clone()};return b=a.extend(!0,{},e,b),c.constraints.previous?(d.days?(c.intervalStart.subtract(d.interval,"days").startOf("day"),c.intervalEnd=c.intervalStart.clone().add(d.days-1,"days").endOf("day"),c.month=c.intervalStart.clone()):(c.intervalStart.subtract(d.interval,"months").startOf("month"),c.intervalEnd=c.intervalStart.clone().add(d.months||d.interval,"months").subtract(1,"days").endOf("month"),c.month=c.intervalStart.clone()),c.render(),b.withCallbacks&&c.triggerEvents(c,f),c):c},c.prototype.backAction=function(a){var b=a.data.context;b.backActionWithContext(b)},c.prototype.backActionWithContext=function(a){a.back({withCallbacks:!0},a)},c.prototype.previous=function(a){return this.back(a)},c.prototype.forward=function(b){var c=arguments.length>1?arguments[1]:this,d=c.options.lengthOfTime,e={withCallbacks:!1},f={end:c.intervalEnd.clone(),start:c.intervalStart.clone()};return b=a.extend(!0,{},e,b),c.constraints.next?(c.options.lengthOfTime.days?(c.intervalStart.add(d.interval,"days").startOf("day"),c.intervalEnd=c.intervalStart.clone().add(d.days-1,"days").endOf("day"),c.month=c.intervalStart.clone()):(c.intervalStart.add(d.interval,"months").startOf("month"),c.intervalEnd=c.intervalStart.clone().add(d.months||d.interval,"months").subtract(1,"days").endOf("month"),c.month=c.intervalStart.clone()),c.render(),b.withCallbacks&&c.triggerEvents(c,f),c):c},c.prototype.forwardAction=function(a){var b=a.data.context;b.forwardActionWithContext(b)},c.prototype.forwardActionWithContext=function(a){a.forward({withCallbacks:!0},a)},c.prototype.next=function(a){return this.forward(a)},c.prototype.previousYear=function(b){var c=arguments.length>1?arguments[1]:this,d={withCallbacks:!1},e={end:c.intervalEnd.clone(),start:c.intervalStart.clone()};return b=a.extend(!0,{},d,b),c.constraints.previousYear?(c.month.subtract(1,"year"),c.intervalStart.subtract(1,"year"),c.intervalEnd.subtract(1,"year"),c.render(),b.withCallbacks&&c.triggerEvents(c,e),c):c},c.prototype.previousYearAction=function(a){var b=a.data.context;b.previousYear({withCallbacks:!0},b)},c.prototype.nextYear=function(b){var c=arguments.length>1?arguments[1]:this,d={withCallbacks:!1},e={end:c.intervalEnd.clone(),start:c.intervalStart.clone()};return b=a.extend(!0,{},d,b),c.constraints.nextYear?(c.month.add(1,"year"),c.intervalStart.add(1,"year"),c.intervalEnd.add(1,"year"),c.render(),b.withCallbacks&&c.triggerEvents(c,e),c):c},c.prototype.nextYearAction=function(a){var b=a.data.context;b.nextYear({withCallbacks:!0},b)},c.prototype.today=function(c){var d=arguments.length>1?arguments[1]:this,e=d.options.lengthOfTime,f={withCallbacks:!1},g={end:d.intervalEnd.clone(),start:d.intervalStart.clone()};c=a.extend(!0,{},f,c),d.month=b().startOf("month"),e.days?(e.startDate?d.intervalStart=b().weekday(e.startDate.weekday()).startOf("day"):d.intervalStart=b().weekday(0).startOf("day"),d.intervalEnd=d.intervalStart.clone().add(e.days-1,"days").endOf("day")):(d.intervalStart=b().startOf("month"),d.intervalEnd=d.intervalStart.clone().add(e.months||e.interval,"months").subtract(1,"days").endOf("month")),d.intervalStart.isSame(g.start)&&d.intervalEnd.isSame(g.end)||d.render(),c.withCallbacks&&(d.options.clickEvents.today&&d.options.clickEvents.today.apply(d,[b(d.month)]),d.triggerEvents(d,g))},c.prototype.todayAction=function(a){var b=a.data.context;b.today({withCallbacks:!0},b)},c.prototype.setMonth=function(a,b){var c=this.options.lengthOfTime,d={end:this.intervalEnd.clone(),start:this.intervalStart.clone()};return c.days||c.months?(console.log("You are using a custom date interval. Use Clndr.setIntervalStart(startDate) instead."),this):(this.month.month(a),this.intervalStart=this.month.clone().startOf("month"),this.intervalEnd=this.intervalStart.clone().endOf("month"),this.render(),b&&b.withCallbacks&&this.triggerEvents(this,d),this)},c.prototype.setYear=function(a,b){var c={end:this.intervalEnd.clone(),start:this.intervalStart.clone()};return this.month.year(a),this.intervalEnd.year(a),this.intervalStart.year(a),this.render(),b&&b.withCallbacks&&this.triggerEvents(this,c),this},c.prototype.setIntervalStart=function(a,c){var d=this.options.lengthOfTime,e={end:this.intervalEnd.clone(),start:this.intervalStart.clone()};return d.days||d.months?(d.days?(this.intervalStart=b(a).startOf("day"),this.intervalEnd=this.intervalStart.clone().add(d-1,"days").endOf("day")):(this.intervalStart=b(a).startOf("month"),this.intervalEnd=this.intervalStart.clone().add(d.months||d.interval,"months").subtract(1,"days").endOf("month")),this.month=this.intervalStart.clone(),this.render(),c&&c.withCallbacks&&this.triggerEvents(this,e),this):(console.log("You are using a custom date interval. Use Clndr.setIntervalStart(startDate) instead."),this)},c.prototype.setEvents=function(a){return this.options.multiDayEvents?this.options.events=this.addMultiDayMomentObjectsToEvents(a):this.options.events=this.addMomentObjectToEvents(a),this.render(),this},c.prototype.addEvents=function(b){var c=arguments.length>1?arguments[1]:!0;return this.options.multiDayEvents?this.options.events=a.merge(this.options.events,this.addMultiDayMomentObjectsToEvents(b)):this.options.events=a.merge(this.options.events,this.addMomentObjectToEvents(b)),c&&this.render(),this},c.prototype.removeEvents=function(a){for(var b=this.options.events.length-1;b>=0;b--)1==a(this.options.events[b])&&this.options.events.splice(b,1);return this.render(),this},c.prototype.addMomentObjectToEvents=function(a){var c=0,d=this;for(c;c<a.length;c++)a[c]._clndrStartDateObject=b(a[c][d.options.dateParameter]),a[c]._clndrEndDateObject=b(a[c][d.options.dateParameter]);return a},c.prototype.addMultiDayMomentObjectsToEvents=function(a){var c=0,d=this,e=d.options.multiDayEvents;for(c;c<a.length;c++){var f=a[c][e.endDate],g=a[c][e.startDate];f||g?(a[c]._clndrEndDateObject=b(f||g),a[c]._clndrStartDateObject=b(g||f)):(a[c]._clndrEndDateObject=b(a[c][e.singleDay]),a[c]._clndrStartDateObject=b(a[c][e.singleDay]))}return a},c.prototype.calendarDay=function(b){var c={day:"",date:null,events:[],classes:this.options.targets.empty};return a.extend({},c,b)},c.prototype.destroy=function(){var b=a(this.calendarContainer);b.parent().data("plugin_clndr",null),this.options=f,b.empty().remove(),this.element=null},a.fn.clndr=function(a){var b;if(this.length>1)throw new Error("CLNDR does not support multiple elements yet. Make sure your clndr selector returns only one element.");if(!this.length)throw new Error("CLNDR cannot be instantiated on an empty selector.");return this.data("plugin_clndr")?this.data("plugin_clndr"):(b=new c(this,a),this.data("plugin_clndr",b),b)}});
 !function($){return $?($.Unslider=function(t,n){var e=this;return e._="unslider",e.defaults={autoplay:!1,delay:3e3,speed:750,easing:"swing",keys:{prev:37,next:39},nav:!0,arrows:{prev:'<a class="'+e._+'-arrow prev">Prev</a>',next:'<a class="'+e._+'-arrow next">Next</a>'},animation:"horizontal",selectors:{container:"ul:first",slides:"li"},animateHeight:!1,activeClass:e._+"-active",swipe:!0,swipeThreshold:.2},e.$context=t,e.options={},e.$parent=null,e.$container=null,e.$slides=null,e.$nav=null,e.$arrows=[],e.total=0,e.current=0,e.prefix=e._+"-",e.eventSuffix="."+e.prefix+~~(2e3*Math.random()),e.interval=null,e.init=function(t){return e.options=$.extend({},e.defaults,t),e.$container=e.$context.find(e.options.selectors.container).addClass(e.prefix+"wrap"),e.$slides=e.$container.children(e.options.selectors.slides),e.setup(),$.each(["nav","arrows","keys","infinite"],function(t,n){e.options[n]&&e["init"+$._ucfirst(n)]()}),jQuery.event.special.swipe&&e.options.swipe&&e.initSwipe(),e.options.autoplay&&e.start(),e.calculateSlides(),e.$context.trigger(e._+".ready"),e.animate(e.options.index||e.current,"init")},e.setup=function(){e.$context.addClass(e.prefix+e.options.animation).wrap('<div class="'+e._+'" />'),e.$parent=e.$context.parent("."+e._);var t=e.$context.css("position");"static"===t&&e.$context.css("position","relative"),e.$context.css("overflow","hidden")},e.calculateSlides=function(){if(e.total=e.$slides.length,"fade"!==e.options.animation){var t="width";"vertical"===e.options.animation&&(t="height"),e.$container.css(t,100*e.total+"%").addClass(e.prefix+"carousel"),e.$slides.css(t,100/e.total+"%")}},e.start=function(){return e.interval=setTimeout(function(){e.next()},e.options.delay),e},e.stop=function(){return clearTimeout(e.interval),e},e.initNav=function(){var t=$('<nav class="'+e.prefix+'nav"><ol /></nav>');e.$slides.each(function(n){var i=this.getAttribute("data-nav")||n+1;$.isFunction(e.options.nav)&&(i=e.options.nav.call(e.$slides.eq(n),n,i)),t.children("ol").append('<li data-slide="'+n+'">'+i+"</li>")}),e.$nav=t.insertAfter(e.$context),e.$nav.find("li").on("click"+e.eventSuffix,function(){var t=$(this).addClass(e.options.activeClass);t.siblings().removeClass(e.options.activeClass),e.animate(t.attr("data-slide"))})},e.initArrows=function(){e.options.arrows===!0&&(e.options.arrows=e.defaults.arrows),$.each(e.options.arrows,function(t,n){e.$arrows.push($(n).insertAfter(e.$context).on("click"+e.eventSuffix,e[t]))})},e.initKeys=function(){e.options.keys===!0&&(e.options.keys=e.defaults.keys),$(document).on("keyup"+e.eventSuffix,function(t){$.each(e.options.keys,function(n,i){t.which===i&&$.isFunction(e[n])&&e[n].call(e)})})},e.initSwipe=function(){var t=e.$slides.width();"fade"!==e.options.animation&&e.$container.on({movestart:function(t){return t.distX>t.distY&&t.distX<-t.distY||t.distX<t.distY&&t.distX>-t.distY?!!t.preventDefault():void e.$container.css("position","relative")},move:function(n){e.$container.css("left",-(100*e.current)+100*n.distX/t+"%")},moveend:function(n){Math.abs(n.distX)/t>e.options.swipeThreshold?e[n.distX<0?"next":"prev"]():e.$container.animate({left:-(100*e.current)+"%"},e.options.speed/2)}})},e.initInfinite=function(){var t=["first","last"];$.each(t,function(n,i){e.$slides.push.apply(e.$slides,e.$slides.filter(':not(".'+e._+'-clone")')[i]().clone().addClass(e._+"-clone")["insert"+(0===n?"After":"Before")](e.$slides[t[~~!n]]()))})},e.destroyArrows=function(){$.each(e.$arrows,function(t,n){n.remove()})},e.destroySwipe=function(){e.$container.off("movestart move moveend")},e.destroyKeys=function(){$(document).off("keyup"+e.eventSuffix)},e.setIndex=function(t){return 0>t&&(t=e.total-1),e.current=Math.min(Math.max(0,t),e.total-1),e.options.nav&&e.$nav.find('[data-slide="'+e.current+'"]')._active(e.options.activeClass),e.$slides.eq(e.current)._active(e.options.activeClass),e},e.animate=function(t,n){if("first"===t&&(t=0),"last"===t&&(t=e.total),isNaN(t))return e;e.options.autoplay&&e.stop().start(),e.setIndex(t),e.$context.trigger(e._+".change",[t,e.$slides.eq(t)]);var i="animate"+$._ucfirst(e.options.animation);return $.isFunction(e[i])&&e[i](e.current,n),e},e.next=function(){var t=e.current+1;return t>=e.total&&(t=0),e.animate(t,"next")},e.prev=function(){return e.animate(e.current-1,"prev")},e.animateHorizontal=function(t){var n="left";return"rtl"===e.$context.attr("dir")&&(n="right"),e.options.infinite&&e.$container.css("margin-"+n,"-100%"),e.slide(n,t)},e.animateVertical=function(t){return e.options.animateHeight=!0,e.options.infinite&&e.$container.css("margin-top",-e.$slides.outerHeight()),e.slide("top",t)},e.slide=function(t,n){if(e.options.animateHeight&&e._move(e.$context,{height:e.$slides.eq(n).outerHeight()},!1),e.options.infinite){var i;n===e.total-1&&(i=e.total-3,n=-1),n===e.total-2&&(i=0,n=e.total-2),"number"==typeof i&&(e.setIndex(i),e.$context.on(e._+".moved",function(){e.current===i&&e.$container.css(t,-(100*i)+"%").off(e._+".moved")}))}var o={};return o[t]=-(100*n)+"%",e._move(e.$container,o)},e.animateFade=function(t){var n=e.$slides.eq(t).addClass(e.options.activeClass);e._move(n.siblings().removeClass(e.options.activeClass),{opacity:0}),e._move(n,{opacity:1},!1)},e._move=function(t,n,i,o){return i!==!1&&(i=function(){e.$context.trigger(e._+".moved")}),t._move(n,o||e.options.speed,e.options.easing,i)},e.init(n)},$.fn._active=function(t){return this.addClass(t).siblings().removeClass(t)},$._ucfirst=function(t){return(t+"").toLowerCase().replace(/^./,function(t){return t.toUpperCase()})},$.fn._move=function(){return this.stop(!0,!0),$.fn[$.fn.velocity?"velocity":"animate"].apply(this,arguments)},void($.fn.unslider=function(t){return this.each(function(){var n=$(this);if("string"==typeof t&&n.data("unslider")){t=t.split(":");var e=n.data("unslider")[t[0]];if($.isFunction(e))return e.apply(n,t[1]?t[1].split(","):null)}return n.data("unslider",new $.Unslider(n,t))})})):console.warn("Unslider needs jQuery")}(window.jQuery);
+/** @preserve
+jSignature v2 "${buildDate}" "${commitID}"
+Copyright (c) 2012 Willow Systems Corp http://willow-systems.com
+Copyright (c) 2010 Brinley Ang http://www.unbolt.net
+MIT License <http://www.opensource.org/licenses/mit-license.php>
+
+*/
+;(function() {
+
+var apinamespace = 'jSignature'
+
+/**
+Allows one to delay certain eventual action by setting up a timer for it and allowing one to delay it
+by "kick"ing it. Sorta like "kick the can down the road"
+
+@public
+@class
+@param
+@returns {Type}
+*/
+var KickTimerClass = function(time, callback) {
+	var timer;
+	this.kick = function() {
+		clearTimeout(timer);
+		timer = setTimeout(
+			callback
+			, time
+		);
+	}
+	this.clear = function() {
+		clearTimeout(timer);
+	}
+	return this;
+}
+
+var PubSubClass = function(context){
+	'use strict'
+	/*  @preserve
+	-----------------------------------------------------------------------------------------------
+	JavaScript PubSub library
+	2012 (c) Willow Systems Corp (www.willow-systems.com)
+	based on Peter Higgins (dante@dojotoolkit.org)
+	Loosely based on Dojo publish/subscribe API, limited in scope. Rewritten blindly.
+	Original is (c) Dojo Foundation 2004-2010. Released under either AFL or new BSD, see:
+	http://dojofoundation.org/license for more information.
+	-----------------------------------------------------------------------------------------------
+	*/
+	this.topics = {};
+	// here we choose what will be "this" for the called events.
+	// if context is defined, it's context. Else, 'this' is this instance of PubSub
+	this.context = context ? context : this;
+	/**
+	 * Allows caller to emit an event and pass arguments to event listeners.
+	 * @public
+	 * @function
+	 * @param topic {String} Name of the channel on which to voice this event
+	 * @param **arguments Any number of arguments you want to pass to the listeners of this event.
+	 */
+	this.publish = function(topic, arg1, arg2, etc) {
+		'use strict'
+		if (this.topics[topic]) {
+			var currentTopic = this.topics[topic]
+			, args = Array.prototype.slice.call(arguments, 1)
+			, toremove = []
+			, torun = []
+			, fn
+			, i, l
+			, pair;
+
+			for (i = 0, l = currentTopic.length; i < l; i++) {
+				pair = currentTopic[i]; // this is a [function, once_flag] array
+				fn = pair[0];
+				if (pair[1] /* 'run once' flag set */){
+				  pair[0] = function(){};
+				  toremove.push(i);
+				}
+				/* don't call the callback right now, it might decide to add or
+				 * remove subscribers which will wreak havoc on our index-based
+				 * iteration */
+				torun.push(fn);
+			}
+			for (i = 0, l = toremove.length; i < l; i++) {
+			  currentTopic.splice(toremove[i], 1);
+			}
+			for (i = 0, l = torun.length; i < l; i++) {
+			  torun[i].apply(this.context, args);
+			}
+		}
+	}
+	/**
+	 * Allows listener code to subscribe to channel and be called when data is available
+	 * @public
+	 * @function
+	 * @param topic {String} Name of the channel on which to voice this event
+	 * @param callback {Function} Executable (function pointer) that will be ran when event is voiced on this channel.
+	 * @param once {Boolean} (optional. False by default) Flag indicating if the function is to be triggered only once.
+	 * @returns {Object} A token object that cen be used for unsubscribing.
+	 */
+	this.subscribe = function(topic, callback, once) {
+		'use strict'
+		if (!this.topics[topic]) {
+			this.topics[topic] = [[callback, once]];
+		} else {
+			this.topics[topic].push([callback,once]);
+		}
+		return {
+			"topic": topic,
+			"callback": callback
+		};
+	};
+	/**
+	 * Allows listener code to unsubscribe from a channel
+	 * @public
+	 * @function
+	 * @param token {Object} A token object that was returned by `subscribe` method
+	 */
+	this.unsubscribe = function(token) {
+		if (this.topics[token.topic]) {
+			var currentTopic = this.topics[token.topic];
+
+			for (var i = 0, l = currentTopic.length; i < l; i++) {
+				if (currentTopic[i] && currentTopic[i][0] === token.callback) {
+					currentTopic.splice(i, 1);
+				}
+			}
+		}
+	}
+}
+
+/// Returns front, back and "decor" colors derived from element (as jQuery obj)
+function getColors($e){
+	var tmp
+	, undef
+	, frontcolor = $e.css('color')
+	, backcolor
+	, e = $e[0];
+
+	var toOfDOM = false;
+	while(e && !backcolor && !toOfDOM){
+		try{
+			tmp = $(e).css('background-color');
+		} catch (ex) {
+			tmp = 'transparent';
+		}
+		if (tmp !== 'transparent' && tmp !== 'rgba(0, 0, 0, 0)'){
+			backcolor = tmp;
+		}
+		toOfDOM = e.body;
+		e = e.parentNode;
+	}
+
+	var rgbaregex = /rgb[a]*\((\d+),\s*(\d+),\s*(\d+)/ // modern browsers
+	, hexregex = /#([AaBbCcDdEeFf\d]{2})([AaBbCcDdEeFf\d]{2})([AaBbCcDdEeFf\d]{2})/ // IE 8 and less.
+	, frontcolorcomponents;
+
+	// Decomposing Front color into R, G, B ints
+	tmp = undef;
+	tmp = frontcolor.match(rgbaregex);
+	if (tmp){
+		frontcolorcomponents = {'r':parseInt(tmp[1],10),'g':parseInt(tmp[2],10),'b':parseInt(tmp[3],10)};
+	} else {
+		tmp = frontcolor.match(hexregex);
+		if (tmp) {
+			frontcolorcomponents = {'r':parseInt(tmp[1],16),'g':parseInt(tmp[2],16),'b':parseInt(tmp[3],16)};
+		}
+	}
+//		if(!frontcolorcomponents){
+//			frontcolorcomponents = {'r':255,'g':255,'b':255}
+//		}
+
+	var backcolorcomponents
+	// Decomposing back color into R, G, B ints
+	if(!backcolor){
+		// HIghly unlikely since this means that no background styling was applied to any element from here to top of dom.
+		// we'll pick up back color from front color
+		if(frontcolorcomponents){
+			if (Math.max.apply(null, [frontcolorcomponents.r, frontcolorcomponents.g, frontcolorcomponents.b]) > 127){
+				backcolorcomponents = {'r':0,'g':0,'b':0};
+			} else {
+				backcolorcomponents = {'r':255,'g':255,'b':255};
+			}
+		} else {
+			// arg!!! front color is in format we don't understand (hsl, named colors)
+			// Let's just go with white background.
+			backcolorcomponents = {'r':255,'g':255,'b':255};
+		}
+	} else {
+		tmp = undef;
+		tmp = backcolor.match(rgbaregex);
+		if (tmp){
+			backcolorcomponents = {'r':parseInt(tmp[1],10),'g':parseInt(tmp[2],10),'b':parseInt(tmp[3],10)};
+		} else {
+			tmp = backcolor.match(hexregex);
+			if (tmp) {
+				backcolorcomponents = {'r':parseInt(tmp[1],16),'g':parseInt(tmp[2],16),'b':parseInt(tmp[3],16)};
+			}
+		}
+//			if(!backcolorcomponents){
+//				backcolorcomponents = {'r':0,'g':0,'b':0}
+//			}
+	}
+
+	// Deriving Decor color
+	// THis is LAZY!!!! Better way would be to use HSL and adjust luminocity. However, that could be an overkill.
+
+	var toRGBfn = function(o){return 'rgb(' + [o.r, o.g, o.b].join(', ') + ')'}
+	, decorcolorcomponents
+	, frontcolorbrightness
+	, adjusted;
+
+	if (frontcolorcomponents && backcolorcomponents){
+		var backcolorbrightness = Math.max.apply(null, [frontcolorcomponents.r, frontcolorcomponents.g, frontcolorcomponents.b]);
+
+		frontcolorbrightness = Math.max.apply(null, [backcolorcomponents.r, backcolorcomponents.g, backcolorcomponents.b]);
+		adjusted = Math.round(frontcolorbrightness + (-1 * (frontcolorbrightness - backcolorbrightness) * 0.75)); // "dimming" the difference between pen and back.
+		decorcolorcomponents = {'r':adjusted,'g':adjusted,'b':adjusted}; // always shade of gray
+	} else if (frontcolorcomponents) {
+		frontcolorbrightness = Math.max.apply(null, [frontcolorcomponents.r, frontcolorcomponents.g, frontcolorcomponents.b]);
+		var polarity = +1;
+		if (frontcolorbrightness > 127){
+			polarity = -1;
+		}
+		// shifting by 25% (64 points on RGB scale)
+		adjusted = Math.round(frontcolorbrightness + (polarity * 96)); // "dimming" the pen's color by 75% to get decor color.
+		decorcolorcomponents = {'r':adjusted,'g':adjusted,'b':adjusted}; // always shade of gray
+	} else {
+		decorcolorcomponents = {'r':191,'g':191,'b':191}; // always shade of gray
+	}
+
+	return {
+		'color': frontcolor
+		, 'background-color': backcolorcomponents? toRGBfn(backcolorcomponents) : backcolor
+		, 'decor-color': toRGBfn(decorcolorcomponents)
+	};
+}
+
+function Vector(x,y){
+	this.x = x;
+	this.y = y;
+	this.reverse = function(){
+		return new this.constructor(
+			this.x * -1
+			, this.y * -1
+		);
+	};
+	this._length = null;
+	this.getLength = function(){
+		if (!this._length){
+			this._length = Math.sqrt( Math.pow(this.x, 2) + Math.pow(this.y, 2) );
+		}
+		return this._length;
+	};
+
+	var polarity = function (e){
+		return Math.round(e / Math.abs(e));
+	};
+	this.resizeTo = function(length){
+		// proportionally changes x,y such that the hypotenuse (vector length) is = new length
+		if (this.x === 0 && this.y === 0){
+			this._length = 0;
+		} else if (this.x === 0){
+			this._length = length;
+			this.y = length * polarity(this.y);
+		} else if(this.y === 0){
+			this._length = length;
+			this.x = length * polarity(this.x);
+		} else {
+			var proportion = Math.abs(this.y / this.x)
+				, x = Math.sqrt(Math.pow(length, 2) / (1 + Math.pow(proportion, 2)))
+				, y = proportion * x;
+			this._length = length;
+			this.x = x * polarity(this.x);
+			this.y = y * polarity(this.y);
+		}
+		return this;
+	};
+
+	/**
+	 * Calculates the angle between 'this' vector and another.
+	 * @public
+	 * @function
+	 * @returns {Number} The angle between the two vectors as measured in PI.
+	 */
+	this.angleTo = function(vectorB) {
+		var divisor = this.getLength() * vectorB.getLength();
+		if (divisor === 0) {
+			return 0;
+		} else {
+			// JavaScript floating point math is screwed up.
+			// because of it, the core of the formula can, on occasion, have values
+			// over 1.0 and below -1.0.
+			return Math.acos(
+				Math.min(
+					Math.max(
+						( this.x * vectorB.x + this.y * vectorB.y ) / divisor
+						, -1.0
+					)
+					, 1.0
+				)
+			) / Math.PI;
+		}
+	};
+}
+
+function Point(x,y){
+	this.x = x;
+	this.y = y;
+
+	this.getVectorToCoordinates = function (x, y) {
+		return new Vector(x - this.x, y - this.y);
+	};
+	this.getVectorFromCoordinates = function (x, y) {
+		return this.getVectorToCoordinates(x, y).reverse();
+	};
+	this.getVectorToPoint = function (point) {
+		return new Vector(point.x - this.x, point.y - this.y);
+	};
+	this.getVectorFromPoint = function (point) {
+		return this.getVectorToPoint(point).reverse();
+	};
+}
+
+/*
+ * About data structure:
+ * We don't store / deal with "pictures" this signature capture code captures "vectors"
+ *
+ * We don't store bitmaps. We store "strokes" as arrays of arrays. (Actually, arrays of objects containing arrays of coordinates.
+ *
+ * Stroke = mousedown + mousemoved * n (+ mouseup but we don't record that as that was the "end / lack of movement" indicator)
+ *
+ * Vectors = not classical vectors where numbers indicated shift relative last position. Our vectors are actually coordinates against top left of canvas.
+ * 			we could calc the classical vectors, but keeping the the actual coordinates allows us (through Math.max / min)
+ * 			to calc the size of resulting drawing very quickly. If we want classical vectors later, we can always get them in backend code.
+ *
+ * So, the data structure:
+ *
+ * var data = [
+ * 	{ // stroke starts
+ * 		x : [101, 98, 57, 43] // x points
+ * 		, y : [1, 23, 65, 87] // y points
+ * 	} // stroke ends
+ * 	, { // stroke starts
+ * 		x : [55, 56, 57, 58] // x points
+ * 		, y : [101, 97, 54, 4] // y points
+ * 	} // stroke ends
+ * 	, { // stroke consisting of just a dot
+ * 		x : [53] // x points
+ * 		, y : [151] // y points
+ * 	} // stroke ends
+ * ]
+ *
+ * we don't care or store stroke width (it's canvas-size-relative), color, shadow values. These can be added / changed on whim post-capture.
+ *
+ */
+function DataEngine(storageObject, context, startStrokeFn, addToStrokeFn, endStrokeFn){
+	this.data = storageObject; // we expect this to be an instance of Array
+	this.context = context;
+
+	if (storageObject.length){
+		// we have data to render
+		var numofstrokes = storageObject.length
+		, stroke
+		, numofpoints;
+
+		for (var i = 0; i < numofstrokes; i++){
+			stroke = storageObject[i];
+			numofpoints = stroke.x.length;
+			startStrokeFn.call(context, stroke);
+			for(var j = 1; j < numofpoints; j++){
+				addToStrokeFn.call(context, stroke, j);
+			}
+			endStrokeFn.call(context, stroke);
+		}
+	}
+
+	this.changed = function(){};
+
+	this.startStrokeFn = startStrokeFn;
+	this.addToStrokeFn = addToStrokeFn;
+	this.endStrokeFn = endStrokeFn;
+
+	this.inStroke = false;
+
+	this._lastPoint = null;
+	this._stroke = null;
+	this.startStroke = function(point){
+		if(point && typeof(point.x) == "number" && typeof(point.y) == "number"){
+			this._stroke = {'x':[point.x], 'y':[point.y]};
+			this.data.push(this._stroke);
+			this._lastPoint = point;
+			this.inStroke = true;
+			// 'this' does not work same inside setTimeout(
+			var stroke = this._stroke
+			, fn = this.startStrokeFn
+			, context = this.context;
+			setTimeout(
+				// some IE's don't support passing args per setTimeout API. Have to create closure every time instead.
+				function() {fn.call(context, stroke)}
+				, 3
+			);
+			return point;
+		} else {
+			return null;
+		}
+	};
+	// that "5" at the very end of this if is important to explain.
+	// we do NOT render links between two captured points (in the middle of the stroke) if the distance is shorter than that number.
+	// not only do we NOT render it, we also do NOT capture (add) these intermediate points to storage.
+	// when clustering of these is too tight, it produces noise on the line, which, because of smoothing, makes lines too curvy.
+	// maybe, later, we can expose this as a configurable setting of some sort.
+	this.addToStroke = function(point){
+		if (this.inStroke &&
+			typeof(point.x) === "number" &&
+			typeof(point.y) === "number" &&
+			// calculates absolute shift in diagonal pixels away from original point
+			(Math.abs(point.x - this._lastPoint.x) + Math.abs(point.y - this._lastPoint.y)) > 4
+		){
+			var positionInStroke = this._stroke.x.length;
+			this._stroke.x.push(point.x);
+			this._stroke.y.push(point.y);
+			this._lastPoint = point;
+
+			var stroke = this._stroke
+			, fn = this.addToStrokeFn
+			, context = this.context;
+			setTimeout(
+				// some IE's don't support passing args per setTimeout API. Have to create closure every time instead.
+				function() {fn.call(context, stroke, positionInStroke)}
+				, 3
+			);
+			return point;
+		} else {
+			return null;
+		}
+	};
+	this.endStroke = function(){
+		var c = this.inStroke;
+		this.inStroke = false;
+		this._lastPoint = null;
+		if (c){
+			var stroke = this._stroke
+			, fn = this.endStrokeFn // 'this' does not work same inside setTimeout(
+			, context = this.context
+			, changedfn = this.changed;
+			setTimeout(
+				// some IE's don't support passing args per setTimeout API. Have to create closure every time instead.
+				function(){
+					fn.call(context, stroke);
+					changedfn.call(context);
+				}
+				, 3
+			);
+			return true;
+		} else {
+			return null;
+		}
+	};
+}
+
+var basicDot = function(ctx, x, y, size){
+	var fillStyle = ctx.fillStyle;
+	ctx.fillStyle = ctx.strokeStyle;
+	ctx.fillRect(x + size / -2 , y + size / -2, size, size);
+	ctx.fillStyle = fillStyle;
+}
+, basicLine = function(ctx, startx, starty, endx, endy){
+	ctx.beginPath();
+	ctx.moveTo(startx, starty);
+	ctx.lineTo(endx, endy);
+	ctx.closePath();
+	ctx.stroke();
+}
+, basicCurve = function(ctx, startx, starty, endx, endy, cp1x, cp1y, cp2x, cp2y){
+	ctx.beginPath();
+	ctx.moveTo(startx, starty);
+	ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, endx, endy);
+	ctx.closePath();
+	ctx.stroke();
+}
+, strokeStartCallback = function(stroke) {
+	// this = jSignatureClass instance
+	basicDot(this.canvasContext, stroke.x[0], stroke.y[0], this.settings.lineWidth);
+}
+, strokeAddCallback = function(stroke, positionInStroke){
+	// this = jSignatureClass instance
+
+	// Because we are funky this way, here we draw TWO curves.
+	// 1. POSSIBLY "this line" - spanning from point right before us, to this latest point.
+	// 2. POSSIBLY "prior curve" - spanning from "latest point" to the one before it.
+
+	// Why you ask?
+	// long lines (ones with many pixels between them) do not look good when they are part of a large curvy stroke.
+	// You know, the jaggedy crocodile spine instead of a pretty, smooth curve. Yuck!
+	// We want to approximate pretty curves in-place of those ugly lines.
+	// To approximate a very nice curve we need to know the direction of line before and after.
+	// Hence, on long lines we actually wait for another point beyond it to come back from
+	// mousemoved before we draw this curve.
+
+	// So for "prior curve" to be calc'ed we need 4 points
+	// 	A, B, C, D (we are on D now, A is 3 points in the past.)
+	// and 3 lines:
+	//  pre-line (from points A to B),
+	//  this line (from points B to C), (we call it "this" because if it was not yet, it's the only one we can draw for sure.)
+	//  post-line (from points C to D) (even through D point is 'current' we don't know how we can draw it yet)
+	//
+	// Well, actually, we don't need to *know* the point A, just the vector A->B
+	var Cpoint = new Point(stroke.x[positionInStroke-1], stroke.y[positionInStroke-1])
+		, Dpoint = new Point(stroke.x[positionInStroke], stroke.y[positionInStroke])
+		, CDvector = Cpoint.getVectorToPoint(Dpoint);
+
+	// Again, we have a chance here to draw TWO things:
+	//  BC Curve (only if it's long, because if it was short, it was drawn by previous callback) and
+	//  CD Line (only if it's short)
+
+	// So, let's start with BC curve.
+	// if there is only 2 points in stroke array, we don't have "history" long enough to have point B, let alone point A.
+	// Falling through to drawing line CD is proper, as that's the only line we have points for.
+	if(positionInStroke > 1) {
+		// we are here when there are at least 3 points in stroke array.
+		var Bpoint = new Point(stroke.x[positionInStroke-2], stroke.y[positionInStroke-2])
+		, BCvector = Bpoint.getVectorToPoint(Cpoint)
+		, ABvector;
+		if(BCvector.getLength() > this.lineCurveThreshold){
+			// Yey! Pretty curves, here we come!
+			if(positionInStroke > 2) {
+				// we are here when at least 4 points in stroke array.
+				ABvector = (new Point(stroke.x[positionInStroke-3], stroke.y[positionInStroke-3])).getVectorToPoint(Bpoint);
+			} else {
+				ABvector = new Vector(0,0);
+			}
+
+			var minlenfraction = 0.05
+			, maxlen = BCvector.getLength() * 0.35
+			, ABCangle = BCvector.angleTo(ABvector.reverse())
+			, BCDangle = CDvector.angleTo(BCvector.reverse())
+			, BCP1vector = new Vector(ABvector.x + BCvector.x, ABvector.y + BCvector.y).resizeTo(
+				Math.max(minlenfraction, ABCangle) * maxlen
+			)
+			, CCP2vector = (new Vector(BCvector.x + CDvector.x, BCvector.y + CDvector.y)).reverse().resizeTo(
+				Math.max(minlenfraction, BCDangle) * maxlen
+			);
+
+			basicCurve(
+				this.canvasContext
+				, Bpoint.x
+				, Bpoint.y
+				, Cpoint.x
+				, Cpoint.y
+				, Bpoint.x + BCP1vector.x
+				, Bpoint.y + BCP1vector.y
+				, Cpoint.x + CCP2vector.x
+				, Cpoint.y + CCP2vector.y
+			);
+		}
+	}
+	if(CDvector.getLength() <= this.lineCurveThreshold){
+		basicLine(
+			this.canvasContext
+			, Cpoint.x
+			, Cpoint.y
+			, Dpoint.x
+			, Dpoint.y
+		);
+	}
+}
+, strokeEndCallback = function(stroke){
+	// this = jSignatureClass instance
+
+	// Here we tidy up things left unfinished in last strokeAddCallback run.
+
+	// What's POTENTIALLY left unfinished there is the curve between the last points
+	// in the stroke, if the len of that line is more than lineCurveThreshold
+	// If the last line was shorter than lineCurveThreshold, it was drawn there, and there
+	// is nothing for us here to do.
+	// We can also be called when there is only one point in the stroke (meaning, the
+	// stroke was just a dot), in which case, again, there is nothing for us to do.
+
+	// So for "this curve" to be calc'ed we need 3 points
+	// 	A, B, C
+	// and 2 lines:
+	//  pre-line (from points A to B),
+	//  this line (from points B to C)
+	// Well, actually, we don't need to *know* the point A, just the vector A->B
+	// so, we really need points B, C and AB vector.
+	var positionInStroke = stroke.x.length - 1;
+
+	if (positionInStroke > 0){
+		// there are at least 2 points in the stroke.we are in business.
+		var Cpoint = new Point(stroke.x[positionInStroke], stroke.y[positionInStroke])
+			, Bpoint = new Point(stroke.x[positionInStroke-1], stroke.y[positionInStroke-1])
+			, BCvector = Bpoint.getVectorToPoint(Cpoint)
+			, ABvector;
+		if (BCvector.getLength() > this.lineCurveThreshold){
+			// yep. This one was left undrawn in prior callback. Have to draw it now.
+			if (positionInStroke > 1){
+				// we have at least 3 elems in stroke
+				ABvector = (new Point(stroke.x[positionInStroke-2], stroke.y[positionInStroke-2])).getVectorToPoint(Bpoint);
+				var BCP1vector = new Vector(ABvector.x + BCvector.x, ABvector.y + BCvector.y).resizeTo(BCvector.getLength() / 2);
+				basicCurve(
+					this.canvasContext
+					, Bpoint.x
+					, Bpoint.y
+					, Cpoint.x
+					, Cpoint.y
+					, Bpoint.x + BCP1vector.x
+					, Bpoint.y + BCP1vector.y
+					, Cpoint.x
+					, Cpoint.y
+				);
+			} else {
+				// Since there is no AB leg, there is no curve to draw. This line is still "long" but no curve.
+				basicLine(
+					this.canvasContext
+					, Bpoint.x
+					, Bpoint.y
+					, Cpoint.x
+					, Cpoint.y
+				);
+			}
+		}
+	}
+}
+
+
+/*
+var getDataStats = function(){
+	var strokecnt = strokes.length
+		, stroke
+		, pointid
+		, pointcnt
+		, x, y
+		, maxX = Number.NEGATIVE_INFINITY
+		, maxY = Number.NEGATIVE_INFINITY
+		, minX = Number.POSITIVE_INFINITY
+		, minY = Number.POSITIVE_INFINITY
+	for(strokeid = 0; strokeid < strokecnt; strokeid++){
+		stroke = strokes[strokeid]
+		pointcnt = stroke.length
+		for(pointid = 0; pointid < pointcnt; pointid++){
+			x = stroke.x[pointid]
+			y = stroke.y[pointid]
+			if (x > maxX){
+				maxX = x
+			} else if (x < minX) {
+				minX = x
+			}
+			if (y > maxY){
+				maxY = y
+			} else if (y < minY) {
+				minY = y
+			}
+		}
+	}
+	return {'maxX': maxX, 'minX': minX, 'maxY': maxY, 'minY': minY}
+}
+*/
+
+function conditionallyLinkCanvasResizeToWindowResize(jSignatureInstance, settingsWidth, apinamespace, globalEvents){
+	'use strict'
+	if ( settingsWidth === 'ratio' || settingsWidth.split('')[settingsWidth.length - 1] === '%' ) {
+
+		this.eventTokens[apinamespace + '.parentresized'] = globalEvents.subscribe(
+			apinamespace + '.parentresized'
+			, (function(eventTokens, $parent, originalParentWidth, sizeRatio){
+				'use strict'
+
+				return function(){
+					'use strict'
+
+					var w = $parent.width();
+					if (w !== originalParentWidth) {
+
+						// UNsubscribing this particular instance of signature pad only.
+						// there is a separate `eventTokens` per each instance of signature pad
+						for (var key in eventTokens){
+							if (eventTokens.hasOwnProperty(key)) {
+								globalEvents.unsubscribe(eventTokens[key]);
+								delete eventTokens[key];
+							}
+						}
+
+						var settings = jSignatureInstance.settings;
+						jSignatureInstance.$parent.children().remove();
+						for (var key in jSignatureInstance){
+							if (jSignatureInstance.hasOwnProperty(key)) {
+								delete jSignatureInstance[key];
+							}
+						}
+
+						// scale data to new signature pad size
+						settings.data = (function(data, scale){
+							var newData = [];
+							var o, i, l, j, m, stroke;
+							for ( i = 0, l = data.length; i < l; i++) {
+								stroke = data[i];
+
+								o = {'x':[],'y':[]};
+
+								for ( j = 0, m = stroke.x.length; j < m; j++) {
+									o.x.push(stroke.x[j] * scale);
+									o.y.push(stroke.y[j] * scale);
+								}
+
+								newData.push(o);
+							}
+							return newData;
+						})(
+							settings.data
+							, w * 1.0 / originalParentWidth
+						)
+
+						$parent[apinamespace](settings);
+					}
+				}
+			})(
+				this.eventTokens
+				, this.$parent
+				, this.$parent.width()
+				, this.canvas.width * 1.0 / this.canvas.height
+			)
+		)
+	}
+};
+
+
+function jSignatureClass(parent, options, instanceExtensions) {
+
+	var $parent = this.$parent = $(parent)
+	, eventTokens = this.eventTokens = {}
+	, events = this.events = new PubSubClass(this)
+	, globalEvents = $.fn[apinamespace]('globalEvents')
+	, settings = {
+		'width' : 'ratio'
+		,'height' : 'ratio'
+		,'sizeRatio': 4 // only used when height = 'ratio'
+		,'color' : '#000'
+		,'background-color': '#fff'
+		,'decor-color': '#eee'
+		,'lineWidth' : 0
+		,'minFatFingerCompensation' : -10
+		,'showUndoButton': false
+		,'readOnly': false
+		,'data': []
+		,'signatureLine': false
+	};
+
+	$.extend(settings, getColors($parent));
+	if (options) {
+		$.extend(settings, options);
+	}
+	this.settings = settings;
+
+	for (var extensionName in instanceExtensions){
+		if (instanceExtensions.hasOwnProperty(extensionName)) {
+			instanceExtensions[extensionName].call(this, extensionName);
+		}
+	}
+
+	this.events.publish(apinamespace+'.initializing');
+
+	// these, when enabled, will hover above the sig area. Hence we append them to DOM before canvas.
+	this.$controlbarUpper = (function(){
+		var controlbarstyle = 'padding:0 !important; margin:0 !important;'+
+			'width: 100% !important; height: 0 !important; -ms-touch-action: none; touch-action: none;'+
+			'margin-top:-1em !important; margin-bottom:1em !important;';
+		return $('<div style="'+controlbarstyle+'"></div>').appendTo($parent);
+	})();
+
+	this.isCanvasEmulator = false; // will be flipped by initializer when needed.
+	var canvas = this.canvas = this.initializeCanvas(settings)
+	, $canvas = $(canvas);
+
+	this.$controlbarLower = (function(){
+		var controlbarstyle = 'padding:0 !important; margin:0 !important;'+
+			'width: 100% !important; height: 0 !important; -ms-touch-action: none; touch-action: none;'+
+			'margin-top:-1.5em !important; margin-bottom:1.5em !important; position: relative;';
+		return $('<div style="'+controlbarstyle+'"></div>').appendTo($parent);
+	})();
+
+	this.canvasContext = canvas.getContext("2d");
+
+	// Most of our exposed API will be looking for this:
+	$canvas.data(apinamespace + '.this', this);
+
+	settings.lineWidth = (function(defaultLineWidth, canvasWidth){
+		if (!defaultLineWidth){
+			return Math.max(
+				Math.round(canvasWidth / 400) /*+1 pixel for every extra 300px of width.*/
+				, 2 /* minimum line width */
+			);
+		} else {
+			return defaultLineWidth;
+		}
+	})(settings.lineWidth, canvas.width);
+
+	this.lineCurveThreshold = settings.lineWidth * 3;
+
+	// Add custom class if defined
+	if(settings.cssclass && $.trim(settings.cssclass) != "") {
+		$canvas.addClass(settings.cssclass);
+	}
+
+	// used for shifting the drawing point up on touch devices, so one can see the drawing above the finger.
+	this.fatFingerCompensation = 0;
+
+	var movementHandlers = (function(jSignatureInstance) {
+
+		//================================
+		// mouse down, move, up handlers:
+
+		// shifts - adjustment values in viewport pixels drived from position of canvas on the page
+		var shiftX
+		, shiftY
+		, setStartValues = function(){
+			var tos = $(jSignatureInstance.canvas).offset()
+			shiftX = tos.left * -1
+			shiftY = tos.top * -1
+		}
+		, getPointFromEvent = function(e) {
+			var firstEvent = (e.changedTouches && e.changedTouches.length > 0 ? e.changedTouches[0] : e);
+			// All devices i tried report correct coordinates in pageX,Y
+			// Android Chrome 2.3.x, 3.1, 3.2., Opera Mobile,  safari iOS 4.x,
+			// Windows: Chrome, FF, IE9, Safari
+			// None of that scroll shift calc vs screenXY other sigs do is needed.
+			// ... oh, yeah, the "fatFinger.." is for tablets so that people see what they draw.
+			return new Point(
+				Math.round(firstEvent.pageX + shiftX)
+				, Math.round(firstEvent.pageY + shiftY) + jSignatureInstance.fatFingerCompensation
+			);
+		}
+		, timer = new KickTimerClass(
+			750
+			, function() { jSignatureInstance.dataEngine.endStroke(); }
+		);
+
+		this.drawEndHandler = function(e) {
+		    if (!jSignatureInstance.settings.readOnly) {
+    			try { e.preventDefault(); } catch (ex) {}
+    			timer.clear();
+    			jSignatureInstance.dataEngine.endStroke();
+		    }
+		};
+		this.drawStartHandler = function(e) {
+		    if (!jSignatureInstance.settings.readOnly) {
+		        e.preventDefault();
+    			// for performance we cache the offsets
+    			// we recalc these only at the beginning the stroke
+    			setStartValues();
+    			jSignatureInstance.dataEngine.startStroke( getPointFromEvent(e) );
+    			timer.kick();
+		    }
+		};
+		this.drawMoveHandler = function(e) {
+		    if (!jSignatureInstance.settings.readOnly) {
+    			e.preventDefault();
+    			if (!jSignatureInstance.dataEngine.inStroke){
+    				return;
+    			}
+    			jSignatureInstance.dataEngine.addToStroke( getPointFromEvent(e) );
+    			timer.kick();
+		    }
+		};
+
+		return this;
+
+	}).call( {}, this )
+
+	//
+	//================================
+
+	;(function(drawEndHandler, drawStartHandler, drawMoveHandler) {
+		var canvas = this.canvas
+		, $canvas = $(canvas)
+		, undef;
+		if (this.isCanvasEmulator){
+			$canvas.bind('mousemove.'+apinamespace, drawMoveHandler);
+			$canvas.bind('mouseup.'+apinamespace, drawEndHandler);
+			$canvas.bind('mousedown.'+apinamespace, drawStartHandler);
+		} else {
+			canvas.ontouchstart = function(e) {
+				canvas.onmousedown = canvas.onmouseup = canvas.onmousemove = undef;
+
+				this.fatFingerCompensation = (
+					settings.minFatFingerCompensation &&
+					settings.lineWidth * -3 > settings.minFatFingerCompensation
+				) ? settings.lineWidth * -3 : settings.minFatFingerCompensation;
+
+				drawStartHandler(e);
+
+				canvas.ontouchend = drawEndHandler;
+				canvas.ontouchstart = drawStartHandler;
+				canvas.ontouchmove = drawMoveHandler;
+			};
+			canvas.onmousedown = function(e) {
+				canvas.ontouchstart = canvas.ontouchend = canvas.ontouchmove = undef;
+
+				drawStartHandler(e);
+
+				canvas.onmousedown = drawStartHandler;
+				canvas.onmouseup = drawEndHandler;
+				canvas.onmousemove = drawMoveHandler;
+			}
+			if (window.navigator.msPointerEnabled) {
+				canvas.onmspointerdown = drawStartHandler;
+				canvas.onmspointerup = drawEndHandler;
+				canvas.onmspointermove = drawMoveHandler;
+			}
+		}
+	}).call(
+		this
+		, movementHandlers.drawEndHandler
+		, movementHandlers.drawStartHandler
+		, movementHandlers.drawMoveHandler
+	)
+
+	//=========================================
+	// various event handlers
+
+	// on mouseout + mouseup canvas did not know that mouseUP fired. Continued to draw despite mouse UP.
+	// it is bettr than
+	// $canvas.bind('mouseout', drawEndHandler)
+	// because we don't want to break the stroke where user accidentally gets ouside and wants to get back in quickly.
+	eventTokens[apinamespace + '.windowmouseup'] = globalEvents.subscribe(
+		apinamespace + '.windowmouseup'
+		, movementHandlers.drawEndHandler
+	);
+
+	this.events.publish(apinamespace+'.attachingEventHandlers');
+
+	// If we have proportional width, we sign up to events broadcasting "window resized" and checking if
+	// parent's width changed. If so, we (1) extract settings + data from current signature pad,
+	// (2) remove signature pad from parent, and (3) reinit new signature pad at new size with same settings, (rescaled) data.
+	conditionallyLinkCanvasResizeToWindowResize.call(
+		this
+		, this
+		, settings.width.toString(10)
+		, apinamespace, globalEvents
+	);
+
+	// end of event handlers.
+	// ===============================
+
+	this.resetCanvas(settings.data);
+
+	// resetCanvas renders the data on the screen and fires ONE "change" event
+	// if there is data. If you have controls that rely on "change" firing
+	// attach them to something that runs before this.resetCanvas, like
+	// apinamespace+'.attachingEventHandlers' that fires a bit higher.
+	this.events.publish(apinamespace+'.initialized');
+
+	return this;
+} // end of initBase
+
+//=========================================================================
+// jSignatureClass's methods and supporting fn's
+
+jSignatureClass.prototype.resetCanvas = function(data, dontClear){
+	var canvas = this.canvas
+	, settings = this.settings
+	, ctx = this.canvasContext
+	, isCanvasEmulator = this.isCanvasEmulator
+	, cw = canvas.width
+	, ch = canvas.height;
+
+	// preparing colors, drawing area
+	if (!dontClear){
+		ctx.clearRect(0, 0, cw + 30, ch + 30);
+	}
+
+	ctx.shadowColor = ctx.fillStyle = settings['background-color']
+	if (isCanvasEmulator){
+		// FLashCanvas fills with Black by default, covering up the parent div's background
+		// hence we refill
+		ctx.fillRect(0,0,cw + 30, ch + 30);
+	}
+
+	ctx.lineWidth = Math.ceil(parseInt(settings.lineWidth, 10));
+	ctx.lineCap = ctx.lineJoin = "round";
+
+	// signature line
+	if(settings.signatureLine) {
+		if (null != settings['decor-color']) {
+			ctx.strokeStyle = settings['decor-color'];
+			ctx.shadowOffsetX = 0;
+			ctx.shadowOffsetY = 0;
+			var lineoffset = Math.round( ch / 5 );
+			basicLine(ctx, lineoffset * 1.5, ch - lineoffset, cw - (lineoffset * 1.5), ch - lineoffset);
+		}
+
+		if (!isCanvasEmulator){
+			ctx.shadowColor = ctx.strokeStyle;
+			ctx.shadowOffsetX = ctx.lineWidth * 0.5;
+			ctx.shadowOffsetY = ctx.lineWidth * -0.6;
+			ctx.shadowBlur = 0;
+		}
+	}
+	
+	ctx.strokeStyle = settings.color;
+
+	// setting up new dataEngine
+
+	if (!data) { data = []; }
+
+	var dataEngine = this.dataEngine = new DataEngine(
+		data
+		, this
+		, strokeStartCallback
+		, strokeAddCallback
+		, strokeEndCallback
+	);
+
+	settings.data = data; // onwindowresize handler uses it, i think.
+	$(canvas).data(apinamespace+'.data', data)
+		.data(apinamespace+'.settings', settings);
+
+	// we fire "change" event on every change in data.
+	// setting this up:
+	dataEngine.changed = (function(target, events, apinamespace) {
+		'use strict'
+		return function() {
+			events.publish(apinamespace+'.change');
+			target.trigger('change');
+		}
+	})(this.$parent, this.events, apinamespace);
+	// let's trigger change on all data reloads
+	dataEngine.changed();
+
+	// import filters will be passing this back as indication of "we rendered"
+	return true;
+};
+
+function initializeCanvasEmulator(canvas){
+	if (canvas.getContext){
+		return false;
+	} else {
+		// for cases when jSignature, FlashCanvas is inserted
+		// from one window into another (child iframe)
+		// 'window' and 'FlashCanvas' may be stuck behind
+		// in that other parent window.
+		// we need to find it
+		var window = canvas.ownerDocument.parentWindow;
+		var FC = window.FlashCanvas ?
+			canvas.ownerDocument.parentWindow.FlashCanvas :
+			(
+				typeof FlashCanvas === "undefined" ?
+				undefined :
+				FlashCanvas
+			);
+
+		if (FC) {
+			canvas = FC.initElement(canvas);
+
+			var zoom = 1;
+			// FlashCanvas uses flash which has this annoying habit of NOT scaling with page zoom.
+			// It matches pixel-to-pixel to screen instead.
+			// Since we are targeting ONLY IE 7, 8 with FlashCanvas, we will test the zoom only the IE8, IE7 way
+			if (window && window.screen && window.screen.deviceXDPI && window.screen.logicalXDPI){
+				zoom = window.screen.deviceXDPI * 1.0 / window.screen.logicalXDPI;
+			}
+			if (zoom !== 1){
+				try {
+					// We effectively abuse the brokenness of FlashCanvas and force the flash rendering surface to
+					// occupy larger pixel dimensions than the wrapping, scaled up DIV and Canvas elems.
+					$(canvas).children('object').get(0).resize(Math.ceil(canvas.width * zoom), Math.ceil(canvas.height * zoom));
+					// And by applying "scale" transformation we can talk "browser pixels" to FlashCanvas
+					// and have it translate the "browser pixels" to "screen pixels"
+					canvas.getContext('2d').scale(zoom, zoom);
+					// Note to self: don't reuse Canvas element. Repeated "scale" are cumulative.
+				} catch (ex) {}
+			}
+			return true;
+		} else {
+			throw new Error("Canvas element does not support 2d context. jSignature cannot proceed.");
+		}
+	}
+
+}
+
+jSignatureClass.prototype.initializeCanvas = function(settings) {
+	// ===========
+	// Init + Sizing code
+
+	var canvas = document.createElement('canvas')
+	, $canvas = $(canvas);
+
+	// We cannot work with circular dependency
+	if (settings.width === settings.height && settings.height === 'ratio') {
+		settings.width = '100%';
+	}
+
+	$canvas.css(
+		{
+			'margin': 0,
+			'padding': 0,
+			'border': 'none',
+			'height': settings.height === 'ratio' || !settings.height ? 1 : settings.height.toString(10),
+			'width': settings.width === 'ratio' || !settings.width ? 1 : settings.width.toString(10),
+			'-ms-touch-action': 'none',
+			'touch-action': 'none',
+			'background-color': settings['background-color']
+		}
+	);
+
+	$canvas.appendTo(this.$parent);
+
+	// we could not do this until canvas is rendered (appended to DOM)
+	if (settings.height === 'ratio') {
+		$canvas.css(
+			'height'
+			, Math.round( $canvas.width() / settings.sizeRatio )
+		);
+	} else if (settings.width === 'ratio') {
+		$canvas.css(
+			'width'
+			, Math.round( $canvas.height() * settings.sizeRatio )
+		);
+	}
+
+	$canvas.addClass(apinamespace);
+
+	// canvas's drawing area resolution is independent from canvas's size.
+	// pixels are just scaled up or down when internal resolution does not
+	// match external size. So...
+
+	canvas.width = $canvas.width();
+	canvas.height = $canvas.height();
+
+	// Special case Sizing code
+
+	this.isCanvasEmulator = initializeCanvasEmulator(canvas);
+
+	// End of Sizing Code
+	// ===========
+
+	// normally select preventer would be short, but
+	// Canvas emulator on IE does NOT provide value for Event. Hence this convoluted line.
+	canvas.onselectstart = function(e){if(e && e.preventDefault){e.preventDefault()}; if(e && e.stopPropagation){e.stopPropagation()}; return false;};
+
+	return canvas;
+}
+
+
+var GlobalJSignatureObjectInitializer = function(window){
+
+	var globalEvents = new PubSubClass();
+
+	// common "window resized" event listener.
+	// jSignature instances will subscribe to this chanel.
+	// to resize themselves when needed.
+	;(function(globalEvents, apinamespace, $, window){
+		'use strict'
+
+		var resizetimer
+		, runner = function(){
+			globalEvents.publish(
+				apinamespace + '.parentresized'
+			)
+		};
+
+		// jSignature knows how to resize its content when its parent is resized
+		// window resize is the only way we can catch resize events though...
+		$(window).bind('resize.'+apinamespace, function(){
+			if (resizetimer) {
+				clearTimeout(resizetimer);
+			}
+			resizetimer = setTimeout(
+				runner
+				, 500
+			);
+		})
+		// when mouse exists canvas element and "up"s outside, we cannot catch it with
+		// callbacks attached to canvas. This catches it outside.
+		.bind('mouseup.'+apinamespace, function(e){
+			globalEvents.publish(
+				apinamespace + '.windowmouseup'
+			)
+		});
+
+	})(globalEvents, apinamespace, $, window)
+
+	var jSignatureInstanceExtensions = {
+		/*
+		'exampleExtension':function(extensionName){
+			// we are called very early in instance's life.
+			// right after the settings are resolved and
+			// jSignatureInstance.events is created
+			// and right before first ("jSignature.initializing") event is called.
+			// You don't really need to manupilate
+			// jSignatureInstance directly, just attach
+			// a bunch of events to jSignatureInstance.events
+			// (look at the source of jSignatureClass to see when these fire)
+			// and your special pieces of code will attach by themselves.
+
+			// this function runs every time a new instance is set up.
+			// this means every var you create will live only for one instance
+			// unless you attach it to something outside, like "window."
+			// and pick it up later from there.
+
+			// when globalEvents' events fire, 'this' is globalEvents object
+			// when jSignatureInstance's events fire, 'this' is jSignatureInstance
+
+			// Here,
+			// this = is new jSignatureClass's instance.
+
+			// The way you COULD approch setting this up is:
+			// if you have multistep set up, attach event to "jSignature.initializing"
+			// that attaches other events to be fired further lower the init stream.
+			// Or, if you know for sure you rely on only one jSignatureInstance's event,
+			// just attach to it directly
+
+			this.events.subscribe(
+				// name of the event
+				apinamespace + '.initializing'
+				// event handlers, can pass args too, but in majority of cases,
+				// 'this' which is jSignatureClass object instance pointer is enough to get by.
+				, function(){
+					if (this.settings.hasOwnProperty('non-existent setting category?')) {
+						console.log(extensionName + ' is here')
+					}
+				}
+			)
+		}
+		*/
+	};
+
+	var exportplugins = {
+		'default':function(data){return this.toDataURL()}
+		, 'native':function(data){return data}
+		, 'image':function(data){
+			/*this = canvas elem */
+			var imagestring = this.toDataURL();
+
+			if (typeof imagestring === 'string' &&
+				imagestring.length > 4 &&
+				imagestring.slice(0,5) === 'data:' &&
+				imagestring.indexOf(',') !== -1){
+
+				var splitterpos = imagestring.indexOf(',');
+
+				return [
+					imagestring.slice(5, splitterpos)
+					, imagestring.substr(splitterpos + 1)
+				];
+			}
+			return [];
+		}
+	};
+
+	// will be part of "importplugins"
+	function _renderImageOnCanvas( data, formattype, rerendercallable ) {
+		'use strict'
+		// #1. Do NOT rely on this. No worky on IE
+		//   (url max len + lack of base64 decoder + possibly other issues)
+		// #2. This does NOT affect what is captured as "signature" as far as vector data is
+		// concerned. This is treated same as "signature line" - i.e. completely ignored
+		// the only time you see imported image data exported is if you export as image.
+
+		// we do NOT call rerendercallable here (unlike in other import plugins)
+		// because importing image does absolutely nothing to the underlying vector data storage
+		// This could be a way to "import" old signatures stored as images
+		// This could also be a way to import extra decor into signature area.
+
+		var img = new Image()
+		// this = Canvas DOM elem. Not jQuery object. Not Canvas's parent div.
+		, c = this;
+
+		img.onload = function () {
+			var ctx = c.getContext("2d");
+			var oldShadowColor = ctx.shadowColor;
+			ctx.shadowColor = "transparent";
+			ctx.drawImage(
+				img, 0, 0
+				, ( img.width < c.width) ? img.width : c.width
+				, ( img.height < c.height) ? img.height : c.height
+			);
+			ctx.shadowColor = oldShadowColor;
+		};
+
+		img.src = 'data:' + formattype + ',' + data;
+	}
+
+	var importplugins = {
+		'native':function(data, formattype, rerendercallable){
+			// we expect data as Array of objects of arrays here - whatever 'default' EXPORT plugin spits out.
+			// returning Truthy to indicate we are good, all updated.
+			rerendercallable( data );
+		}
+		, 'image': _renderImageOnCanvas
+		, 'image/png;base64': _renderImageOnCanvas
+		, 'image/jpeg;base64': _renderImageOnCanvas
+		, 'image/jpg;base64': _renderImageOnCanvas
+	};
+
+	function _clearDrawingArea( data, dontClear ) {
+		this.find('canvas.'+apinamespace)
+			.add(this.filter('canvas.'+apinamespace))
+			.data(apinamespace+'.this').resetCanvas( data, dontClear );
+		return this;
+	}
+
+	function _setDrawingData( data, formattype ) {
+		var undef;
+
+		if (formattype === undef && typeof data === 'string' && data.substr(0,5) === 'data:') {
+			formattype = data.slice(5).split(',')[0];
+			// 5 chars of "data:" + mimetype len + 1 "," char = all skipped.
+			data = data.slice(6 + formattype.length);
+			if (formattype === data) {
+				return;
+			}
+		}
+
+		var $canvas = this.find('canvas.'+apinamespace).add(this.filter('canvas.'+apinamespace));
+
+		if (!importplugins.hasOwnProperty(formattype)) {
+			throw new Error(apinamespace + " is unable to find import plugin with for format '"+ String(formattype) +"'");
+		} else if ($canvas.length !== 0) {
+			importplugins[formattype].call(
+				$canvas[0]
+				, data
+				, formattype
+				, (function(jSignatureInstance){
+					return function(){ return jSignatureInstance.resetCanvas.apply(jSignatureInstance, arguments) }
+				})($canvas.data(apinamespace+'.this'))
+			);
+		}
+
+		return this;
+	}
+
+	var elementIsOrphan = function(e){
+		var topOfDOM = false;
+		e = e.parentNode;
+		while (e && !topOfDOM){
+			topOfDOM = e.body;
+			e = e.parentNode;
+		}
+		return !topOfDOM;
+	}
+
+	//These are exposed as methods under $obj.jSignature('methodname', *args)
+	var plugins = {'export':exportplugins, 'import':importplugins, 'instance': jSignatureInstanceExtensions}
+	, methods = {
+		'init' : function( options ) {
+			return this.each( function() {
+				if (!elementIsOrphan(this)) {
+					new jSignatureClass(this, options, jSignatureInstanceExtensions);
+				}
+			})
+		}
+		, 'destroy': function() {
+			return this.each(function() {
+				if(!elementIsOrphan(this)) {
+					var sig = $(this).find('canvas').data(apinamespace + '.this');
+					if(sig) {
+						sig.$controlbarLower.remove();
+						sig.$controlbarUpper.remove();
+						$(sig.canvas).remove();
+					}
+				}
+			});
+		}
+		, 'getSettings' : function() {
+			return this.find('canvas.'+apinamespace)
+				.add(this.filter('canvas.'+apinamespace))
+				.data(apinamespace+'.this').settings;
+		}
+		, 'isModified' : function() {
+			return this.find('canvas.'+apinamespace)
+				.add(this.filter('canvas.'+apinamespace))
+				.data(apinamespace+'.this')
+				.dataEngine
+				._stroke !== null;
+		}
+		, 'updateSetting' : function(param, val, forFuture) {
+			var $canvas = this.find('canvas.'+apinamespace)
+							.add(this.filter('canvas.'+apinamespace))
+							.data(apinamespace+'.this');
+			$canvas.settings[param] = val;
+			$canvas.resetCanvas(( forFuture ? null : $canvas.settings.data ), true);
+			return $canvas.settings[param];
+		}
+		// around since v1
+		, 'clear' : _clearDrawingArea
+		// was mistakenly introduced instead of 'clear' in v2
+		, 'reset' : _clearDrawingArea
+		, 'addPlugin' : function(pluginType, pluginName, callable){
+			if (plugins.hasOwnProperty(pluginType)){
+				plugins[pluginType][pluginName] = callable;
+			}
+			return this;
+		}
+		, 'listPlugins' : function(pluginType){
+			var answer = [];
+			if (plugins.hasOwnProperty(pluginType)){
+				var o = plugins[pluginType];
+				for (var k in o){
+					if (o.hasOwnProperty(k)){
+						answer.push(k);
+					}
+				}
+			}
+			return answer;
+		}
+		, 'getData' : function( formattype ) {
+			var undef, $canvas=this.find('canvas.'+apinamespace).add(this.filter('canvas.'+apinamespace));
+			if (formattype === undef) {
+				formattype = 'default';
+			}
+			if ($canvas.length !== 0 && exportplugins.hasOwnProperty(formattype)){
+				return exportplugins[formattype].call(
+					$canvas.get(0) // canvas dom elem
+					, $canvas.data(apinamespace+'.data') // raw signature data as array of objects of arrays
+					, $canvas.data(apinamespace+'.settings')
+				);
+			}
+		}
+		// around since v1. Took only one arg - data-url-formatted string with (likely png of) signature image
+		, 'importData' : _setDrawingData
+		// was mistakenly introduced instead of 'importData' in v2
+		, 'setData' : _setDrawingData
+		// this is one and same instance for all jSignature.
+		, 'globalEvents' : function(){return globalEvents}
+        , 'disable' : function() {
+            this.find("input").attr("disabled", 1);
+            this.find('canvas.'+apinamespace)
+                .addClass("disabled")
+                .data(apinamespace+'.this')
+                .settings
+                .readOnly=true;
+        }
+        , 'enable' : function() {
+            this.find("input").removeAttr("disabled");
+            this.find('canvas.'+apinamespace)
+                .removeClass("disabled")
+                .data(apinamespace+'.this')
+                .settings
+                .readOnly=false;
+        }
+		// there will be a separate one for each jSignature instance.
+		, 'events' : function() {
+			return this.find('canvas.'+apinamespace)
+					.add(this.filter('canvas.'+apinamespace))
+					.data(apinamespace+'.this').events;
+		}
+	} // end of methods declaration.
+
+	$.fn[apinamespace] = function(method) {
+		'use strict'
+		if ( !method || typeof method === 'object' ) {
+			return methods.init.apply( this, arguments );
+		} else if ( typeof method === 'string' && methods[method] ) {
+			return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
+		} else {
+			$.error( 'Method ' +  String(method) + ' does not exist on jQuery.' + apinamespace );
+		}
+	}
+
+} // end of GlobalJSignatureObjectInitializer
+
+GlobalJSignatureObjectInitializer(window)
+
+})();
+
 !function(a,b,c){"use strict";c.robust=c.robust||{};var d=c("body"),e=c(a),f=c('div[data-menu="menu-wrapper"]').html(),g=c('div[data-menu="menu-wrapper"]').attr("class");c.robust.menu={expanded:null,collapsed:null,hidden:null,container:null,horizontalMenu:!1,manualScroller:{obj:null,init:function(){var a=c(".main-menu").hasClass("menu-dark")?"light":"dark";if(this.obj=c(".main-menu-content").perfectScrollbar({suppressScrollX:!0,theme:a}),c(".main-menu").data("scroll-to-active")===!0){var b;b=c(".main-menu-content").find("li.active").parents("li").length>0?c(".main-menu-content").find("li.active").parents("li").last().position():c(".main-menu-content").find("li.active").position(),c.robust.menu.container.scrollTop(b.top),this.update()}},update:function(){this.obj&&c(".main-menu-content").perfectScrollbar("update")},enable:function(){this.init()},disable:function(){this.obj&&c(".main-menu-content").perfectScrollbar("destroy")},updateHeight:function(){"vertical-menu"!=d.data("menu")&&"vertical-overlay-menu"!=d.data("menu")||!c(".main-menu").hasClass("menu-fixed")||(c(".main-menu-content").css("height",c(a).height()-c(".header-navbar").height()-c(".main-menu-header").outerHeight()-c(".main-menu-footer").outerHeight()),this.update())}},mMenu:{obj:null,init:function(){c(".main-menu").mmenu({slidingSubmenus:!0,offCanvas:!1,counters:!1,navbar:{title:""},navbars:[{position:"top",content:["searchfield"]}],searchfield:{resultsPanel:!0},setSelected:{parent:!0}},{classNames:{divider:"navigation-header",selected:"active"},searchfield:{clear:!0}}),c("a.mm-next").addClass("mm-fullsubopen"),this.obj=c(".main-menu").data("mmenu")},enable:function(){this.init()},disable:function(){}},init:function(){if(c(".main-menu-content").length>0){this.container=c(".main-menu-content");this.change()}else this.drillDownMenu()},drillDownMenu:function(a){c(".drilldown-menu").length&&("sm"==a||"xs"==a?"true"==c("#navbar-mobile").attr("aria-expanded")&&c(".drilldown-menu").slidingMenu({backLabel:!0}):c(".drilldown-menu").slidingMenu({backLabel:!0}))},change:function(){function a(a){var b=c(".menu-search");c(b).change(function(){var b=c(this).val();if(b){c(".navigation-header").hide(),c(a).find("li a:not(:Contains("+b+"))").hide().parent().hide();var d=c(a).find("li a:Contains("+b+")");d.parent().hasClass("has-sub")?(d.show().parents("li").show().addClass("open").closest("li").children("a").show().children("li").show(),d.siblings("ul").length>0&&d.siblings("ul").children("li").show().children("a").show()):d.show().parents("li").show().addClass("open").closest("li").children("a").show()}else c(".navigation-header").show(),c(a).find("li a").show().parent().show().removeClass("open");return c.robust.menu.manualScroller.update(),!1}).keyup(function(){c(this).change()})}var b=Unison.fetch.now();this.reset();var e=d.data("menu");if(b)switch(b.name){case"xl":case"lg":"vertical-overlay-menu"===e?this.hide():"vertical-compact-menu"===e?this.open():this.expand();break;case"md":"vertical-overlay-menu"===e||"vertical-mmenu"===e?this.hide():"vertical-compact-menu"===e?this.open():this.collapse();break;case"sm":this.hide();break;case"xs":this.hide()}"vertical-menu"!==e&&"vertical-compact-menu"!==e&&"vertical-content-menu"!==e||this.toOverlayMenu(b.name),d.is(".horizontal-layout")&&!d.hasClass(".horizontal-menu-demo")&&(this.changeMenu(b.name),c(".menu-toggle").removeClass("is-active")),"horizontal-menu"!=e&&"horizontal-top-icon-menu"!=e&&this.drillDownMenu(b.name),"xl"==b.name&&c('body[data-open="hover"] .dropdown').on("mouseenter",function(){c(this).hasClass("open")?c(this).removeClass("open"):c(this).addClass("open")}).on("mouseleave",function(a){c(this).removeClass("open")}),c(".header-navbar").hasClass("navbar-brand-center")&&c(".header-navbar").attr("data-nav","brand-center"),"sm"==b.name||"xs"==b.name?c(".header-navbar[data-nav=brand-center]").removeClass("navbar-brand-center"):c(".header-navbar[data-nav=brand-center]").addClass("navbar-brand-center"),c("ul.dropdown-menu [data-toggle=dropdown]").on("click",function(a){c(this).siblings("ul.dropdown-menu").length>0&&a.preventDefault(),a.stopPropagation(),c(this).parent().siblings().removeClass("open"),c(this).parent().toggleClass("open")}),"horizontal-menu"!=e&&"horizontal-top-icon-menu"!=e||("sm"==b.name||"xs"==b.name?c(".menu-fixed").length&&c(".menu-fixed").unstick():c(".navbar-fixed").length&&c(".navbar-fixed").sticky()),"vertical-menu"!==e&&"vertical-overlay-menu"!==e&&"vertical-content-menu"!==e||(jQuery.expr[":"].Contains=function(a,b,c){return(a.textContent||a.innerText||"").toUpperCase().indexOf(c[3].toUpperCase())>=0},a(c("#main-menu-navigation")))},changeLogo:function(a){var b=c(".brand-logo");"expand"==a?b.attr("src",b.data("expand")):b.attr("src",b.data("collapse"))},transit:function(a,b){var e=this;d.addClass("changing-menu"),a.call(e),d.hasClass("vertical-layout")&&(d.hasClass("menu-open")||d.hasClass("menu-expanded")?(c(".menu-toggle").addClass("is-active"),"vertical-menu"!==d.data("menu")&&"vertical-content-menu"!==d.data("menu")||c(".main-menu-header")&&c(".main-menu-header").show()):(c(".menu-toggle").removeClass("is-active"),"vertical-menu"!==d.data("menu")&&"vertical-content-menu"!==d.data("menu")||c(".main-menu-header")&&c(".main-menu-header").hide())),setTimeout(function(){b.call(e),d.removeClass("changing-menu"),e.update()},500)},open:function(){d.is(".vertical-mmenu")&&this.mMenu.enable(),this.transit(function(){d.removeClass("menu-hide menu-collapsed").addClass("menu-open"),this.hidden=!1,this.expanded=!0},function(){c(".main-menu").hasClass("menu-native-scroll")||d.is(".vertical-mmenu")||!c(".main-menu").hasClass("menu-fixed")||(this.manualScroller.enable(),c(".main-menu-content").css("height",c(a).height()-c(".header-navbar").height()-c(".main-menu-header").outerHeight()-c(".main-menu-footer").outerHeight()),this.manualScroller.update())})},hide:function(){d.is(".vertical-mmenu")&&this.mMenu.disable(),this.transit(function(){d.removeClass("menu-open menu-expanded").addClass("menu-hide"),this.hidden=!0,this.expanded=!1},function(){c(".main-menu").hasClass("menu-native-scroll")||d.is(".vertical-mmenu")||!c(".main-menu").hasClass("menu-fixed")||this.manualScroller.enable()})},expand:function(){this.expanded===!1&&("vertical-menu"==d.data("menu")&&this.changeLogo("expand"),this.transit(function(){d.removeClass("menu-collapsed").addClass("menu-expanded"),this.collapsed=!1,this.expanded=!0},function(){d.is(".vertical-mmenu")?this.mMenu.enable():c(".main-menu").hasClass("menu-native-scroll")||"vertical-mmenu"==d.data("menu")||"horizontal-menu"==d.data("menu")||"horizontal-top-icon-menu"==d.data("menu")?this.manualScroller.disable():c(".main-menu").hasClass("menu-fixed")&&this.manualScroller.enable(),"vertical-menu"==d.data("menu")&&c(".main-menu").hasClass("menu-fixed")&&(c(".main-menu-content").css("height",c(a).height()-c(".header-navbar").height()-c(".main-menu-header").outerHeight()-c(".main-menu-footer").outerHeight()),this.manualScroller.update())}))},collapse:function(){this.collapsed===!1&&("vertical-menu"==d.data("menu")&&this.changeLogo("collapse"),this.transit(function(){d.removeClass("menu-expanded").addClass("menu-collapsed"),this.collapsed=!0,this.expanded=!1},function(){"vertical-content-menu"==d.data("menu")&&this.manualScroller.disable(),"horizontal-menu"!=d.data("menu")&&"horizontal-top-icon-menu"!=d.data("menu")||!d.hasClass("vertical-overlay-menu")||c(".main-menu").hasClass("menu-fixed")&&this.manualScroller.enable(),"vertical-menu"==d.data("menu")&&c(".main-menu").hasClass("menu-fixed")&&(c(".main-menu-content").css("height",c(a).height()-c(".header-navbar").height()),this.manualScroller.update())}))},toOverlayMenu:function(a){var b=d.data("menu");"sm"==a||"xs"==a?(d.hasClass(b)&&d.removeClass(b).addClass("vertical-overlay-menu"),"vertical-content-menu"==b&&c(".main-menu").addClass("menu-fixed")):(d.hasClass("vertical-overlay-menu")&&d.removeClass("vertical-overlay-menu").addClass(b),"vertical-content-menu"==b&&c(".main-menu").removeClass("menu-fixed"))},changeMenu:function(a){c('div[data-menu="menu-wrapper"]').html(""),c('div[data-menu="menu-wrapper"]').html(f);var b=c('div[data-menu="menu-wrapper"]'),e=(c('div[data-menu="menu-container"]'),c('ul[data-menu="menu-navigation"]')),h=c('li[data-menu="megamenu"]'),i=c("li[data-mega-col]"),j=c('li[data-menu="dropdown"]'),k=c('li[data-menu="dropdown-submenu"]');"sm"==a||"xs"==a?(d.removeClass(d.data("menu")).addClass("vertical-layout vertical-overlay-menu fixed-navbar"),c("nav.header-navbar").addClass("navbar-fixed-top"),b.removeClass().addClass("main-menu menu-light menu-fixed menu-shadow"),e.removeClass().addClass("navigation navigation-main"),h.removeClass("dropdown mega-dropdown").addClass("has-sub"),h.children("ul").removeClass(),i.each(function(a,b){var d=c(b).find(".mega-menu-sub");d.find("li").has("ul").addClass("has-sub");var e=c(b).children().first(),f="";e.is("h6")&&(f=e.html(),e.remove(),c(b).prepend('<a href="#">'+f+"</a>").addClass("has-sub mega-menu-title"))}),h.find("a").removeClass("dropdown-toggle"),h.find("a").removeClass("dropdown-item"),j.removeClass("dropdown").addClass("has-sub"),j.find("a").removeClass("dropdown-toggle nav-link"),j.children("ul").find("a").removeClass("dropdown-item"),j.find("ul").removeClass("dropdown-menu"),k.removeClass().addClass("has-sub"),c.robust.nav.init(),c("ul.dropdown-menu [data-toggle=dropdown]").on("click",function(a){a.preventDefault(),a.stopPropagation(),c(this).parent().siblings().removeClass("open"),c(this).parent().toggleClass("open")})):(d.removeClass("vertical-layout vertical-overlay-menu fixed-navbar").addClass(d.data("menu")),c("nav.header-navbar").removeClass("navbar-fixed-top"),b.removeClass().addClass(g),this.drillDownMenu(a),c("a.dropdown-item.nav-has-children").on("click",function(){event.preventDefault(),event.stopPropagation()}),c("a.dropdown-item.nav-has-parent").on("click",function(){event.preventDefault(),event.stopPropagation()}))},toggle:function(){var a=Unison.fetch.now(),b=(this.collapsed,this.expanded),c=this.hidden,e=d.data("menu");switch(a.name){case"xl":case"lg":case"md":b===!0?"vertical-compact-menu"==e||"vertical-mmenu"==e||"vertical-overlay-menu"==e?this.hide():this.collapse():"vertical-compact-menu"==e||"vertical-mmenu"==e||"vertical-overlay-menu"==e?this.open():this.expand();break;case"sm":c===!0?this.open():this.hide();break;case"xs":c===!0?this.open():this.hide()}this.drillDownMenu(a.name)},update:function(){this.manualScroller.update()},reset:function(){this.expanded=!1,this.collapsed=!1,this.hidden=!1,d.removeClass("menu-hide menu-open menu-collapsed menu-expanded")}},c.robust.nav={container:c(".navigation-main"),initialized:!1,navItem:c(".navigation-main").find("li").not(".navigation-category"),config:{speed:300},init:function(a){this.initialized=!0,c.extend(this.config,a),d.is(".vertical-mmenu")||this.bind_events()},bind_events:function(){var a=this;c(".navigation-main").on("mouseenter.robust.menu","li",function(){var b=c(this);if(c(".hover",".navigation-main").removeClass("hover"),d.hasClass("menu-collapsed")||"vertical-compact-menu"==d.data("menu")&&!d.hasClass("vertical-overlay-menu")){c(".main-menu-content").children("span.menu-title").remove(),c(".main-menu-content").children("a.menu-title").remove(),c(".main-menu-content").children("ul.menu-content").remove();var e,f,g=b.find("span.menu-title").clone();b.hasClass("has-sub")||(e=b.find("span.menu-title").text(),f=b.children("a").attr("href"),""!==e&&(g=c("<a>"),g.attr("href",f),g.attr("title",e),g.text(e),g.addClass("menu-title")));var h;if(h=b.css("border-top")?b.position().top+parseInt(b.css("border-top"),10):b.position().top,"vertical-compact-menu"!==d.data("menu")&&g.appendTo(".main-menu-content").css({position:"fixed",top:h}),b.hasClass("has-sub")&&b.hasClass("nav-item")){b.children("ul:first");a.adjustSubmenu(b)}}b.addClass("hover")}).on("mouseleave.robust.menu","li",function(){}).on("active.robust.menu","li",function(a){c(this).addClass("active"),a.stopPropagation()}).on("deactive.robust.menu","li.active",function(a){c(this).removeClass("active"),a.stopPropagation()}).on("open.robust.menu","li",function(b){var d=c(this);return d.addClass("open"),a.expand(d),!c(".main-menu").hasClass("menu-collapsible")&&(d.siblings(".open").find("li.open").trigger("close.robust.menu"),d.siblings(".open").trigger("close.robust.menu"),void b.stopPropagation())}).on("close.robust.menu","li.open",function(b){var d=c(this);d.removeClass("open"),a.collapse(d),b.stopPropagation()}).on("click.robust.menu","li",function(a){var b=c(this);b.is(".disabled")?a.preventDefault():d.hasClass("menu-collapsed")||"vertical-compact-menu"==d.data("menu")&&!d.hasClass("vertical-overlay-menu")?a.preventDefault():b.has("ul")?b.is(".open")?b.trigger("close.robust.menu"):b.trigger("open.robust.menu"):b.is(".active")||(b.siblings(".active").trigger("deactive.robust.menu"),b.trigger("active.robust.menu")),a.stopPropagation()}),c(".main-menu-content").on("mouseleave",function(){(d.hasClass("menu-collapsed")||"vertical-compact-menu"==d.data("menu"))&&(c(".main-menu-content").children("span.menu-title").remove(),c(".main-menu-content").children("a.menu-title").remove(),c(".main-menu-content").children("ul.menu-content").remove()),c(".hover",".navigation-main").removeClass("hover")}),c(".navigation-main li.has-sub > a").on("click",function(a){a.preventDefault()}),c("ul.menu-content").on("click","li",function(b){var d=c(this);if(d.is(".disabled"))b.preventDefault();else if(d.has("ul"))if(d.is(".open"))d.removeClass("open"),a.collapse(d);else{if(d.addClass("open"),a.expand(d),c(".main-menu").hasClass("menu-collapsible"))return!1;d.siblings(".open").find("li.open").trigger("close.robust.menu"),d.siblings(".open").trigger("close.robust.menu"),b.stopPropagation()}else d.is(".active")||(d.siblings(".active").trigger("deactive.robust.menu"),d.trigger("active.robust.menu"));b.stopPropagation()})},adjustSubmenu:function(a){var b,f,g,h,i,j,k,l,m=a.children("ul:first"),n=m.clone(!0);b=c(".main-menu-header").height(),f=a.position().top,h=e.height()-c(".header-navbar").height(),k=0,i=m.height(),parseInt(a.css("border-top"),10)>0&&(k=parseInt(a.css("border-top"),10)),j=h-f-a.height()-30,l=c(".main-menu").hasClass("menu-dark")?"light":"dark","vertical-compact-menu"===d.data("menu")?(g=f+k,j=h-f-30):"vertical-content-menu"===d.data("menu")?(g=f+a.height()+k,j=h-c(".content-header").height()-a.height()-f-60):g=f+a.height()+k,"vertical-content-menu"==d.data("menu")?n.addClass("menu-popout").appendTo(".main-menu-content").css({top:g,position:"fixed"}):(n.addClass("menu-popout").appendTo(".main-menu-content").css({top:g,position:"fixed","max-height":j}),c(".main-menu-content > ul.menu-content").perfectScrollbar({theme:l}))},collapse:function(a,b){var d=a.children("ul");d.show().slideUp(c.robust.nav.config.speed,function(){c(this).css("display",""),c(this).find("> li").removeClass("is-shown"),b&&b(),c.robust.nav.container.trigger("collapsed.robust.menu")})},expand:function(a,b){var d=a.children("ul"),e=d.children("li").addClass("is-hidden");d.hide().slideDown(c.robust.nav.config.speed,function(){c(this).css("display",""),b&&b(),c.robust.nav.container.trigger("expanded.robust.menu")}),setTimeout(function(){e.addClass("is-shown"),e.removeClass("is-hidden")},0)},refresh:function(){c.robust.nav.container.find(".open").removeClass("open")}}}(window,document,jQuery);
 !function(a,b,c){"use strict";var d=c("html"),e=c("body");c(a).on("load",function(){function a(){var a=c(".main-menu").height(),b=c(".content-body").height();b<a&&c(".content-body").css("height",a)}var b;"RTL"==c("html").data("textdirection")&&(b=!0),setTimeout(function(){d.removeClass("loading").addClass("loaded")},1200),c.robust.menu.init();var f={speed:300};if(c.robust.nav.initialized===!1&&c.robust.nav.init(f),Unison.on("change",function(a){c.robust.menu.change()}),c('[data-toggle="tooltip"]').tooltip({container:"body"}),c(".navbar-hide-on-scroll").length>0&&(c(".navbar-hide-on-scroll.navbar-fixed-top").headroom({offset:205,tolerance:5,classes:{initial:"headroom",pinned:"headroom--pinned-top",unpinned:"headroom--unpinned-top"}}),c(".navbar-hide-on-scroll.navbar-fixed-bottom").headroom({offset:205,tolerance:5,classes:{initial:"headroom",pinned:"headroom--pinned-bottom",unpinned:"headroom--unpinned-bottom"}})),setTimeout(function(){c("body").hasClass("vertical-content-menu")&&a()},500),c(".responsive-slick").length>0){var g=c(".responsive-slick");g.slick({rtl:b,dots:!1,arrows:!1,infinite:!0,autoplay:!0,autoplaySpeed:2e3,slidesToShow:1,slidesToScroll:1})}c('a[data-action="collapse"]').on("click",function(a){a.preventDefault(),c(this).closest(".card").children(".card-body").collapse("toggle"),c(this).closest(".card").find('[data-action="collapse"] i').toggleClass("icon-minus4 icon-plus4")}),c('a[data-action="expand"]').on("click",function(a){a.preventDefault(),c(this).closest(".card").find('[data-action="expand"] i').toggleClass("icon-expand2 icon-contract"),c(this).closest(".card").toggleClass("card-fullscreen")}),c(".scrollable-container").length>0&&c(".scrollable-container").perfectScrollbar({theme:"dark"}),c('a[data-action="reload"]').on("click",function(){var a=c(this).closest(".card");a.block({message:'<div class="icon-spinner9 icon-spin icon-lg"></div>',timeout:2e3,overlayCSS:{backgroundColor:"#FFF",cursor:"wait"},css:{border:0,padding:0,backgroundColor:"none"}})}),c('a[data-action="close"]').on("click",function(){c(this).closest(".card").removeClass().slideUp("fast")}),setTimeout(function(){c(".row.match-height").each(function(){c(this).find(".card").not(".card .card").matchHeight()})},500),c('.card .heading-elements a[data-action="collapse"]').on("click",function(){var a,b=c(this),d=b.closest(".card");console.log(parseInt(d[0].style.height,10)),parseInt(d[0].style.height,10)>0?(a=d.css("height"),d.css("height","").attr("data-height",a)):d.data("height")&&(a=d.data("height"),d.css("height",a).attr("data-height",""))});var h=e.data("menu");"vertical-compact-menu"!=h&&"horizontal-menu"!=h&&"horizontal-top-icon-menu"!=h&&c(".main-menu-content").find("li.active").parents("li").addClass("open"),c(".heading-elements-toggle").on("click",function(){c(this).parent().children(".heading-elements").toggleClass("visible")});var i=c(".chartjs"),j=i.children("canvas").attr("height");if(i.css("height",j),c("body").hasClass("boxed-layout")&&(c("body").hasClass("vertical-overlay-menu")||c("body").hasClass("vertical-compact-menu"))){var k=c(".main-menu").width(),l=c(".robust-content").position().left,m=l-k;c("body").hasClass("menu-flipped")?c(".main-menu").css("right",m+"px"):c(".main-menu").css("left",m+"px")}}),c(b).on("click",".menu-toggle",function(a){return a.preventDefault(),c.robust.menu.toggle(),!1}),c(b).on("click",".open-navbar-container",function(a){var b=Unison.fetch.now();c.robust.menu.drillDownMenu(b.name)}),c(b).on("click",".main-menu-footer .footer-toggle",function(a){return a.preventDefault(),c(this).find("i").toggleClass("pe-is-i-angle-down pe-is-i-angle-up"),c(".main-menu-footer").toggleClass("footer-close footer-open"),!1}),c(".navigation").find("li").has("ul").addClass("has-sub"),c(".carousel").carousel({interval:2e3}),c(".nav-link-expand").on("click",function(a){"undefined"!=typeof screenfull&&screenfull.enabled&&screenfull.toggle()}),"undefined"!=typeof screenfull&&screenfull.enabled&&c(b).on(screenfull.raw.fullscreenchange,function(){screenfull.isFullscreen?c(".nav-link-expand").find("i").toggleClass("icon-contract icon-expand2"):c(".nav-link-expand").find("i").toggleClass("icon-expand2 icon-contract")}),c(b).on("click",".mega-dropdown-menu",function(a){a.stopPropagation()}),c(b).ready(function(){c(".step-icon").each(function(){var a=c(this);a.siblings("span.step").length>0&&(a.siblings("span.step").empty(),c(this).appendTo(c(this).siblings("span.step")))})}),c(a).resize(function(){c.robust.menu.manualScroller.updateHeight()}),c(".nav.nav-tabs a.dropdown-item",".nav.nav-tabs a.dropdown-item").on("click",function(){var a=c(this),b=a.attr("href"),d=a.closest(".nav");d.find(".nav-link").removeClass("active"),a.closest(".nav-item").find(".nav-link").addClass("active"),a.closest(".dropdown-menu").find(".dropdown-item").removeClass("active"),a.addClass("active"),d.next().find(b).siblings(".tab-pane").removeClass("active in").attr("aria-expanded",!1),c(b).addClass("active in").attr("aria-expanded","true")}),c("#sidebar-page-navigation").on("click","a.nav-link",function(a){a.preventDefault();var b=c(this),d=b.attr("href"),e=c(d).offset(),f=e.top-80;c("html, body").animate({scrollTop:f},0)})}(window,document,jQuery);
 !function(){var a=$("#fullscreen-search"),b=$("body"),c=$(".fullscreen-search-input"),d=$(".fullscreen-search-btn"),e=a.find("span.fullscreen-search-close"),f=isAnimating=!1,g=function(d){if("focus"===d.type.toLowerCase()&&f)return!1;a[0].getBoundingClientRect();f?(a.removeClass("open"),b.removeClass("search-open"),""!==c.value&&setTimeout(function(){a.addClass("hideInput"),setTimeout(function(){a.removeClass("hideInput"),c.value=""},300)},500),c.blur()):(a.addClass("open"),b.addClass("search-open")),f=!f};$(d).on("click",function(a){g(a)}),$(c).on("focus",function(a){g(a)}),$(e).on("click",function(a){g(a)}),document.addEventListener("keydown",function(a){if(($(a.target).is("input")||$(a.target).is("textarea")||$(a.target).hasClass("ql-editor"))&&"fullscreen-search-input"!=a.target.className)return!1;var b=a.keyCode||a.which;27===b&&f&&g(a),(a.keyCode>=48&&a.keyCode<=57||a.keyCode>=65&&a.keyCode<=90&&!(a.shiftKey||a.ctrlKey||a.altKey||a.metaKey))&&(f=!1,g(a),$(".fullscreen-search-input").focus())}),a.find('button[type="submit"]').on("click",function(a){a.preventDefault()})}();
