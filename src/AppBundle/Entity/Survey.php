@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class Survey
  * @package AppBundle\Entity
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\SurveyRepository");
  * @ORM\Table(name="SRV_SURVEY")
  */
 class Survey
@@ -25,6 +25,7 @@ class Survey
      * @var \DateTime
      * @ORM\Id
      * @ORM\Column(name="SRV_ID")
+     * @ORM\GeneratedValue
      */
     protected $id;
 

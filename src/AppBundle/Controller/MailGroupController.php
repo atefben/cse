@@ -45,9 +45,16 @@ class MailGroupController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($mailGroup);
-            $em->flush($mailGroup);
 
+            foreach ($form->getData()->getUsers() as $user)
+            {
+
+                $user->addMailGroup($mailGroup);
+                $em->persist($user);
+            }
+
+            $em->persist($mailGroup);
+            $em->flush();
             return $this->redirectToRoute('mailgroup_show', array('id' => $mailGroup->getId()));
         }
 
@@ -84,11 +91,17 @@ class MailGroupController extends Controller
         $deleteForm = $this->createDeleteForm($mailGroup);
         $editForm = $this->createForm('AppBundle\Form\MailGroupType', $mailGroup);
         $editForm->handleRequest($request);
-
+        $em = $this->getDoctrine()->getManager();
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            foreach ($editForm->getData()->getUsers() as $user)
+            {
 
-            return $this->redirectToRoute('mailgroup_edit', array('id' => $mailGroup->getId()));
+                $user->addMailGroup($mailGroup);
+                $em->persist($user);
+            }
+            $em->persist($mailGroup);
+            $em->flush();
+//            return $this->redirectToRoute('mailgroup_edit', array('id' => $mailGroup->getId()));
         }
 
         return $this->render('mailgroup/edit.html.twig', array(

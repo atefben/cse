@@ -25,6 +25,7 @@ class Criteria
      * @var int
      * @ORM\Id
      * @ORM\Column(name="CRT_ID", type="integer")
+     * @ORM\GeneratedValue
      **/
     protected $id;
 

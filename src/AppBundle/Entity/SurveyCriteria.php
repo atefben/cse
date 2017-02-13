@@ -22,6 +22,7 @@ class SurveyCriteria
      * @var
      * @ORM\Id
      * @ORM\Column(name="SCR_ID")
+     * @ORM\GeneratedValue
      */
     protected $id;
 

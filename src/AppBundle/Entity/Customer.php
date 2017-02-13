@@ -21,6 +21,7 @@ class Customer
     /**
      * @ORM\Id
      * @ORM\Column(name="CST_ID", type="integer")
+     * @ORM\GeneratedValue
      */
     protected $id;
 

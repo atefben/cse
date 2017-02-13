@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Survey;
+use AppBundle\Repository\SurveyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -132,5 +133,24 @@ class SurveyController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    /**
+     * Lists all surveys by user.
+     *
+     * @Route("/list/{userId}", name="survey_user_list")
+     * @Method("GET")
+     */
+    public function listSurveysByUser($userId)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $surveys = $em->getRepository('AppBundle:Survey')->findAll();
+        $evaluationService = $this->get('app.evaluation_service');
+        $evals = $evaluationService->getEvaluationByUser($userId,[SurveyRepository::CONDITION_RENEWABLE_EVALUATION,SurveyRepository::CONDITION_NO_EVALUATION]);
+        dump($evals);
+        return $this->render('survey/index.html.twig', array(
+            'surveys' => $surveys,
+        ));
     }
 }

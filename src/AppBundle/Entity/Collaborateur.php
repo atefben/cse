@@ -24,6 +24,7 @@ class Collaborateur
      * @var int
      * @ORM\Id
      * @ORM\Column(name="CLR_ID", type="integer")
+     * @ORM\GeneratedValue
      **/
     protected $id;
 

@@ -40,7 +40,7 @@ class CriteriaController extends Controller
      */
     public function newAction(Request $request)
     {
-        $criterion = new Criterion();
+        $criterion = new Criteria();
         $form = $this->createForm('AppBundle\Form\CriteriaType', $criterion);
         $form->handleRequest($request);
 

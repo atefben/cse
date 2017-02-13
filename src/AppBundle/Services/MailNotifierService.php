@@ -18,17 +18,44 @@ class MailNotifierService
     private $receivers;
     private $body;
     private $subject;
+    private $mailGroupService;
 
-    public function __construct(Swift_Mailer $mailer,Logger $logger)
+    public function __construct(Swift_Mailer $mailer,Logger $logger,MailGroupService $mailGroupService)
     {
+        $this->mailGroupService = $mailGroupService;
         $this->receivers = [];
         $this->mailer = $mailer;
         $this->logger = $logger;
     }
 
+    /**
+     * @return bool
+     */
     public function send()
     {
+        $mailReceivers = $this->receivers;
+        $message = \Swift_Message::newInstance()
+            ->setSubject($this->subject)
+            ->setFrom('cse@altimate.pro')
+            ->setReplyTo('cse@altimate.pro','Altimate CSE')
+            ->setBody($this->body,'text/html');
 
+        $message->setTo('noreply@ltimate.pro')
+            ->setBcc($mailReceivers);
+        $sendedMessage = $this->mailer->send($message);
+        return $sendedMessage>0;
+    }
+
+    public function appendMailGroup($mailGroupId)
+    {
+        $mailGroup = $this->mailGroupService->getMailGroupReceivers($mailGroupId);
+        if(!is_array($mailGroup))
+        {
+            throw new \InvalidArgumentException('The returned parameter must be an array containing email addresses');
+        }
+
+        array_merge($this->receivers,$mailGroup);
+        return $this;
     }
 
     public function appendReceiver($receiverMail)
@@ -89,6 +116,7 @@ class MailNotifierService
         $this->receivers = $receivers;
         return $this;
     }
+
 
 
 }

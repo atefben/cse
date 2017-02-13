@@ -1,0 +1,27 @@
+parameters:
+    evaluations_reminder:
+        subject : Rappels evaluations
+        template: |
+                  Test template {data_to_insert}
+                  {arrays}
+
+        allowed_roles: [ROLE_ADMIN,ROLE_RESPONSABLE_AGENCE,ROLE_COMMERCIAL]
+        perimeter_restriction : true
+        data_criterias: [SurveyRepository::CONDITION_NO_EVALUATION,SurveyRepository::CONDITION_RENEWABLE_EVALUATION]
+    unsatisfied_evaluations:
+        subject: Evaluations insatisfaisantes
+        template: |
+                  Test template unsatisfied {data_to_insert}
+                  {arrays}
+
+        allowed_roles: [ROLE_ADMIN,ROLE_RESPONSABLE_AGENCE,ROLE_COMMERCIAL]
+        data_criterias: [SurveyRepository::CONDITION_UNSATISFIED_EVALUATION]
+        perimeter_restriction : true
+    another_notifications:
+        subject: Autres critères
+        template: |
+                  Test template unsatisfied{data_to_insert}
+                  {arrays}
+
+        allowed_roles: [ROLE_ADMIN,ROLE_RESPONSABLE_AGENCE]
+        perimeter_restriction : false

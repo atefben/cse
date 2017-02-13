@@ -22,6 +22,7 @@ class Mission
      * @var
      * @ORM\Column(name="MSN_ID",type="integer")
      * @ORM\Id
+     * @ORM\GeneratedValue
      */
     protected $id;
 

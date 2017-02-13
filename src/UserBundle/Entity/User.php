@@ -3,10 +3,12 @@
 namespace UserBundle\Entity;
 
 
+use AppBundle\Entity\MailGroup;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
-use Gedmo\Mapping\Annotation as Gedmo;
+//use Gedmo\Mapping\Annotation as Gedmo;
 
 
 /**
@@ -14,7 +16,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class User extends BaseUser
 {
@@ -45,10 +46,20 @@ class User extends BaseUser
      */
     private $deletedAt;
 
+    /**
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\MailGroup", inversedBy="users")
+     * @ORM\JoinTable(name="UMG_USER_MAIL_GROUP",
+     *       joinColumns={@ORM\JoinColumn(name="USR_ID", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="MGP_ID", referencedColumnName="MGP_ID")})
+     */
+    private $mailGroups;
 
     public function __construct() {
         parent::__construct();
+        $this->mailGroups = new ArrayCollection();
     }
+
 
     /**
      * Set firstname
@@ -121,4 +132,35 @@ class User extends BaseUser
     {
         return $this->deletedAt;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMailGroups()
+    {
+        return $this->mailGroups;
+    }
+
+    /**
+     * @param mixed $mailGroups
+     */
+    public function setMailGroups($mailGroups)
+    {
+        $this->mailGroups = $mailGroups;
+    }
+
+    public function addMailGroup(MailGroup $mailGroup)
+    {
+        $this->mailGroups->add($mailGroup);
+//        $mailGroup->addUser($this);
+        return $this;
+    }
+
+    public function removeMailGroup(MailGroup $mailGroup)
+    {
+        $this->mailGroups->removeElement($mailGroup);
+        $mailGroup->removeUser($this);
+    }
+
+
 }
