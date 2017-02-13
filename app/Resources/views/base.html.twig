@@ -32,6 +32,7 @@
         '@UserBundle/Resources/public/robust-assets/css/app.min.css'
         '@UserBundle/Resources/public/robust-assets/css/components/weather-icons/climacons.min.css'
         '@UserBundle/Resources/public/robust-assets/css/plugins/file-uploaders/dropzone.min.css'
+        '@UserBundle/Resources/public/robust-assets/css/components/forms/select/form-select2.css'
         '@UserBundle/Resources/public/assets/css/style.css'
 
         %}
@@ -223,26 +224,26 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <h3>People</h3>
-                        <div class="media"><a href="#" class="media-left"><img src="robust-assets/images/portrait/small/avatar-s-2.png" alt="Generic placeholder image" class="media-object rounded-circle"></a>
-                            <div class="media-body">
-                                <h5 class="media-heading"><a href="#">Karmen Dartez</a></h5>
-                                <p class="mb-0"><span class="tag tag-pill mr-1 tag-danger">JavaScript</span><span class="tag tag-pill mr-1 tag-primary">HTML</span></p>
-                                <p><span class="font-weight-bold">Sr. Developer - </span><a href="mailto:john@example.com">karmen@example.com</a></p>
-                            </div>
-                        </div>
-                        <div class="media"><a href="#" class="media-left"><img src="robust-assets/images/portrait/small/avatar-s-3.png" alt="Generic placeholder image" class="media-object rounded-circle"></a>
-                            <div class="media-body">
-                                <h5 class="media-heading"><a href="#">Scot Loh</a></h5>
-                                <p class="mb-0"><span class="tag tag-pill mr-1 tag-danger">PhotoShop</span><span class="tag tag-pill mr-1 tag-warning">UX</span></p>
-                                <p><span class="font-weight-bold">Sr. UI/UX Desugner - </span><a href="mailto:john@example.com">scot@example.com</a></p>
-                            </div>
-                        </div>
-                        <div class="media"><a href="#" class="media-left"><img src="robust-assets/images/portrait/small/avatar-s-5.png" alt="Generic placeholder image" class="media-object rounded-circle"></a>
-                            <div class="media-body">
-                                <h5 class="media-heading"><a href="#">Kim Willmore</a></h5>
-                                <p class="mb-0"><span class="tag tag-pill mr-1 tag-warning">CSS</span><span class="tag tag-pill mr-1 tag-danger">HTML</span></p>
-                                <p><span class="font-weight-bold">UI Developer - </span><a href="mailto:john@example.com">kim@example.com</a></p>
-                            </div>
+                        {#<div class="media"><a href="#" class="media-left"><img src="robust-assets/images/portrait/small/avatar-s-2.png" alt="Generic placeholder image" class="media-object rounded-circle"></a>#}
+                            {#<div class="media-body">#}
+                                {#<h5 class="media-heading"><a href="#">Karmen Dartez</a></h5>#}
+                                {#<p class="mb-0"><span class="tag tag-pill mr-1 tag-danger">JavaScript</span><span class="tag tag-pill mr-1 tag-primary">HTML</span></p>#}
+                                {#<p><span class="font-weight-bold">Sr. Developer - </span><a href="mailto:john@example.com">karmen@example.com</a></p>#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="media"><a href="#" class="media-left"><img src="robust-assets/images/portrait/small/avatar-s-3.png" alt="Generic placeholder image" class="media-object rounded-circle"></a>#}
+                            {#<div class="media-body">#}
+                                {#<h5 class="media-heading"><a href="#">Scot Loh</a></h5>#}
+                                {#<p class="mb-0"><span class="tag tag-pill mr-1 tag-danger">PhotoShop</span><span class="tag tag-pill mr-1 tag-warning">UX</span></p>#}
+                                {#<p><span class="font-weight-bold">Sr. UI/UX Desugner - </span><a href="mailto:john@example.com">scot@example.com</a></p>#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="media"><a href="#" class="media-left"><img src="robust-assets/images/portrait/small/avatar-s-5.png" alt="Generic placeholder image" class="media-object rounded-circle"></a>#}
+                            {#<div class="media-body">#}
+                                {#<h5 class="media-heading"><a href="#">Kim Willmore</a></h5>#}
+                                {#<p class="mb-0"><span class="tag tag-pill mr-1 tag-warning">CSS</span><span class="tag tag-pill mr-1 tag-danger">HTML</span></p>#}
+                                {#<p><span class="font-weight-bold">UI Developer - </span><a href="mailto:john@example.com">kim@example.com</a></p>#}
+                            {#</div>#}
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -432,11 +433,10 @@
     '@UserBundle/Resources/public/robust-assets/js/plugins/extensions/underscore-min.js'
     '@UserBundle/Resources/public/robust-assets/js/plugins/extensions/clndr.min.js'
     '@UserBundle/Resources/public/robust-assets/js/plugins/extensions/unslider-min.js'
-    '@UserBundle/Resources/public/robust-assets/js/plugins/extensions/dropzone.min.js'
-    '@UserBundle/Resources/public/robust-assets/js/components/extensions/dropzone.js'
-    '@UserBundle/Resources/public/robust-assets/js/app.min.js'
+    '@UserBundle/Resources/public/robust-assets/js/components/forms/select/form-select2.js'
     '@UserBundle/Resources/public/robust-assets/js/components/pages/dashboard-project.js'
     '@UserBundle/Resources/public/robust-assets/js/components/tables/datatables/datatable-basic.js'
+    '@UserBundle/Resources/public/robust-assets/js/app.min.js'
 
     %}
     <script src="{{ asset_url }}"></script>

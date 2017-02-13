@@ -7,14 +7,13 @@
 
 {% block content %}
 
-    <table>
+        <table class="table table-striped table-bordered zero-configuration">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Everwinid</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Deleted</th>
+                <th>Nom</th>
+                <th>Prenom</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -25,7 +24,6 @@
                 <td>{{ collaborateur.everwinId }}</td>
                 <td>{{ collaborateur.firstName }}</td>
                 <td>{{ collaborateur.lastName }}</td>
-                <td>{% if collaborateur.deleted %}Yes{% else %}No{% endif %}</td>
                 <td>
                     <ul>
                         <li>
