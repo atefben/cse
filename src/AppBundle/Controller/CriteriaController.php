@@ -24,6 +24,7 @@ class CriteriaController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $em->getEventManager()->addEventSubscriber(new \Gedmo\SoftDeleteable\SoftDeleteableListener());
 
         $criterias = $em->getRepository('AppBundle:Criteria')->findAll();
 
@@ -94,7 +95,7 @@ class CriteriaController extends Controller
 
         return $this->render('criteria/edit.html.twig', array(
             'criterion' => $criterion,
-            'edit_form' => $editForm->createView(),
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -112,6 +113,7 @@ class CriteriaController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $em->getEventManager()->addEventSubscriber(new \Gedmo\SoftDeleteable\SoftDeleteableListener());
             $em->remove($criterion);
             $em->flush($criterion);
         }

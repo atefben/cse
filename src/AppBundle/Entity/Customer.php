@@ -19,11 +19,18 @@ use Doctrine\ORM\Mapping as ORM;
 class Customer
 {
     /**
+     * @var int
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\Column(name="CST_ID", type="integer")
-     * @ORM\GeneratedValue
-     */
+     * @ORM\GeneratedValue(strategy="AUTO")
+     **/
     protected $id;
+
+    /**
+     * @var string
+     * @ORM\Column(name="CRT_CODE_SX", type="string", length=50)
+     **/
+    protected $codeSX;
 
     /**
      * @var string
@@ -37,17 +44,25 @@ class Customer
      **/
     protected $address;
 
-    /**
+        /**
      * @var string
-     * @ORM\Column(name="CRT_CONTACT", type="string", length=50)
+     * @ORM\Column(name="CRT_ZIP_CODE", type="string", length=255)
      **/
-    protected $contact;
+    protected $zipCode;
+
+        /**
+     * @var string
+     * @ORM\Column(name="CRT_CITY", type="string", length=255)
+     **/
+    protected $city;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(name="CRT_DATE_INSERTION", type="datetime")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
      **/
-    protected $dtInsertion;
+    protected $user;
+
+
 
     /**
      * @return int
@@ -57,23 +72,6 @@ class Customer
         return $this->id;
     }
 
-//    protected $userInsertion;
-
-    /**
-     * @return mixed
-     */
-    public function getRcs()
-    {
-        return $this->rcs;
-    }
-
-    /**
-     * @param mixed $rcs
-     */
-    public function setRcs($rcs)
-    {
-        $this->rcs = $rcs;
-    }
 
     /**
      * @return mixed
@@ -107,54 +105,101 @@ class Customer
         $this->address = $address;
     }
 
+
+
     /**
-     * @return mixed
+     * Set codeSX
+     *
+     * @param string $codeSX
+     *
+     * @return Customer
      */
-    public function getContact()
+    public function setCodeSX($codeSX)
     {
-        return $this->contact;
+        $this->codeSX = $codeSX;
+
+        return $this;
     }
 
     /**
-     * @param mixed $contact
+     * Get codeSX
+     *
+     * @return string
      */
-    public function setContact($contact)
+    public function getCodeSX()
     {
-        $this->contact = $contact;
+        return $this->codeSX;
     }
 
     /**
-     * @return mixed
+     * Set zipCode
+     *
+     * @param string $zipCode
+     *
+     * @return Customer
      */
-    public function getDtInsertion()
+    public function setZipCode($zipCode)
     {
-        return $this->dtInsertion;
+        $this->zipCode = $zipCode;
+
+        return $this;
     }
 
     /**
-     * @param mixed $dtInsertion
+     * Get zipCode
+     *
+     * @return string
      */
-    public function setDtInsertion(\DateTime $dtInsertion)
+    public function getZipCode()
     {
-        $this->dtInsertion = $dtInsertion;
+        return $this->zipCode;
     }
 
     /**
-     * @return mixed
+     * Set ciy
+     *
+     * @param string $ciy
+     *
+     * @return Customer
      */
-    public function getUserInsertion()
+    public function setCity($city)
     {
-        return $this->userInsertion;
+        $this->city = $city;
+
+        return $this;
     }
 
     /**
-     * @param mixed $userInsertion
+     * Get ciy
+     *
+     * @return string
      */
-    public function setUserInsertion($userInsertion)
+    public function getCity()
     {
-        $this->userInsertion = $userInsertion;
+        return $this->city;
     }
 
+    /**
+     * Set user
+     *
+     * @param \UserBundle\Entity\User $user
+     *
+     * @return Customer
+     */
+    public function setUser(\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
 
+        return $this;
+    }
 
+    /**
+     * Get user
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

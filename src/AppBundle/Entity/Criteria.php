@@ -23,9 +23,9 @@ class Criteria
 
     /**
      * @var int
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\Column(name="CRT_ID", type="integer")
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="AUTO")
      **/
     protected $id;
 
@@ -37,27 +37,21 @@ class Criteria
 
     /**
      * @var string
-     * @ORM\Column(name="CRT_COMMENTAIRES", type="text")
+     * @ORM\Column(name="CRT_DESCRIPTION", type="text")
      **/
-    protected $commentaires;
+    protected $description;
 
-    /**
-     * @var
-     * @ORM\Column(name="CRT_COEFFICIENT", type="integer")
-     */
-    protected $coefficient;
-
-    /**
-     * @var boolean
-     * @ORM\Column(name="CRT_REQUIRED", type="boolean")
-     */
-    protected $required;
 
     /**
      * @var boolean
      * @ORM\Column(name="CRT_TYPE", type="integer")
      */
     protected $criteriaType;
+
+    /**
+     * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
+     */
+    private $deletedAt;
 
     /**
      * @return int
@@ -84,53 +78,74 @@ class Criteria
     }
 
     /**
-     * @return mixed
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Criteria
      */
-    public function getCommentaires()
+    public function setDescription($description)
     {
-        return $this->commentaires;
+        $this->description = $description;
+
+        return $this;
     }
 
     /**
-     * @param mixed $commentaires
+     * Get description
+     *
+     * @return string
      */
-    public function setCommentaires($commentaires)
+    public function getDescription()
     {
-        $this->commentaires = $commentaires;
+        return $this->description;
     }
 
     /**
-     * @return mixed
+     * Set criteriaType
+     *
+     * @param integer $criteriaType
+     *
+     * @return Criteria
      */
-    public function getCoefficient()
+    public function setCriteriaType($criteriaType)
     {
-        return $this->coefficient;
+        $this->criteriaType = $criteriaType;
+
+        return $this;
     }
 
     /**
-     * @param mixed $coefficient
+     * Get criteriaType
+     *
+     * @return integer
      */
-    public function setCoefficient($coefficient)
+    public function getCriteriaType()
     {
-        $this->coefficient = $coefficient;
+        return $this->criteriaType;
     }
 
     /**
-     * @return mixed
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     *
+     * @return User
      */
-    public function getRequired()
+    public function setDeletedAt($deletedAt)
     {
-        return $this->required;
+        $this->deletedAt = $deletedAt;
+
+        return $this;
     }
 
     /**
-     * @param mixed $required
+     * Get deletedAt
+     *
+     * @return \DateTime
      */
-    public function setRequired($required)
+    public function getDeletedAt()
     {
-        $this->required = $required;
+        return $this->deletedAt;
     }
-
-
-
 }

@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block content_title %}
-    Critères
+    Liste des Critères
 {% endblock %}
 
 {% block content %}
-
-
+    <a href="{{ path('criteria_new') }}">
+        <button type="button" class="btn btn-success btn-min-width btn-round mr-1 mb-1">Ajouter un nouveau critère</button>
+    </a>
     <table class="table table-striped table-bordered zero-configuration">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Label</th>
-                <th>Commentaires</th>
-                <th>Coefficient</th>
-                <th>Obligatoire</th>
+                {#<th>Commentaires</th>#}
+
                 <th>Criteriatype</th>
                 <th>Actions</th>
             </tr>
@@ -24,28 +24,22 @@
             <tr>
                 <td><a href="{{ path('criteria_show', { 'id': criterion.id }) }}">{{ criterion.id }}</a></td>
                 <td>{{ criterion.label }}</td>
-                <td>{{ criterion.commentaires }}</td>
-                <td>{{ criterion.coefficient }}</td>
-                <td>{% if criterion.required %}Yes{% else %}No{% endif %}</td>
-                <td>{{ criterion.criteriaType }}</td>
+                {#<td>{{ criterion.desctiption }}</td>#}
+                <td>{% if criterion.criteriaType == 1 %} Collaborateur{% else %} Client {% endif %}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('criteria_show', { 'id': criterion.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('criteria_edit', { 'id': criterion.id }) }}">edit</a>
-                        </li>
-                    </ul>
+
+                            <a href="{{ path('criteria_show', { 'id': criterion.id }) }}">
+                                <button type="button" class="btn btn-info btn-min-width btn-round mr-1 mb-1">Voir</button>
+                            </a>
+
+                            <a href="{{ path('criteria_edit', { 'id': criterion.id }) }}">
+                                <button type="button" class="btn btn-primary btn-min-width btn-round mr-1 mb-1">Edition</button>
+                            </a>
+
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('criteria_new') }}">Create a new criterion</a>
-        </li>
-    </ul>
 {% endblock %}

@@ -70,7 +70,7 @@
                     <li class="nav-item mobile-menu hidden-md-up float-xs-left">
                         <a class="nav-link nav-menu-main menu-toggle hidden-xs"><i class="icon-menu5 font-large-1"></i></a></li>
                     <li class="nav-item"><a href="index.html" class="navbar-brand nav-link">
-                            <img alt="branding logo" src="{{ asset('robust-assets/images/logo/image001.png') }}" data-expand="{{ asset('robust-assets/images/logo/image001.png') }}" data-collapse="{{ asset('robust-assets/images/logo/image001.png') }}" class="brand-logo"></a></li>
+                            <img alt="branding logo" src="{{ asset('robust-assets/images/logo/logo.png') }}" data-expand="{{ asset('robust-assets/images/logo/logo.png') }}" data-collapse="{{ asset('robust-assets/images/logo/logo-80x80.png') }}" class="brand-logo"></a></li>
                     <li class="nav-item hidden-md-up float-xs-right"><a data-toggle="collapse" data-target="#navbar-mobile" class="nav-link open-navbar-container"><i class="icon-ellipsis pe-2x icon-icon-rotate-right-right"></i></a></li>
                 </ul>
             </div>
@@ -329,11 +329,11 @@
                         </li>
                         <li {% if current_path == path('criteria_index')  %}class="active"{% endif %}><a href="{{ path('criteria_index') }}" data-i18n="nav.dash.analytics" class="menu-item">Critère</a>
                         </li>
-                        {#
+
                         <li {% if current_path == path('import_customer')  %}class="active"{% endif %}><a href="{{ path('import_customer') }}" data-i18n="nav.dash.crm" class="menu-item">Update client</a>
                         </li>
                         <li {% if current_path == path('import_collaborateur')  %}class="active"{% endif %}><a href="{{ path('import_collaborateur') }}" data-i18n="nav.dash.fitness" class="menu-item">Update Collaborateur</a>
-                        </li>#}
+                        </li>
                     </ul>
                 </li>
                 {% endif %}
@@ -434,9 +434,14 @@
     '@UserBundle/Resources/public/robust-assets/js/plugins/extensions/clndr.min.js'
     '@UserBundle/Resources/public/robust-assets/js/plugins/extensions/unslider-min.js'
     '@UserBundle/Resources/public/robust-assets/js/components/forms/select/form-select2.js'
+
+    '@UserBundle/Resources/public/robust-assets/js/app.min.js'
     '@UserBundle/Resources/public/robust-assets/js/components/pages/dashboard-project.js'
     '@UserBundle/Resources/public/robust-assets/js/components/tables/datatables/datatable-basic.js'
     '@UserBundle/Resources/public/robust-assets/js/app.min.js'
+
+    '@UserBundle/Resources/public/robust-assets/js/plugins/extensions/dropzone.min.js'
+    '@UserBundle/Resources/public/robust-assets/js/components/extensions/dropzone.js'
 
     %}
     <script src="{{ asset_url }}"></script>

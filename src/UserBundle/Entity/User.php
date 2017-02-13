@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
-//use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 
 /**
@@ -16,6 +16,7 @@ use FOS\UserBundle\Model\User as BaseUser;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class User extends BaseUser
 {
@@ -40,6 +41,18 @@ class User extends BaseUser
      * @ORM\Column(name="lastname", type="string")
      */
     private $lastname;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     **/
+    private $userReponsable;
+
+    /**
+     * @ORM\Column(name="code_sx", type="string")
+     */
+    private $codeSX;
 
     /**
      * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
@@ -131,6 +144,54 @@ class User extends BaseUser
     public function getDeletedAt()
     {
         return $this->deletedAt;
+    }
+
+    /**
+     * Set userReponsable
+     *
+     * @param string $userReponsable
+     *
+     * @return User
+     */
+    public function setUserReponsable($userReponsable)
+    {
+        $this->userReponsable = $userReponsable;
+
+        return $this;
+    }
+
+    /**
+     * Get userReponsable
+     *
+     * @return string
+     */
+    public function getUserReponsable()
+    {
+        return $this->userReponsable;
+    }
+
+    /**
+     * Set codeSX
+     *
+     * @param string $codeSX
+     *
+     * @return User
+     */
+    public function setCodeSX($codeSX)
+    {
+        $this->codeSX = $codeSX;
+
+        return $this;
+    }
+
+    /**
+     * Get codeSX
+     *
+     * @return string
+     */
+    public function getCodeSX()
+    {
+        return $this->codeSX;
     }
 
     /**

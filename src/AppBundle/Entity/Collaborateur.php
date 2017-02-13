@@ -24,126 +24,302 @@ class Collaborateur
      * @var int
      * @ORM\Id
      * @ORM\Column(name="CLR_ID", type="integer")
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="AUTO")
      **/
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(name="CLR_EVERWIN_ID", type="string", length=20)
-     * @Assert\NotBlank(message="L'identifiant everwin est obligatoire.")
-    **/
-    protected $everwinId;
+     * @ORM\Column(name="CRT_CODE", type="string")
+     **/
+    protected $code;
+
+    /**
+     * @var string
+     * @ORM\Column(name="CRT_LASTNAME", type="string")
+     **/
+    protected $lastname;
+
+    /**
+     * @var string
+     * @ORM\Column(name="CRT_FIRSTNAME", type="string")
+     **/
+    protected $firstname;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Customer")
+     * @ORM\JoinColumn(nullable=true)
+     **/
+    protected $Customer;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     **/
+    protected $user;
+
+    /**
+     * @var string
+     * @ORM\Column(name="CRT_EMAIL", type="string")
+     **/
+    protected $email;
 
 
     /**
      * @var string
-     * @ORM\Column(name="CLR_FIRST_NAME", type="string", length=50)
+     * @ORM\Column(name="CRT_PHONE", type="string")
      **/
-    protected $firstName;
+    protected $phone;
+
+
 
     /**
-     * @var string
-     * @ORM\Column(name="CLR_LAST_NAME", type="string", length=50)
-     **/
-    protected $lastName;
-
-//    /**
-//     * @var string
-//     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserApp")
-//     * @ORM\JoinColumn(name="MANAGER_UAP_ID", referencedColumnName="UAP_ID")
-//     **/
-//    protected $userManager;
-
-    /**
-     * @var boolean
-     * @ORM\Column(name="CLR_DELETED", type="boolean")
-     **/
-    protected $deleted;
-
-    /**
-     * @return int
+     * Get id
+     *
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
 
-
-    public function getEverwinId()
+    /**
+     * Set code
+     *
+     * @param string $code
+     *
+     * @return Collaborateur
+     */
+    public function setCode($code)
     {
-        return $this->everwinId;
+        $this->code = $code;
+
+        return $this;
     }
 
     /**
-     * @param string $everwinId
+     * Get code
+     *
+     * @return string
      */
-    public function setEverwinId($everwinId)
+    public function getCode()
     {
-        $this->everwinId = $everwinId;
+        return $this->code;
     }
 
     /**
-     * @return mixed
+     * Set lastname
+     *
+     * @param string $lastname
+     *
+     * @return Collaborateur
      */
-    public function getFirstName()
+    public function setLastname($lastname)
     {
-        return $this->firstName;
+        $this->lastname = $lastname;
+
+        return $this;
     }
 
     /**
-     * @param mixed $firstName
+     * Get lastname
+     *
+     * @return string
      */
-    public function setFirstName($firstName)
+    public function getLastname()
     {
-        $this->firstName = $firstName;
+        return $this->lastname;
     }
 
     /**
-     * @return mixed
+     * Set firstname
+     *
+     * @param string $firstname
+     *
+     * @return Collaborateur
      */
-    public function getLastName()
+    public function setFirstname($firstname)
     {
-        return $this->lastName;
+        $this->firstname = $firstname;
+
+        return $this;
     }
 
     /**
-     * @param mixed $lastName
+     * Get firstname
+     *
+     * @return string
      */
-    public function setLastName($lastName)
+    public function getFirstname()
     {
-        $this->lastName = $lastName;
-    }
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getUserManager()
-//    {
-//        return $this->userManager;
-//    }
-//
-//    /**
-//     * @param mixed $userManager
-//     */
-//    public function setUserManager($userManager)
-//    {
-//        $this->userManager = $userManager;
-//    }
-
-    /**
-     * @return mixed
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
+        return $this->firstname;
     }
 
     /**
-     * @param mixed $deleted
+     * Set responsable
+     *
+     * @param string $responsable
+     *
+     * @return Collaborateur
      */
-    public function setDeleted($deleted)
+    public function setResponsable($responsable)
     {
-        $this->deleted = $deleted;
+        $this->responsable = $responsable;
+
+        return $this;
+    }
+
+    /**
+     * Get responsable
+     *
+     * @return string
+     */
+    public function getResponsable()
+    {
+        return $this->responsable;
+    }
+
+    /**
+     * Set emailPro
+     *
+     * @param string $emailPro
+     *
+     * @return Collaborateur
+     */
+    public function setEmailPro($emailPro)
+    {
+        $this->email_pro = $emailPro;
+
+        return $this;
+    }
+
+    /**
+     * Get emailPro
+     *
+     * @return string
+     */
+    public function getEmailPro()
+    {
+        return $this->email_pro;
+    }
+
+    /**
+     * Set emailPerso
+     *
+     * @param string $emailPerso
+     *
+     * @return Collaborateur
+     */
+    public function setEmailPerso($emailPerso)
+    {
+        $this->email_perso = $emailPerso;
+
+        return $this;
+    }
+
+    /**
+     * Get emailPerso
+     *
+     * @return string
+     */
+    public function getEmailPerso()
+    {
+        return $this->email_perso;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     *
+     * @return Collaborateur
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * Set customer
+     *
+     * @param string $customer
+     *
+     * @return Collaborateur
+     */
+    public function setCustomer($customer)
+    {
+        $this->Customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Get customer
+     *
+     * @return string
+     */
+    public function getCustomer()
+    {
+        return $this->Customer;
+    }
+
+    /**
+     * Set user
+     *
+     * @param string $user
+     *
+     * @return Collaborateur
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return string
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Collaborateur
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 }
