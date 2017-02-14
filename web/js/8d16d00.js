@@ -1858,19 +1858,30 @@ b[_type],e=/wn|up/.test(d)?t:v;if(!c[n]){if(d==_click)A(a,!1,!0);else{if(/wn|er|
 
    // setup an "add a tag" link
 
-    var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
+    var $addTagLink = $('<a href="#" class="add_tag_link"><i class="icon-android-add-circle"></i></a>');
     var $newLinkLi = $('<div class="form-group"></div>').append($addTagLink);
+
+
+
 jQuery(document).ready(function() {
 
 
 
+	//$('#appbundle_survey_collaborateur').combobox();
 
-$("#appbundle_survey_signatureClient").jSignature()
+	var $sigdiv = $("#signature").jSignature();
+
+
+	$("#signature").bind('change', function(e){ var data = $sigdiv.jSignature('getData', e.target.value)
+		$('#appbundle_survey_signatureClient').val(data);
+	})
 
 
 
     // Get the ul that holds the collection of tags
-   var $collectionHolder = $('div.tags');
+   var $collectionHolder = $('div.criterias');
+   var $collectionHolderscores = $('div.scores');
+   var $collectionHoldercoefficients = $('div.coefficients');
     
     // add the "add a tag" anchor and li to the tags ul
     $collectionHolder.append($newLinkLi);
@@ -1881,7 +1892,7 @@ $("#appbundle_survey_signatureClient").jSignature()
     $collectionHolder.data('index', $collectionHolder.find(':input').length);
 
     for(var i = 0; i < 5; i++) {
-    	addTagForm($collectionHolder, $newLinkLi, false);
+    	addTagForm($collectionHolder, $newLinkLi, $collectionHolderscores, $collectionHoldercoefficients, false);
     }
  
     $addTagLink.on('click', function(e) {
@@ -1889,15 +1900,17 @@ $("#appbundle_survey_signatureClient").jSignature()
         e.preventDefault();
         
         // add a new tag form (see code block below)
-        addTagForm($collectionHolder, $newLinkLi, true);
+        addTagForm($collectionHolder, $newLinkLi, $collectionHolderscores, $collectionHoldercoefficients, true);
     });
     
     
 });
 
-function addTagForm($collectionHolder, $newLinkLi, $deletelink) {
+function addTagForm($collectionHolder, $newLinkLi, $collectionHolderScore, $collectionHolderCoef, $deletelink) {
     // Get the data-prototype explained earlier
     var prototype = $collectionHolder.data('prototype');
+    var prototypeScore = $collectionHolderScore.data('prototype');
+    var prototypeCoef = $collectionHolderCoef.data('prototype');
     
     // get the new index
     var index = $collectionHolder.data('index');
@@ -1905,18 +1918,24 @@ function addTagForm($collectionHolder, $newLinkLi, $deletelink) {
     // Replace '$$name$$' in the prototype's HTML to
     // instead be a number based on how many items we have
     var newForm = prototype.replace(/__name__/g, index);
+    var newFormScore = prototypeScore.replace(/__name__/g, index);
+    var newFormCoef = prototypeCoef.replace(/__name__/g, index);
     
     // increase the index with one for the next item
     $collectionHolder.data('index', index + 1);
     
     // Display the form in the page in an li, before the "Add a tag" link li
     var N = index +1;
-    var $newFormLi = $('<div class="form-group"></div>').append('<h5 class="form-section">Critère '+N+'</h5>'+newForm+'<div></div>');
+    var FC = '<h5 class="form-section" style="text-align:center">Critère '+N+'</h5><div class="col-md-3"><div class="form-group"><label for="">Critère</label>'+newForm+'</div></div>';
+    var FS = '<div class="col-md-3"><div class="form-group"><label for="">Score</label>'+newFormScore+'</div></div>';
+    var FCo = '<div class="col-md-3"><div class="form-group"><label for="">coefficient</label>'+newFormCoef+'</div></div>';
+
+    var $newFormLi = $('<div class="row"></div>').append(FC+ FS+FCo+'<div></div>');
     
     // also add a remove button, just for this example
     if($deletelink == true)
     {
-    	$newFormLi.append('<a href="#" class="remove-tag">x</a>');
+    	$newFormLi.append('<h5><a href="#" class="remove-tag"><i class="icon-android-cancel"></i></a></h5>');
     }
     
     $newLinkLi.before($newFormLi);
@@ -1929,5 +1948,155 @@ function addTagForm($collectionHolder, $newLinkLi, $deletelink) {
         
         return false;
     });
+
+
+
+
+
+
+
+
+
+
+
+
+/* ** */
+$( function() {
+    $.widget( "custom.combobox", {
+      _create: function() {
+        this.wrapper = $( "<span>" )
+          .addClass( "custom-combobox" )
+          .insertAfter( this.element );
+ 
+        this.element.hide();
+        this._createAutocomplete();
+        this._createShowAllButton();
+      },
+ 
+      _createAutocomplete: function() {
+        var selected = this.element.children( ":selected" ),
+          value = selected.val() ? selected.text() : "";
+ 
+        this.input = $( "<input>" )
+          .appendTo( this.wrapper )
+          .val( value )
+          .attr( "title", "" )
+          .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+          .autocomplete({
+            delay: 0,
+            minLength: 0,
+            source: $.proxy( this, "_source" )
+          })
+          .tooltip({
+            classes: {
+              "ui-tooltip": "ui-state-highlight"
+            }
+          });
+ 
+        this._on( this.input, {
+          autocompleteselect: function( event, ui ) {
+            ui.item.option.selected = true;
+            this._trigger( "select", event, {
+              item: ui.item.option
+            });
+          },
+ 
+          autocompletechange: "_removeIfInvalid"
+        });
+      },
+ 
+      _createShowAllButton: function() {
+        var input = this.input,
+          wasOpen = false;
+ 
+        $( "<a>" )
+          .attr( "tabIndex", -1 )
+          .attr( "title", "Show All Items" )
+          .tooltip()
+          .appendTo( this.wrapper )
+          .button({
+            icons: {
+              primary: "ui-icon-triangle-1-s"
+            },
+            text: false
+          })
+          .removeClass( "ui-corner-all" )
+          .addClass( "custom-combobox-toggle ui-corner-right" )
+          .on( "mousedown", function() {
+            wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+          })
+          .on( "click", function() {
+            input.trigger( "focus" );
+ 
+            // Close if already visible
+            if ( wasOpen ) {
+              return;
+            }
+ 
+            // Pass empty string as value to search for, displaying all results
+            input.autocomplete( "search", "" );
+          });
+      },
+ 
+      _source: function( request, response ) {
+        var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+        response( this.element.children( "option" ).map(function() {
+          var text = $( this ).text();
+          if ( this.value && ( !request.term || matcher.test(text) ) )
+            return {
+              label: text,
+              value: text,
+              option: this
+            };
+        }) );
+      },
+ 
+      _removeIfInvalid: function( event, ui ) {
+ 
+        // Selected an item, nothing to do
+        if ( ui.item ) {
+          return;
+        }
+ 
+        // Search for a match (case-insensitive)
+        var value = this.input.val(),
+          valueLowerCase = value.toLowerCase(),
+          valid = false;
+        this.element.children( "option" ).each(function() {
+          if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+            this.selected = valid = true;
+            return false;
+          }
+        });
+ 
+        // Found a match, nothing to do
+        if ( valid ) {
+          return;
+        }
+ 
+        // Remove invalid value
+        this.input
+          .val( "" )
+          .attr( "title", value + " didn't match any item" )
+          .tooltip( "open" );
+        this.element.val( "" );
+        this._delay(function() {
+          this.input.tooltip( "close" ).attr( "title", "" );
+        }, 2500 );
+        this.input.autocomplete( "instance" ).term = "";
+      },
+ 
+      _destroy: function() {
+        this.wrapper.remove();
+        this.element.show();
+      }
+    });
+ 
+    $( "#appbundle_survey_collaborateur" ).combobox();
+    /*$( "#toggle" ).on( "click", function() {
+      $( "#combobox" ).toggle();
+    });*/
+  } );
 }
+
 $(document).ready(function(){"use strict";void 0!=$("form.form-horizontal").attr("novalidate")&&$("input,select,textarea").not("[type=submit]").jqBootstrapValidation(),$(".chk-remember").length&&$(".chk-remember").iCheck({checkboxClass:"icheckbox_square-blue",radioClass:"iradio_square-blue"})});

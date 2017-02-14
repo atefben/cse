@@ -28,7 +28,7 @@ class SurveyCriteriaType extends AbstractType
 
         ->add('score', ChoiceType::class, array(
             'attr'   =>  array(
-                'class'   => 'form-control')
+                'class'   => 'form-control score')
             ,
                 'choices'  => array(
                     '1' => 1,
@@ -45,7 +45,7 @@ class SurveyCriteriaType extends AbstractType
             ))
         ->add('coefficient', ChoiceType::class, array(
             'attr'   =>  array(
-                'class'   => 'form-control')
+                'class'   => 'form-control coefficient')
             ,
                 'choices'  => array(
                     '1' => 1,

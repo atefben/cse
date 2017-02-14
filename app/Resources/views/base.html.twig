@@ -18,7 +18,11 @@
         <meta name="apple-touch-fullscreen" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="default">
     {% endblock %}
-
+{#
+'@UserBundle/Resources/public/robust-assets/css/plugins/file-uploaders/dropzone.min.css'
+'@UserBundle/Resources/public/robust-assets/css/plugins/charts/morris.css'
+'@UserBundle/Resources/public/robust-assets/js/components/ui/jquery-ui/autocomplete.js'
+    #}
     {% block stylesheets %}
         {% stylesheets filter='cssrewrite'
         '@UserBundle/Resources/public/robust-assets/css/vendors.min.css'
@@ -26,12 +30,12 @@
         '@UserBundle/Resources/public/robust-assets/fonts/flag-icon-css/css/flag-icon.min.css'
         '@UserBundle/Resources/public/robust-assets/css/plugins/sliders/slick/slick.css'
         '@UserBundle/Resources/public/robust-assets/css/plugins/charts/jquery-jvectormap-2.0.3.css'
-        '@UserBundle/Resources/public/robust-assets/css/plugins/charts/morris.css'
         '@UserBundle/Resources/public/robust-assets/css/plugins/extensions/unslider.css'
         '@UserBundle/Resources/public/robust-assets/css/plugins/tables/datatable/dataTables.bootstrap4.min.css'
+        '@UserBundle/Resources/public/robust-assets/css/plugins/ui/jquery-ui.min.css'
         '@UserBundle/Resources/public/robust-assets/css/app.min.css'
+        
         '@UserBundle/Resources/public/robust-assets/css/components/weather-icons/climacons.min.css'
-        '@UserBundle/Resources/public/robust-assets/css/plugins/file-uploaders/dropzone.min.css'
         '@UserBundle/Resources/public/assets/css/style.css'
 
         %}
@@ -416,17 +420,26 @@
 {% endblock footer %}
 
 {% block javascripts %}
+{#
+
+    '@UserBundle/Resources/public/robust-assets/js/plugins/charts/morris.min.js'
+    '@UserBundle/Resources/public/robust-assets/js/plugins/charts/chartist.min.js'
+    '@UserBundle/Resources/public/robust-assets/js/plugins/charts/chartist-plugin-tooltip.js'
+    '@UserBundle/Resources/public/robust-assets/js/plugins/charts/chart.min.js'
+
+    '@UserBundle/Resources/public/robust-assets/js/plugins/extensions/dropzone.min.js'
+    '@UserBundle/Resources/public/robust-assets/js/components/extensions/dropzone.js'
+       '@UserBundle/Resources/public/robust-assets/js/components/pages/dashboard-project.js'
+#}
     {% javascripts
     '@UserBundle/Resources/public/robust-assets/js/vendors.min.js'
+     '@UserBundle/Resources/public/robust-assets/js/core/libraries/jquery_ui/jquery-ui.min.js'
      '@UserBundle/Resources/public/jSignature.js'
     '@UserBundle/Resources/public/robust-assets/js/plugins/tables/jquery.dataTables.min.js'
     '@UserBundle/Resources/public/robust-assets/js/plugins/tables/datatable/dataTables.bootstrap4.min.js'
     '@UserBundle/Resources/public/robust-assets/js/plugins/extensions/jquery.knob.min.js'
     '@UserBundle/Resources/public/robust-assets/js/plugins/charts/raphael-min.js'
-    '@UserBundle/Resources/public/robust-assets/js/plugins/charts/morris.min.js'
-    '@UserBundle/Resources/public/robust-assets/js/plugins/charts/chartist.min.js'
-    '@UserBundle/Resources/public/robust-assets/js/plugins/charts/chartist-plugin-tooltip.js'
-    '@UserBundle/Resources/public/robust-assets/js/plugins/charts/chart.min.js'
+
     '@UserBundle/Resources/public/robust-assets/js/plugins/charts/jquery.sparkline.min.js'
     '@UserBundle/Resources/public/robust-assets/js/plugins/charts/jvector/jquery-jvectormap-2.0.3.min.js'
     '@UserBundle/Resources/public/robust-assets/js/plugins/charts/jvector/jquery-jvectormap-world-mill.js'
@@ -437,11 +450,10 @@
 
    
     '@UserBundle/Resources/public/robust-assets/js/app.min.js'
-    '@UserBundle/Resources/public/robust-assets/js/components/pages/dashboard-project.js'
+    '@UserBundle/Resources/public/robust-assets/js/components/ui/jquery-ui/autocomplete.js'
+ 
     '@UserBundle/Resources/public/robust-assets/js/components/tables/datatables/datatable-basic.js'
 
-    '@UserBundle/Resources/public/robust-assets/js/plugins/extensions/dropzone.min.js'
-    '@UserBundle/Resources/public/robust-assets/js/components/extensions/dropzone.js'
 
 
 

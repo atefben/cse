@@ -19,20 +19,32 @@ use AppBundle\Entity\SurveyCriteria;
 
 class SurveyType extends AbstractType
 {
+
+
+
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+ 
+        $this->id = $options['idUser'];
         $builder
         ->add('commentairesClient')
         //->add('signatureClient')
         ->add('signatureClient', HiddenType::class)
         ->add('collaborateur', EntityType::class, array(
               'class' => 'AppBundle:Collaborateur',
-              'required'    => false,
+               'required'    => false,
               'choice_label' => 'firstname',
-            ))       
+              'query_builder' => function ($er) {
+                  return $er->createQueryBuilder('c')
+                    ->where('c.user = :idUser')
+                    ->setParameter("idUser", $this->id)
+                  ;
+               }))
+             
+              
         ->add("surveys", CollectionType::class, array(
                 'entry_type' => SurveyCriteriaType::class,
                 'allow_add'    => true,
@@ -43,6 +55,7 @@ class SurveyType extends AbstractType
 
 
     }
+
     
     /**
      * {@inheritdoc}
@@ -51,6 +64,7 @@ class SurveyType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => Survey::class,
+            'idUser' => null,
         ));
         
     }

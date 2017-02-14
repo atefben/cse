@@ -7,6 +7,7 @@ use AppBundle\Entity\SurveyCriteria;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Form\SurveyType;
 
 /**
  * Survey controller.
@@ -40,8 +41,9 @@ class SurveyController extends Controller
      */
     public function newAction(Request $request)
     {
+        $idUser = $this->getUser()->getId();
         $survey = new Survey();
-        $form = $this->createForm('AppBundle\Form\SurveyType', $survey);
+        $form = $this->createForm( SurveyType::class  , $survey, ['idUser' => $idUser]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
