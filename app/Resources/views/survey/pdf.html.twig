@@ -1,0 +1,118 @@
+{% extends 'base-pdf.html.twig' %}
+
+{% block content_title %}
+
+{% endblock %}
+
+{% block content %}
+
+<table width="100%"  class="table table-bordered">
+    <tr>
+        <td style="text-align: center" colspan="2">
+            <image src="{{ absolute_url(asset('Resources/logo.png')) }}"  />
+        </td>
+    </tr>
+
+    <tr>
+        <td width="50%">
+            <table class="table">
+                <tr>
+                    <td><b>Client</b></td>
+                    <td>
+                        {{ survey.customer.name }}
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td width="50%">
+            <table class="table">
+                <tr>
+                    <td><b>Collaborateur</b></td>
+                    <td>
+                        {{ survey.collaborateur.firstname }} {{ survey.collaborateur.lastname }}
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+
+
+    <tr>
+        <td colspan="2">
+            <table class="table" width="100%">
+                <tr  >
+                    <td width="40%"><b>Critère</b></td>
+                    <td ><b>Score</b></td>
+                    <td ><b>Coefficient</b></td>
+                </tr>
+                {%  set note =0 %} {%  set totalCoef =0 %} {%  set total =0 %}
+                {% for critere in survey.surveys %}
+                <tr  >
+
+                    <td width="40%">{{ critere.criteria.label }}</td>
+                    <td >{{ critere.score }}</td>
+                    <td >{{ critere.coefficient }}</td>
+                    {% set total = total + (critere.score * critere.coefficient) %}
+                    {% set totalCoef = totalCoef + critere.coefficient %}
+
+                </tr>
+
+                {% endfor %}
+            </table>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td colspan="2"  width="100%"  style="text-align: center">
+            <table class="table table-bordered" style="border-color: black;">
+                <tr  >
+                    <td idth="20%" ><b>Note :</b></td>
+                    <td >{{ total / totalCoef }} / 10</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td colspan="2">
+        <table class="table" width="100%">
+            <tr >
+                <td><b>Commentaire :</b></td>
+
+            </tr>
+            <tr  >
+                <td> {{ survey.commentairesClient}} </td>
+
+            </tr>
+
+        </table>
+
+
+
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <table class="table" width="100%" style="border-color: black;">
+                <tr >
+                    <td><b>Signature :</b></td>
+
+                </tr>
+                <tr style="text-align: center">
+                    <td> <img src="{{ survey.signatureClient}}" /> </td>
+
+                </tr>
+
+            </table>
+
+        </td>
+    </tr>
+
+
+</table>
+{% endblock %}

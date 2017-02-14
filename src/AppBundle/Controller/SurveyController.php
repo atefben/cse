@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\SurveyType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Survey controller.
@@ -173,6 +174,26 @@ class SurveyController extends Controller
      */
     public function downloadPdfAction(Request $request) {
 
+
+
+        $em = $this->getDoctrine()->getManager();
+        $id = $request->get('id');
+        $survey = $em->getRepository('AppBundle:Survey')->find($id);
+        if($request->get('html')) {
+        return  $this->render('survey/pdf.html.twig', array('survey'=>$survey));
+        } else {
+          $html = $this->renderView('survey/pdf.html.twig', array('survey'=>$survey));
+      $filename = sprintf('test-%s.pdf', date('Y-m-d'));
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            [
+                'Content-Type'        => 'application/pdf',
+                'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
+            ]
+        );
+        }
     }
 
     /**
