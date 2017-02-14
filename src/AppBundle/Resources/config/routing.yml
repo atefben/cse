@@ -1,0 +1,3 @@
+customer_list:
+    path:     /list-client
+    defaults: { _controller: AppBundle:Customer:index }

@@ -18,7 +18,11 @@
         <meta name="apple-touch-fullscreen" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="default">
     {% endblock %}
-
+{#
+'@UserBundle/Resources/public/robust-assets/css/plugins/file-uploaders/dropzone.min.css'
+'@UserBundle/Resources/public/robust-assets/css/plugins/charts/morris.css'
+'@UserBundle/Resources/public/robust-assets/js/components/ui/jquery-ui/autocomplete.js'
+    #}
     {% block stylesheets %}
         {% stylesheets filter='cssrewrite'
         '@UserBundle/Resources/public/robust-assets/css/vendors.min.css'
@@ -26,10 +30,11 @@
         '@UserBundle/Resources/public/robust-assets/fonts/flag-icon-css/css/flag-icon.min.css'
         '@UserBundle/Resources/public/robust-assets/css/plugins/sliders/slick/slick.css'
         '@UserBundle/Resources/public/robust-assets/css/plugins/charts/jquery-jvectormap-2.0.3.css'
-        '@UserBundle/Resources/public/robust-assets/css/plugins/charts/morris.css'
         '@UserBundle/Resources/public/robust-assets/css/plugins/extensions/unslider.css'
         '@UserBundle/Resources/public/robust-assets/css/plugins/tables/datatable/dataTables.bootstrap4.min.css'
+        '@UserBundle/Resources/public/robust-assets/css/plugins/ui/jquery-ui.min.css'
         '@UserBundle/Resources/public/robust-assets/css/app.min.css'
+
         '@UserBundle/Resources/public/robust-assets/css/components/weather-icons/climacons.min.css'
         '@UserBundle/Resources/public/robust-assets/css/plugins/file-uploaders/dropzone.min.css'
         '@UserBundle/Resources/public/robust-assets/css/components/forms/select/form-select2.css'
@@ -224,26 +229,26 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <h3>People</h3>
-                        {#<div class="media"><a href="#" class="media-left"><img src="robust-assets/images/portrait/small/avatar-s-2.png" alt="Generic placeholder image" class="media-object rounded-circle"></a>#}
-                            {#<div class="media-body">#}
-                                {#<h5 class="media-heading"><a href="#">Karmen Dartez</a></h5>#}
-                                {#<p class="mb-0"><span class="tag tag-pill mr-1 tag-danger">JavaScript</span><span class="tag tag-pill mr-1 tag-primary">HTML</span></p>#}
-                                {#<p><span class="font-weight-bold">Sr. Developer - </span><a href="mailto:john@example.com">karmen@example.com</a></p>#}
-                            {#</div>#}
-                        {#</div>#}
-                        {#<div class="media"><a href="#" class="media-left"><img src="robust-assets/images/portrait/small/avatar-s-3.png" alt="Generic placeholder image" class="media-object rounded-circle"></a>#}
-                            {#<div class="media-body">#}
-                                {#<h5 class="media-heading"><a href="#">Scot Loh</a></h5>#}
-                                {#<p class="mb-0"><span class="tag tag-pill mr-1 tag-danger">PhotoShop</span><span class="tag tag-pill mr-1 tag-warning">UX</span></p>#}
-                                {#<p><span class="font-weight-bold">Sr. UI/UX Desugner - </span><a href="mailto:john@example.com">scot@example.com</a></p>#}
-                            {#</div>#}
-                        {#</div>#}
-                        {#<div class="media"><a href="#" class="media-left"><img src="robust-assets/images/portrait/small/avatar-s-5.png" alt="Generic placeholder image" class="media-object rounded-circle"></a>#}
-                            {#<div class="media-body">#}
-                                {#<h5 class="media-heading"><a href="#">Kim Willmore</a></h5>#}
-                                {#<p class="mb-0"><span class="tag tag-pill mr-1 tag-warning">CSS</span><span class="tag tag-pill mr-1 tag-danger">HTML</span></p>#}
-                                {#<p><span class="font-weight-bold">UI Developer - </span><a href="mailto:john@example.com">kim@example.com</a></p>#}
-                            {#</div>#}
+                        <div class="media"><a href="#" class="media-left"><img src="robust-assets/images/portrait/small/avatar-s-2.png" alt="Generic placeholder image" class="media-object rounded-circle"></a>
+                            <div class="media-body">
+                                <h5 class="media-heading"><a href="#">Karmen Dartez</a></h5>
+                                <p class="mb-0"><span class="tag tag-pill mr-1 tag-danger">JavaScript</span><span class="tag tag-pill mr-1 tag-primary">HTML</span></p>
+                                <p><span class="font-weight-bold">Sr. Developer - </span><a href="mailto:john@example.com">karmen@example.com</a></p>
+                            </div>
+                        </div>
+                        <div class="media"><a href="#" class="media-left"><img src="robust-assets/images/portrait/small/avatar-s-3.png" alt="Generic placeholder image" class="media-object rounded-circle"></a>
+                            <div class="media-body">
+                                <h5 class="media-heading"><a href="#">Scot Loh</a></h5>
+                                <p class="mb-0"><span class="tag tag-pill mr-1 tag-danger">PhotoShop</span><span class="tag tag-pill mr-1 tag-warning">UX</span></p>
+                                <p><span class="font-weight-bold">Sr. UI/UX Desugner - </span><a href="mailto:john@example.com">scot@example.com</a></p>
+                            </div>
+                        </div>
+                        <div class="media"><a href="#" class="media-left"><img src="robust-assets/images/portrait/small/avatar-s-5.png" alt="Generic placeholder image" class="media-object rounded-circle"></a>
+                            <div class="media-body">
+                                <h5 class="media-heading"><a href="#">Kim Willmore</a></h5>
+                                <p class="mb-0"><span class="tag tag-pill mr-1 tag-warning">CSS</span><span class="tag tag-pill mr-1 tag-danger">HTML</span></p>
+                                <p><span class="font-weight-bold">UI Developer - </span><a href="mailto:john@example.com">kim@example.com</a></p>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -308,7 +313,7 @@
 {% block menu %}
     {% set current_path = path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params'))  %}
     <!-- main menu-->
-    <div id="main-menu" data-scroll-to-active="true" class="main-menu menu-dark menu-fixed menu-shadow menu-accordion">
+    <div id="main-menu" data-scroll-to-active="true" class="main-menu menu-dark menu-fixed menu-shadow menu-accordion" style="height:100%">
 
         <!-- main menu content-->
         <div class="main-menu-content">
@@ -337,8 +342,8 @@
                     </ul>
                 </li>
                 {% endif %}
-                <li {% if current_path == path('userapp_index')  %}class="active"{% endif %} class=" nav-item">
-                    <a href="#"><i class="icon-address-book"></i>
+                <li {% if current_path == path('customer_index')  %}class="active"{% endif %} class=" nav-item">
+                    <a href="{{ path('customer_index')}}"><i class="icon-address-book"></i>
                         <span data-i18n="nav.dash.main" class="menu-title">Client</span>
                     </a>
                 </li>
@@ -348,12 +353,12 @@
                     </a>
                 </li>
 
-
-
             </ul>
         </div>
+
         <!-- /main menu content-->
         <!-- main menu footer-->
+        {#
         <div class="main-menu-footer footer-close">
             <div class="header text-xs-center"><a href="#" class="col-xs-12 footer-toggle"><i class="icon-ios-arrow-up"></i></a></div>
             <div class="content">
@@ -370,6 +375,7 @@
                 <div class="actions"><a href="javascript: void(0);" data-placement="top" data-toggle="tooltip" data-original-title="Settings"><span aria-hidden="true" class="icon-cog3"></span></a><a href="javascript: void(0);" data-placement="top" data-toggle="tooltip" data-original-title="Lock"><span aria-hidden="true" class="icon-lock4"></span></a><a href="javascript: void(0);" data-placement="top" data-toggle="tooltip" data-original-title="Logout"><span aria-hidden="true" class="icon-power3"></span></a></div>
             </div>
         </div>
+        #}
         <!-- main menu footer-->
     </div>
     <!-- / main menu-->
@@ -416,16 +422,26 @@
 {% endblock footer %}
 
 {% block javascripts %}
-    {% javascripts
-    '@UserBundle/Resources/public/robust-assets/js/vendors.min.js'
-    '@UserBundle/Resources/public/robust-assets/js/plugins/tables/jquery.dataTables.min.js'
-    '@UserBundle/Resources/public/robust-assets/js/plugins/tables/datatable/dataTables.bootstrap4.min.js'
-    '@UserBundle/Resources/public/robust-assets/js/plugins/extensions/jquery.knob.min.js'
-    '@UserBundle/Resources/public/robust-assets/js/plugins/charts/raphael-min.js'
+{#
+
     '@UserBundle/Resources/public/robust-assets/js/plugins/charts/morris.min.js'
     '@UserBundle/Resources/public/robust-assets/js/plugins/charts/chartist.min.js'
     '@UserBundle/Resources/public/robust-assets/js/plugins/charts/chartist-plugin-tooltip.js'
     '@UserBundle/Resources/public/robust-assets/js/plugins/charts/chart.min.js'
+
+    '@UserBundle/Resources/public/robust-assets/js/plugins/extensions/dropzone.min.js'
+    '@UserBundle/Resources/public/robust-assets/js/components/extensions/dropzone.js'
+       '@UserBundle/Resources/public/robust-assets/js/components/pages/dashboard-project.js'
+#}
+    {% javascripts
+    '@UserBundle/Resources/public/robust-assets/js/vendors.min.js'
+     '@UserBundle/Resources/public/robust-assets/js/core/libraries/jquery_ui/jquery-ui.min.js'
+     '@UserBundle/Resources/public/jSignature.js'
+    '@UserBundle/Resources/public/robust-assets/js/plugins/tables/jquery.dataTables.min.js'
+    '@UserBundle/Resources/public/robust-assets/js/plugins/tables/datatable/dataTables.bootstrap4.min.js'
+    '@UserBundle/Resources/public/robust-assets/js/plugins/extensions/jquery.knob.min.js'
+    '@UserBundle/Resources/public/robust-assets/js/plugins/charts/raphael-min.js'
+
     '@UserBundle/Resources/public/robust-assets/js/plugins/charts/jquery.sparkline.min.js'
     '@UserBundle/Resources/public/robust-assets/js/plugins/charts/jvector/jquery-jvectormap-2.0.3.min.js'
     '@UserBundle/Resources/public/robust-assets/js/plugins/charts/jvector/jquery-jvectormap-world-mill.js'
@@ -435,16 +451,20 @@
     '@UserBundle/Resources/public/robust-assets/js/plugins/extensions/unslider-min.js'
     '@UserBundle/Resources/public/robust-assets/js/components/forms/select/form-select2.js'
 
-    '@UserBundle/Resources/public/robust-assets/js/app.min.js'
-    '@UserBundle/Resources/public/robust-assets/js/components/pages/dashboard-project.js'
-    '@UserBundle/Resources/public/robust-assets/js/components/tables/datatables/datatable-basic.js'
-    '@UserBundle/Resources/public/robust-assets/js/app.min.js'
 
-    '@UserBundle/Resources/public/robust-assets/js/plugins/extensions/dropzone.min.js'
-    '@UserBundle/Resources/public/robust-assets/js/components/extensions/dropzone.js'
+    '@UserBundle/Resources/public/robust-assets/js/app.min.js'
+    '@UserBundle/Resources/public/robust-assets/js/components/ui/jquery-ui/autocomplete.js'
+
+    '@UserBundle/Resources/public/robust-assets/js/components/tables/datatables/datatable-basic.js'
+
+
+
+
 
     %}
     <script src="{{ asset_url }}"></script>
+
+
     {% endjavascripts %}
 
 {% endblock %}

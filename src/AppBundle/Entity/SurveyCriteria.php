@@ -19,10 +19,9 @@ use Doctrine\ORM\Mapping as ORM;
 class SurveyCriteria
 {
     /**
-     * @var
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\Column(name="SCR_ID")
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
@@ -39,18 +38,16 @@ class SurveyCriteria
     protected $coefficient;
 
     /**
-     * @var
-     * @ORM\JoinColumn(name="SRV_ID",referencedColumnName="SRV_ID")
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Survey", inversedBy="surveyCriterias")
-     */
+    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Criteria", inversedBy="criterias",cascade={"persist"})
+    * @ORM\JoinColumn(nullable=false)
+    */
+    protected $criteria;
+
+   /**
+    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Survey", inversedBy="surveys",cascade={"persist"})
+    * @ORM\JoinColumn(nullable=false)
+    */
     protected $survey;
-
-    /**
-     * @var
-     * @ORM\Column(name="SCR_ADDITIONAL_NOTE",type="text")
-     */
-    protected $additionalNote;
-
 
     /**
      * @return int
@@ -108,21 +105,31 @@ class SurveyCriteria
         $this->survey = $survey;
     }
 
+
+
+
+
     /**
-     * @return mixed
+     * Set criteria
+     *
+     * @param \AppBundle\Entity\Criteria $criteria
+     *
+     * @return SurveyCriteria
      */
-    public function getAdditionalNote()
+    public function setCriteria(\AppBundle\Entity\Criteria $criteria)
     {
-        return $this->additionalNote;
+        $this->criteria = $criteria;
+
+        return $this;
     }
 
     /**
-     * @param mixed $additionalNote
+     * Get criteria
+     *
+     * @return \AppBundle\Entity\Criteria
      */
-    public function setAdditionalNote($additionalNote)
+    public function getCriteria()
     {
-        $this->additionalNote = $additionalNote;
+        return $this->criteria;
     }
-
-
 }

@@ -3,10 +3,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Survey;
+use AppBundle\Entity\SurveyCriteria;
 use AppBundle\Repository\SurveyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Form\SurveyType;
 
 /**
  * Survey controller.
@@ -35,21 +37,48 @@ class SurveyController extends Controller
     /**
      * Creates a new survey entity.
      *
-     * @Route("/new", name="survey_new")
+     * @Route("/new/{id}", name="survey_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
     {
+        $idUser = $this->getUser()->getId();
         $survey = new Survey();
-        $form = $this->createForm('AppBundle\Form\SurveyType', $survey);
+        $form = $this->createForm( SurveyType::class  , $survey, ['idUser' => $idUser, 'criteriaType' => 2]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($survey);
-            $em->flush($survey);
 
-            return $this->redirectToRoute('survey_show', array('id' => $survey->getId()));
+            $em = $this->getDoctrine()->getManager();
+
+
+            $ObjetSurveyCriteria = $survey->getSurveys();
+
+            $NewSurvey = new Survey();
+            $NewSurvey->setCommentairesClient($survey->getCommentairesClient());
+            $NewSurvey->setSignatureClient($survey->getSignatureClient());
+            $NewSurvey->setCollaborateur($survey->getCollaborateur());
+
+            $NewSurvey->setUser($this->getUser());
+
+            $repository = $this->getDoctrine()->getRepository('AppBundle:Customer');
+            $customer = $repository->find($request->get('id'));
+            $NewSurvey->setCustomer($customer);
+
+            $em->persist($NewSurvey);
+
+            foreach ($ObjetSurveyCriteria as $key => $value) {
+                $SurveyCriteria = new SurveyCriteria();
+                $SurveyCriteria->setScore($value->getScore());
+                $SurveyCriteria->setCoefficient($value->getCoefficient());
+                $SurveyCriteria->setSurvey($NewSurvey);
+                $SurveyCriteria->setCriteria($value->getCriteria());
+                $em->persist($SurveyCriteria);
+            }
+
+            $em->flush($NewSurvey);
+
+            return $this->redirectToRoute('customer_show', array('id' => $request->get('id')));
         }
 
         return $this->render('survey/new.html.twig', array(
@@ -133,6 +162,17 @@ class SurveyController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+
+    /**
+     * Displays a form to edit an existing survey entity.
+     *
+     * @Route("/{id}/pdf", name="survey_pdf")
+     * @Method({"GET"})
+     */
+    public function downloadPdfAction(Request $request) {
+
     }
 
     /**

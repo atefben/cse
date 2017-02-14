@@ -65,11 +65,13 @@ class CustomerController extends Controller
      */
     public function showAction(Customer $customer)
     {
-        $deleteForm = $this->createDeleteForm($customer);
+        //$deleteForm = $this->createDeleteForm($customer);
+        $em = $this->getDoctrine()->getManager();
+        $lists = $em->getRepository('AppBundle:Survey')->findBy(['customer'=>$customer->getId()]);
 
         return $this->render('customer/show.html.twig', array(
             'customer' => $customer,
-            'delete_form' => $deleteForm->createView(),
+            'lists' => $lists,
         ));
     }
 

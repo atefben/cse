@@ -22,10 +22,9 @@ class Survey
 {
 
     /**
-     * @var \DateTime
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\Column(name="SRV_ID")
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
@@ -35,12 +34,7 @@ class Survey
      */
     protected $dateSurvey;
 
-    /**
-     * @var Mission $mission
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Mission")
-     * @ORM\JoinColumn(name="MSN_ID", referencedColumnName="MSN_ID")
-     */
-    protected $mission;
+
 
     /**
      * @var
@@ -55,22 +49,34 @@ class Survey
      */
     protected $signatureClient;
 
+
     /**
-     * @var
-     * @ORM\Column(name="MSN_SIGNATURE_RESP_AGENCE", type="text")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Collaborateur")
+     * @ORM\JoinColumn(nullable=false)
      */
-    protected $signatureResponsableAgence;
+    protected $collaborateur;
 
+     /**
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $user;
 
     /**
-     * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\SurveyCriteria", mappedBy="survey")
      */
-    protected $surveyCriterias;
+    protected $surveys;
+
+
+     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Customer")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $customer;
 
     public function __construct()
     {
-        $this->surveyCriterias = new ArrayCollection();
+        $this->dateSurvey =  new \DateTime();//date('Y-m-d H:i:s');
     }
 
 
@@ -97,21 +103,6 @@ class Survey
         $this->dateSurvey = $dateSurvey;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMission()
-    {
-        return $this->mission;
-    }
-
-    /**
-     * @param mixed $mission
-     */
-    public function setMission($mission)
-    {
-        $this->mission = $mission;
-    }
 
     /**
      * @return mixed
@@ -145,37 +136,114 @@ class Survey
         $this->signatureClient = $signatureClient;
     }
 
+
+
+
     /**
-     * @return mixed
+     * Set collaborateur
+     *
+     * @param \AppBundle\Entity\Collaborateur $collaborateur
+     *
+     * @return Survey
      */
-    public function getSignatureResponsableAgence()
+    public function setCollaborateur(\AppBundle\Entity\Collaborateur $collaborateur)
     {
-        return $this->signatureResponsableAgence;
+        $this->collaborateur = $collaborateur;
+
+        return $this;
     }
 
     /**
-     * @param mixed $signatureResponsableAgence
+     * Get collaborateur
+     *
+     * @return \ApprBundle\Entity\Collaborateur
      */
-    public function setSignatureResponsableAgence($signatureResponsableAgence)
+    public function getCollaborateur()
     {
-        $this->signatureResponsableAgence = $signatureResponsableAgence;
+        return $this->collaborateur;
     }
 
     /**
-     * @return mixed
+     * Set user
+     *
+     * @param \UserBundle\Entity\User $user
+     *
+     * @return Survey
      */
-    public function getSurveyCriterias()
+    public function setUser(\UserBundle\Entity\User $user)
     {
-        return $this->surveyCriterias;
+        $this->user = $user;
+
+        return $this;
     }
 
     /**
-     * @param mixed $surveyCriterias
+     * Get user
+     *
+     * @return \UserBundle\Entity\User
      */
-    public function setSurveyCriterias($surveyCriterias)
+    public function getUser()
     {
-        $this->surveyCriterias = $surveyCriterias;
+        return $this->user;
     }
 
 
+
+    /**
+     * Add survey
+     *
+     * @param \AppBundle\Entity\SurveyCriteria $survey
+     *
+     * @return Survey
+     */
+    public function addSurvey(\AppBundle\Entity\SurveyCriteria $survey)
+    {
+        $this->surveys[] = $survey;
+
+        return $this;
+    }
+
+    /**
+     * Remove survey
+     *
+     * @param \AppBundle\Entity\SurveyCriteria $survey
+     */
+    public function removeSurvey(\AppBundle\Entity\SurveyCriteria $survey)
+    {
+        $this->surveys->removeElement($survey);
+    }
+
+    /**
+     * Get surveys
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSurveys()
+    {
+        return $this->surveys;
+    }
+
+    /**
+     * Set customer
+     *
+     * @param \AppBundle\Entity\Customer $customer
+     *
+     * @return Survey
+     */
+    public function setCustomer(\AppBundle\Entity\Customer $customer)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Get customer
+     *
+     * @return \AppBundle\Entity\Customer
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
 }
