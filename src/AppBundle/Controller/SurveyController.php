@@ -77,7 +77,7 @@ class SurveyController extends Controller
 
             $em->flush($NewSurvey);
 
-            return $this->redirectToRoute('survey_show', array('id' => $NewSurvey->getId()));
+            return $this->redirectToRoute('customer_show', array('id' => $request->get('id')));
         }
 
         return $this->render('survey/new.html.twig', array(
@@ -161,5 +161,16 @@ class SurveyController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+
+    /**
+     * Displays a form to edit an existing survey entity.
+     *
+     * @Route("/{id}/pdf", name="survey_pdf")
+     * @Method({"GET"})
+     */
+    public function downloadPdfAction(Request $request) {
+
     }
 }

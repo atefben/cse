@@ -30,8 +30,40 @@
             </tr>
         </tbody>
     </table>
+
+
+
+    <table class="table table-striped table-bordered zero-configuration">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Fait</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for survey in lists %}
+            <tr>
+                <td>{{ survey.id }}</td>
+                <td>{{  survey.collaborateur.firstname }}</td>
+                <td>{{  survey.dateSurvey|date }}</td>
+                <td><a href="{{ path('survey_pdf', {'id':survey.id}) }}">Télécharger le pdf</a> </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Fait</th>
+            <th>Actions</th>
+        </tr>
+        </tfoot>
+    </table>
+
     <div>
-        <a href="{{ path('survey_new', { 'id': customer.id }) }}">Add</a>
+        <a href="{{ path('survey_new', { 'id': customer.id }) }}">Ajout d'un nouveau test</a>
     </div>
 
 {#
