@@ -143,7 +143,7 @@ class ImportController extends Controller
                     }
 
                     $getCustomer->setCodeSX($customer['Code']);
-                    $getCustomer->setName($customer['Raison social']);
+                    $getCustomer->setName($customer['Raison sociale']);
                     $getCustomer->setAddress($customer['Adresse']);
 
                     if($getUser) {
