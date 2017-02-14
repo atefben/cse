@@ -43,7 +43,7 @@ class SurveyController extends Controller
     {
         $idUser = $this->getUser()->getId();
         $survey = new Survey();
-        $form = $this->createForm( SurveyType::class  , $survey, ['idUser' => $idUser]);
+        $form = $this->createForm( SurveyType::class  , $survey, ['idUser' => $idUser, 'criteriaType' => 2]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

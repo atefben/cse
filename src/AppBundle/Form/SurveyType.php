@@ -29,6 +29,7 @@ class SurveyType extends AbstractType
     {
  
         $this->id = $options['idUser'];
+        $this->criteriaType = $options['criteriaType'];
         $builder
         ->add('commentairesClient')
         //->add('signatureClient')
@@ -48,8 +49,11 @@ class SurveyType extends AbstractType
         ->add("surveys", CollectionType::class, array(
                 'entry_type' => SurveyCriteriaType::class,
                 'allow_add'    => true,
-                'label' => ''   
-           
+                'label' => '',
+                'entry_options' => array(
+                    'criteriaType' => $this->criteriaType
+                )
+
         ))
          ;
 
@@ -65,6 +69,7 @@ class SurveyType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => Survey::class,
             'idUser' => null,
+            'criteriaType'=> null
         ));
         
     }

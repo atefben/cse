@@ -16,9 +16,19 @@ class SurveyCriteriaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+        $this->criteriaType = $options['criteriaType'];
+
+       // var_dump($this->criteriaType); die;
         $builder
         ->add('criteria', EntityType::class, array(
               'class' => 'AppBundle:Criteria',
+              'query_builder' => function ($er) {
+                    return $er->createQueryBuilder('c')
+                        ->where('c.criteriaType = :criteriaType')
+                        ->setParameter("criteriaType", $this->criteriaType)
+                        ;
+                },
               'required'    => false,
               'choice_label' => 'label',
               'attr'   =>  array(
@@ -65,7 +75,8 @@ class SurveyCriteriaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\SurveyCriteria'
+            'data_class' => 'AppBundle\Entity\SurveyCriteria',
+            'criteriaType'=> null
         ));
     }
 
