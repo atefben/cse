@@ -64,7 +64,7 @@ class User extends BaseUser
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\MailGroup", inversedBy="users")
      * @ORM\JoinTable(name="UMG_USER_MAIL_GROUP",
      *       joinColumns={@ORM\JoinColumn(name="USR_ID", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="MGP_ID", referencedColumnName="MGP_ID")})
+     *      inverseJoinColumns={@ORM\JoinColumn(name="MGP_ID", referencedColumnName="id")})
      */
     private $mailGroups;
 

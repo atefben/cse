@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3eb1744-7ff4-4f3b-b3b1-64c4e7f5f063" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/pdf/Client+1-test1-test2-20170215140742.pdf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/pdf/Client+1-test1-test2-20170215142819.pdf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Resources/views/survey/next.html.twig" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/SurveyCollaborateur.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/SurveyCollaborateurCriteria.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/base.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/SurveyController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/SurveyController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/UserBundle/Resources/public/robust-assets/js/app.min.js" afterPath="$PROJECT_DIR$/src/UserBundle/Resources/public/robust-assets/js/app.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/MailGroup.php" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/MailGroup.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/UserBundle/Entity/User.php" afterPath="$PROJECT_DIR$/src/UserBundle/Entity/User.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -60,8 +58,8 @@
       <file leaf-file-name="next.html.twig" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/survey/next.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="828">
-              <caret line="46" column="101" lean-forward="false" selection-start-line="46" selection-start-column="101" selection-end-line="46" selection-end-column="101" />
+            <state relative-caret-position="386">
+              <caret line="22" column="18" lean-forward="true" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -90,7 +88,7 @@
       <file leaf-file-name="app.min.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/UserBundle/Resources/public/robust-assets/js/app.min.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
+            <state relative-caret-position="7416">
               <caret line="412" column="29" lean-forward="false" selection-start-line="412" selection-start-column="29" selection-end-line="412" selection-end-column="29" />
               <folding />
             </state>
@@ -264,8 +262,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -458,6 +454,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -567,11 +565,12 @@
       <workItem from="1487069415932" duration="6796000" />
       <workItem from="1487146835112" duration="14333000" />
       <workItem from="1487167293509" duration="28000" />
+      <workItem from="1487169501970" duration="11000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="83662000" />
+    <option name="totallyTimeSpent" value="83673000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -970,7 +969,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/UserBundle/Resources/public/robust-assets/js/app.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
+        <state relative-caret-position="7416">
           <caret line="412" column="29" lean-forward="false" selection-start-line="412" selection-start-column="29" selection-end-line="412" selection-end-column="29" />
           <folding />
         </state>
@@ -978,8 +977,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/survey/next.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="828">
-          <caret line="46" column="101" lean-forward="false" selection-start-line="46" selection-start-column="101" selection-end-line="46" selection-end-column="101" />
+        <state relative-caret-position="386">
+          <caret line="22" column="18" lean-forward="true" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="18" />
           <folding />
         </state>
       </provider>
