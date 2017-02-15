@@ -92,6 +92,71 @@ class SurveyController extends Controller
         ));
     }
 
+
+
+    /**
+     * Creates a new survey entity.
+     *
+     * @Route("/new/{id}/{idCollab}", name="survey_next")
+     * @Method({"GET", "POST"})
+     */
+    public function nextAction(Request $request)
+    {
+
+        $idUser = $this->getUser()->getId();
+        $idClient = $request->get('id');
+        $idCollab = $request->get('idCollab');
+
+        $em = $this->getDoctrine()->getManager();
+        $survey = $em->getRepository('AppBundle:Survey')->findBy(array('customer'=> $idClient, 'collaborateur'=>$idCollab));
+        $index = count($survey) - 1;
+        $survey = $em->getRepository('AppBundle:Survey')->find($survey[$index]->getId());
+        $form = $this->createForm('AppBundle\Form\SurveyType', $survey, ['idUser' => $idUser, 'criteriaType' => 2]);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+
+            $ObjetSurveyCriteria = $survey->getSurveys();
+
+            $NewSurvey = new Survey();
+            $NewSurvey->setCommentairesClient($survey->getCommentairesClient());
+            $NewSurvey->setSignatureClient($survey->getSignatureClient());
+            $NewSurvey->setCollaborateur($survey->getCollaborateur());
+
+            $NewSurvey->setUser($this->getUser());
+
+            $repository = $this->getDoctrine()->getRepository('AppBundle:Customer');
+            $customer = $repository->find($request->get('id'));
+            $NewSurvey->setCustomer($customer);
+
+            $em->persist($NewSurvey);
+
+
+            foreach ($ObjetSurveyCriteria as $key => $value) {
+                $SurveyCriteria = new SurveyCriteria();
+                $SurveyCriteria->setScore($value->getScore());
+                $SurveyCriteria->setCoefficient($value->getCoefficient());
+                $SurveyCriteria->setSurvey($NewSurvey);
+                $SurveyCriteria->setCriteria($value->getCriteria());
+                $em->persist($SurveyCriteria);
+            }
+
+
+            $em->flush($NewSurvey);
+
+            return $this->redirectToRoute('customer_show', array('id' => $request->get('id')));
+        }
+
+        return $this->render('survey/next.html.twig', array(
+            'survey' => $survey,
+            'form' => $form->createView(),
+        ));
+    }
+
     /**
      * Finds and displays a survey entity.
      *
@@ -116,7 +181,7 @@ class SurveyController extends Controller
      */
     public function editAction(Request $request, Survey $survey)
     {
-        $deleteForm = $this->createDeleteForm($survey);
+       /* $deleteForm = $this->createDeleteForm($survey);
         $editForm = $this->createForm('AppBundle\Form\SurveyType', $survey);
         $editForm->handleRequest($request);
 
@@ -130,7 +195,7 @@ class SurveyController extends Controller
             'survey' => $survey,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ));
+        ));*/
     }
 
     /**
@@ -141,7 +206,7 @@ class SurveyController extends Controller
      */
     public function deleteAction(Request $request, Survey $survey)
     {
-        $form = $this->createDeleteForm($survey);
+        /*$form = $this->createDeleteForm($survey);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -150,7 +215,7 @@ class SurveyController extends Controller
             $em->flush($survey);
         }
 
-        return $this->redirectToRoute('survey_index');
+        return $this->redirectToRoute('survey_index');*/
     }
 
     /**
@@ -162,15 +227,15 @@ class SurveyController extends Controller
      */
     private function createDeleteForm(Survey $survey)
     {
-        return $this->createFormBuilder()
+        /*return $this->createFormBuilder()
             ->setAction($this->generateUrl('survey_delete', array('id' => $survey->getId())))
             ->setMethod('DELETE')
-            ->getForm();
+            ->getForm();*/
     }
 
 
     /**
-     * Displays a form to edit an existing survey entity.
+     * genereate pdf for page html.
      *
      * @Route("/{id}/pdf", name="survey_pdf")
      * @Method({"GET"})
@@ -192,7 +257,7 @@ class SurveyController extends Controller
             {
                 $this->get('knp_snappy.pdf')->generateFromHtml($html, $path);
 
-                return new Response(
+                $response =  new Response(
                     $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
                     200,
                     [
@@ -207,15 +272,48 @@ class SurveyController extends Controller
                     $filename
                 );
 
-                return $response;
-            }
 
+            }
+            return $response;
         }
     }
 
 
 
+    /**
+     * Verification si le client a déjà évalué le collab !
+     *
+     * @Route("/new/{id}/getEval/{idCollab}", name="survey_get_eval")
+     * @Method({"GET"})
+     */
+    public function getEvalAction(Request $request)
+    {
+        if($request->isXmlHttpRequest())
+        {
 
+            $idClient = $request->get('id');
+            $idCollab = $request->get('idCollab');
+
+            $em = $this->getDoctrine()->getManager();
+            $surveys = $em->getRepository('AppBundle:Survey')->findBy(array('customer'=> $idClient, 'collaborateur'=>$idCollab));
+
+            $eval = false;
+            if($surveys) {
+                $eval = true;
+            }
+
+            $response = new Response();
+            $response->setContent(json_encode(array(
+                'eval' => $eval,
+            )));
+            $response->headers->set('Content-Type', 'application/json');
+
+            return$response;
+
+        } else {
+            throw $this->createNotFoundException('The page does not exist');
+        }
+    }
     /**
      * Lists all surveys by user.
      *
@@ -234,4 +332,7 @@ class SurveyController extends Controller
             'surveys' => $surveys,
         ));
     }
+
+
+
 }
