@@ -7,9 +7,13 @@ use AppBundle\Entity\SurveyCriteria;
 use AppBundle\Repository\SurveyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\SurveyType;
 use Symfony\Component\HttpFoundation\Response;
+
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
  * Survey controller.
@@ -45,7 +49,7 @@ class SurveyController extends Controller
     {
         $idUser = $this->getUser()->getId();
         $survey = new Survey();
-        $form = $this->createForm( SurveyType::class  , $survey, ['idUser' => $idUser, 'criteriaType' => 2]);
+        $form = $this->createForm(SurveyType::class, $survey, ['idUser' => $idUser, 'criteriaType' => 2]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -161,8 +165,7 @@ class SurveyController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('survey_delete', array('id' => $survey->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 
 
@@ -172,29 +175,47 @@ class SurveyController extends Controller
      * @Route("/{id}/pdf", name="survey_pdf")
      * @Method({"GET"})
      */
-    public function downloadPdfAction(Request $request) {
-
-
-
+    public function downloadPdfAction(Request $request)
+    {
         $em = $this->getDoctrine()->getManager();
         $id = $request->get('id');
         $survey = $em->getRepository('AppBundle:Survey')->find($id);
-        if($request->get('html')) {
-        return  $this->render('survey/pdf.html.twig', array('survey'=>$survey));
+        if ($request->get('html')) {
+            return $this->render('survey/pdf.html.twig', array('survey' => $survey));
         } else {
-          $html = $this->renderView('survey/pdf.html.twig', array('survey'=>$survey));
-      $filename = sprintf('test-%s.pdf', date('Y-m-d'));
+            $html = $this->renderView('survey/pdf.html.twig', array('survey' => $survey));
 
-        return new Response(
-            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
-            200,
-            [
-                'Content-Type'        => 'application/pdf',
-                'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
-            ]
-        );
+            $filename = urlencode($survey->getCustomer()->getName() . '-' . $survey->getCollaborateur()->getFirstname() . '-' . $survey->getCollaborateur()->getLastname() . '-' . $survey->getDateSurvey()->format('YmdHis'));
+            // $filename = sprintf('test-%s.pdf', date('Y-m-d'));
+            $path = $this->getParameter('parsed_files_pdf').DIRECTORY_SEPARATOR.$filename = urlencode($survey->getCustomer()->getName() . '-' . $survey->getCollaborateur()->getFirstname() . '-' . $survey->getCollaborateur()->getLastname() . '-' . $survey->getDateSurvey()->format('YmdHis').'.pdf');
+
+            if(!file_exists($path))
+            {
+                $this->get('knp_snappy.pdf')->generateFromHtml($html, $path);
+
+                return new Response(
+                    $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+                    200,
+                    [
+                        'Content-Type' => 'application/pdf',
+                        'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
+                    ]
+                );
+            } else {
+                $response = new BinaryFileResponse($path);
+                $response->setContentDisposition(
+                    ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                    $filename
+                );
+
+                return $response;
+            }
+
         }
     }
+
+
+
 
     /**
      * Lists all surveys by user.
@@ -208,7 +229,7 @@ class SurveyController extends Controller
         $em = $this->getDoctrine()->getManager();
         $surveys = $em->getRepository('AppBundle:Survey')->findAll();
         $evaluationService = $this->get('app.evaluation_service');
-        $evals = $evaluationService->getEvaluationByUser($userId,[SurveyRepository::CONDITION_RENEWABLE_EVALUATION,SurveyRepository::CONDITION_NO_EVALUATION]);
+        $evals = $evaluationService->getEvaluationByUser($userId, [SurveyRepository::CONDITION_RENEWABLE_EVALUATION, SurveyRepository::CONDITION_NO_EVALUATION]);
         dump($evals);
         return $this->render('survey/index.html.twig', array(
             'surveys' => $surveys,

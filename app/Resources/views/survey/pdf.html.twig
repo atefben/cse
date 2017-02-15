@@ -42,6 +42,12 @@
     <tr>
         <td colspan="2">
             <table class="table" width="100%">
+                <tr>
+                    <td colspan="2">
+                        <b>Evaluation fait le :</b>
+                    </td>
+                    <td>{{ survey.dateSurvey|date("m/d/Y") }} à {{ survey.dateSurvey|date("H:i") }}</td>
+                </tr>
                 <tr  >
                     <td width="40%"><b>Critère</b></td>
                     <td ><b>Score</b></td>
