@@ -103,7 +103,7 @@ class SurveyCollaborateurController extends Controller
     /**
      * Creates a new survey entity.
      *
-     * @Route("/new/{id}/{idCollab}", name="survey_next")
+     * @Route("/new-eval/{id}/{idCollab}", name="survey_next")
      * @Method({"GET", "POST"})
      */
     public function nextAction(Request $request)
@@ -292,7 +292,7 @@ class SurveyCollaborateurController extends Controller
     /**
      * Verification si le client a déjà évalué le collab !
      *
-     * @Route("/new/{id}/getEval/{idCollab}", name="survey_get_eval")
+     * @Route("/new-eval/{id}/getEval/{idCollab}", name="survey_collaborateur_get_eval")
      * @Method({"GET"})
      */
     public function getEvalAction(Request $request)
@@ -304,7 +304,7 @@ class SurveyCollaborateurController extends Controller
             $idCollab = $request->get('idCollab');
 
             $em = $this->getDoctrine()->getManager();
-            $surveys = $em->getRepository('AppBundle:Survey')->findBy(array('customer'=> $idClient, 'collaborateur'=>$idCollab));
+            $surveys = $em->getRepository('AppBundle:SurveyCollaborateur')->findBy(array('customer'=> $idClient, 'collaborateur'=>$idCollab));
 
             $eval = false;
             if($surveys) {
