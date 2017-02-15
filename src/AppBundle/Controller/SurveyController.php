@@ -186,7 +186,6 @@ class SurveyController extends Controller
             $html = $this->renderView('survey/pdf.html.twig', array('survey' => $survey));
 
             $filename = urlencode($survey->getCustomer()->getName() . '-' . $survey->getCollaborateur()->getFirstname() . '-' . $survey->getCollaborateur()->getLastname() . '-' . $survey->getDateSurvey()->format('YmdHis'));
-            // $filename = sprintf('test-%s.pdf', date('Y-m-d'));
             $path = $this->getParameter('parsed_files_pdf').DIRECTORY_SEPARATOR.$filename = urlencode($survey->getCustomer()->getName() . '-' . $survey->getCollaborateur()->getFirstname() . '-' . $survey->getCollaborateur()->getLastname() . '-' . $survey->getDateSurvey()->format('YmdHis').'.pdf');
 
             if(!file_exists($path))

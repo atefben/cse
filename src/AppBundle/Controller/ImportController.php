@@ -41,21 +41,19 @@ class ImportController extends Controller
         $repositoryCollab = $this->getDoctrine()->getRepository('AppBundle:Collaborateur');
 
 
-        if ($form->isSubmitted() && $form->isValid()) 
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $file = $form->get('file_to_import')->getData();
             $fileName = $this->get('app.file_upload_handler')->upload($file);
             $csvParser = $this->get('app.csv_parser');
-            $collaborateurs = $csvParser->convert($this->getParameter('parsed_files_directory').DIRECTORY_SEPARATOR.$fileName);
-            //@todo handle collaborateurs upsert
-            foreach ($collaborateurs as $collaborateur)
-            {
+            $collaborateurs = $csvParser->convert($this->getParameter('parsed_files_directory') . DIRECTORY_SEPARATOR . $fileName);
+
+            foreach ($collaborateurs as $collaborateur) {
                 try {
-                    //$explode = explode(';', str_replace('"', '', $collab));
-                    $getCollab =  $repositoryCollab->findByCode($collaborateur['Code']);
-                    $getUser =  $repositoryUser->findByCodeSX($collaborateur['Responsable']);
-                    if(!$getCollab) {
+
+                    $getCollab = $repositoryCollab->findByCode($collaborateur['Code']);
+                    $getUser = $repositoryUser->findByCodeSX($collaborateur['Responsable']);
+                    if (!$getCollab) {
                         $getCollab = new Collaborateur();
                     } else {
                         $getCollab = $getCollab[0];
@@ -65,8 +63,8 @@ class ImportController extends Controller
                     $getCollab->setFirstname($collaborateur['Nom']);
                     $getCollab->setLastname($collaborateur['Prénom']);
 
-                    if($getUser) {
-                       
+                    if ($getUser) {
+
                         $getCollab->setUser($getUser[0]);
                     }
 
@@ -75,35 +73,35 @@ class ImportController extends Controller
 
                     $em->persist($getCollab);
                     $em->flush();
-                } catch(\Exception $e) {
+                } catch (\Exception $e) {
 
+                    unlink($this->getParameter('parsed_files_directory') . DIRECTORY_SEPARATOR . $fileName);
 
                     $this->addFlash(
                         'error',
-                        'Problème dans le fichier : '.$e->getMessage()
+                        'Problème dans le fichier : ' . $e->getMessage()
                     );
+
                     return $this->redirectToRoute('import_collaborateur');
-                    //var_dump($e->getMessage()); die;
-                } 
+                }
 
 
-               
             }
 
             $this->addFlash(
-            'notice',
-            'L\'Import s\'est bien passé !'
-        );
+                'notice',
+                'L\'Import s\'est bien passé !'
+            );
 
-            unlink($this->getParameter('parsed_files_directory').DIRECTORY_SEPARATOR.$fileName);
+            unlink($this->getParameter('parsed_files_directory') . DIRECTORY_SEPARATOR . $fileName);
             return $this->redirectToRoute('import_collaborateur');
- 
+
         }
-       
+
         $lists = $repositoryCollab->findAll();
         return $this->render('import/importCollaborateur.html.twig', array(
             'file_form' => $form->createView(),
-            'lists'=> $lists
+            'lists' => $lists
         ));
 
     }
@@ -129,14 +127,13 @@ class ImportController extends Controller
             $file = $form->get('file_to_import')->getData();
             $fileName = $this->get('app.file_upload_handler')->upload($file);
             $csvParser = $this->get('app.csv_parser');
-            $customers = $csvParser->convert($this->getParameter('parsed_files_directory').DIRECTORY_SEPARATOR.$fileName);
-            //@todo handle collaborateurs upsert
-            foreach ($customers as $customer)
-            {
+            $customers = $csvParser->convert($this->getParameter('parsed_files_directory') . DIRECTORY_SEPARATOR . $fileName);
+
+            foreach ($customers as $customer) {
                 try {
-                    $getCustomer =  $repositoryCustomer->findByCodeSX($customer['Code']);
-                    $getUser =  $repositoryUser->findByCodeSX($customer['Chargé de compte']);
-                    if(!$getCustomer) {
+                    $getCustomer = $repositoryCustomer->findByCodeSX($customer['Code']);
+                    $getUser = $repositoryUser->findByCodeSX($customer['Chargé de compte']);
+                    if (!$getCustomer) {
                         $getCustomer = new Customer();
                     } else {
                         $getCustomer = $getCustomer[0];
@@ -146,8 +143,8 @@ class ImportController extends Controller
                     $getCustomer->setName($customer['Raison sociale']);
                     $getCustomer->setAddress($customer['Adresse']);
 
-                    if($getUser) {
-                       
+                    if ($getUser) {
+
                         $getCustomer->setUser($getUser[0]);
                     }
 
@@ -156,32 +153,31 @@ class ImportController extends Controller
 
                     $em->persist($getCustomer);
                     $em->flush();
-                    } catch(\Exception $e) {
+                } catch (\Exception $e) {
 
-
+                    unlink($this->getParameter('parsed_files_directory') . DIRECTORY_SEPARATOR . $fileName);
                     $this->addFlash(
                         'error',
-                        'Problème dans le fichier : '.$e->getMessage()
+                        'Problème dans le fichier : ' . $e->getMessage()
                     );
                     return $this->redirectToRoute('import_collaborateur');
-                    //var_dump($e->getMessage()); die;
-                } 
+                }
             }
 
-$this->addFlash(
-            'notice',
-            'L\'Import s\'est bien passé !'
-        );
-            unlink($this->getParameter('parsed_files_directory').DIRECTORY_SEPARATOR.$fileName);
-    
+            $this->addFlash(
+                'notice',
+                'L\'Import s\'est bien passé !'
+            );
+            unlink($this->getParameter('parsed_files_directory') . DIRECTORY_SEPARATOR . $fileName);
+
             return $this->redirectToRoute('import_customer');
- 
+
         }
 
         $lists = $repositoryCustomer->findAll();
         return $this->render('import/importCustomer.html.twig', array(
             'file_form' => $form->createView(),
-            'lists' =>$lists
+            'lists' => $lists
         ));
     }
 }

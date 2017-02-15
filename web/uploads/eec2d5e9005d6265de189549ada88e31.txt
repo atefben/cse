@@ -1,4 +1,0 @@
-Code;Raison sociale;Chargé de compte;Adresse;Code postal;Ville
-C1;Client 1;COM1;XXX;78481;XXX
-C2;Client 2;COM1;XXX;78481;XXX
-C3;Client 3;COM1;XXX;78481;XXX

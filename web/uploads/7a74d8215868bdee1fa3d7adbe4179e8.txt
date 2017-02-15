@@ -1,3 +1,0 @@
-Code;Raison social;Chargé de compte;Adresse;Code postal;Ville
-C12;client 1;matrob;add;78190;conflant
-C13;client 2;matrob;add2;78190;conflant

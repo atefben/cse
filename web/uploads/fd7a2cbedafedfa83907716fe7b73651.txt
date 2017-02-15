@@ -1,3 +1,0 @@
-Code,Nom,Prénom,Responsable,E-mail,Mobile
-Col1,test1,test2,COM1,ttt@pp.fr,1234567
-col2,dd,dd,COM1,ddd@ppp.fr,123045
