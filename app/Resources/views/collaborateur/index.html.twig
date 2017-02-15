@@ -11,7 +11,7 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Everwinid</th>
+                <th>SX</th>
                 <th>Nom</th>
                 <th>Prenom</th>
                 <th>Actions</th>
@@ -21,7 +21,7 @@
         {% for collaborateur in collaborateurs %}
             <tr>
                 <td><a href="{{ path('collaborateur_show', { 'id': collaborateur.id }) }}">{{ collaborateur.id }}</a></td>
-                <td>{{ collaborateur.everwinId }}</td>
+                <td>{{ collaborateur.code }}</td>
                 <td>{{ collaborateur.firstName }}</td>
                 <td>{{ collaborateur.lastName }}</td>
                 <td>
@@ -29,9 +29,7 @@
                         <li>
                             <a href="{{ path('collaborateur_show', { 'id': collaborateur.id }) }}">show</a>
                         </li>
-                        <li>
-                            <a href="{{ path('collaborateur_edit', { 'id': collaborateur.id }) }}">edit</a>
-                        </li>
+
                     </ul>
                 </td>
             </tr>
@@ -39,9 +37,4 @@
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('collaborateur_new') }}">Create a new collaborateur</a>
-        </li>
-    </ul>
 {% endblock %}

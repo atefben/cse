@@ -3,13 +3,15 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Survey;
+use AppBundle\Entity\SurveyCollaborateur;
+use AppBundle\Entity\SurveyCollaborateurCriteria;
 use AppBundle\Entity\SurveyCriteria;
 use AppBundle\Repository\SurveyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Form\SurveyType;
+use AppBundle\Form\SurveyCollaborateurType;
 use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -42,14 +44,15 @@ class SurveyCollaborateurController extends Controller
     /**
      * Creates a new survey entity.
      *
-     * @Route("/new/{id}", name="survey_new")
+     * @Route("/new-eval/{id}", name="survey_collaborateur_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
     {
         $idUser = $this->getUser()->getId();
-        $survey = new Survey();
-        $form = $this->createForm(SurveyType::class, $survey, ['idUser' => $idUser, 'criteriaType' => 2]);
+        $survey = new SurveyCollaborateur();
+
+        $form = $this->createForm(SurveyCollaborateurType::class, $survey, ['idUser' => $idUser, 'criteriaType' => 1]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -57,36 +60,39 @@ class SurveyCollaborateurController extends Controller
             $em = $this->getDoctrine()->getManager();
 
 
-            $ObjetSurveyCriteria = $survey->getSurveys();
+            $ObjetSurveyCriteria = $survey->getSurveysCollaborateur();
 
-            $NewSurvey = new Survey();
-            $NewSurvey->setCommentairesClient($survey->getCommentairesClient());
-            $NewSurvey->setSignatureClient($survey->getSignatureClient());
-            $NewSurvey->setCollaborateur($survey->getCollaborateur());
+            $NewSurvey = new SurveyCollaborateur();
+            $NewSurvey->setCommentairesCollaborateur($survey->getCommentairesCollaborateur());
+            $NewSurvey->setSignatureCollaborateur($survey->getSignatureCollaborateur());
+            $repository = $this->getDoctrine()->getRepository('AppBundle:Collaborateur');
+
+            $Collaborateur = $repository->find($request->get('id'));
+            $NewSurvey->setCollaborateur($Collaborateur);
+
 
             $NewSurvey->setUser($this->getUser());
 
-            $repository = $this->getDoctrine()->getRepository('AppBundle:Customer');
-            $customer = $repository->find($request->get('id'));
-            $NewSurvey->setCustomer($customer);
+            $NewSurvey->setCustomer($survey->getCustomer());
 
             $em->persist($NewSurvey);
 
             foreach ($ObjetSurveyCriteria as $key => $value) {
-                $SurveyCriteria = new SurveyCriteria();
+                $SurveyCriteria = new SurveyCollaborateurCriteria();
                 $SurveyCriteria->setScore($value->getScore());
                 $SurveyCriteria->setCoefficient($value->getCoefficient());
-                $SurveyCriteria->setSurvey($NewSurvey);
+                $SurveyCriteria->setSurveyCollaborateur($NewSurvey);
                 $SurveyCriteria->setCriteria($value->getCriteria());
                 $em->persist($SurveyCriteria);
             }
 
             $em->flush($NewSurvey);
 
-            return $this->redirectToRoute('customer_show', array('id' => $request->get('id')));
+            return $this->redirectToRoute('collaborateur_show', array('id' => $request->get('id')));
         }
 
-        return $this->render('survey/new.html.twig', array(
+
+        return $this->render('collaborateur/new.html.twig', array(
             'survey' => $survey,
             'form' => $form->createView(),
         ));
@@ -123,15 +129,18 @@ class SurveyCollaborateurController extends Controller
             $ObjetSurveyCriteria = $survey->getSurveys();
 
             $NewSurvey = new Survey();
-            $NewSurvey->setCommentairesClient($survey->getCommentairesClient());
-            $NewSurvey->setSignatureClient($survey->getSignatureClient());
-            $NewSurvey->setCollaborateur($survey->getCollaborateur());
+            $NewSurvey->setCommentairesCollaborateur($survey->getCommentairesCollaborateur());
+            $NewSurvey->setSignatureCollaborateur($survey->getSignatureCollaborateur());
+            //$NewSurvey->setCollaborateur($survey->getCollaborateur());
+
+            $repository = $this->getDoctrine()->getRepository('AppBundle:Collaborateur');
+            $collaborateur = $repository->find($request->get('id'));
+            $NewSurvey->setCollaborateur($collaborateur);
+
 
             $NewSurvey->setUser($this->getUser());
 
-            $repository = $this->getDoctrine()->getRepository('AppBundle:Customer');
-            $customer = $repository->find($request->get('id'));
-            $NewSurvey->setCustomer($customer);
+            $NewSurvey->setCustomer($survey->getCustomer());
 
             $em->persist($NewSurvey);
 
@@ -148,10 +157,10 @@ class SurveyCollaborateurController extends Controller
 
             $em->flush($NewSurvey);
 
-            return $this->redirectToRoute('customer_show', array('id' => $request->get('id')));
+            return $this->redirectToRoute('collaborateur_show', array('id' => $request->get('id')));
         }
 
-        return $this->render('survey/next.html.twig', array(
+        return $this->render('collaborateur/next.html.twig', array(
             'survey' => $survey,
             'form' => $form->createView(),
         ));

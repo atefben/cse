@@ -263,28 +263,4 @@ class SurveyCollaborateur
     {
         return $this->signatureCollaborateur;
     }
-
-    /**
-     * Add surveysCollaborateur
-     *
-     * @param \AppBundle\Entity\SurveyCollaborateurCriteria $surveysCollaborateur
-     *
-     * @return SurveyCollaborateur
-     */
-    public function addSurveysCollaborateur(\AppBundle\Entity\SurveyCollaborateurCriteria $surveysCollaborateur)
-    {
-        $this->surveysCollaborateur[] = $surveysCollaborateur;
-
-        return $this;
-    }
-
-    /**
-     * Remove surveysCollaborateur
-     *
-     * @param \AppBundle\Entity\SurveyCollaborateurCriteria $surveysCollaborateur
-     */
-    public function removeSurveysCollaborateur(\AppBundle\Entity\SurveyCollaborateurCriteria $surveysCollaborateur)
-    {
-        $this->surveysCollaborateur->removeElement($surveysCollaborateur);
-    }
 }

@@ -39,7 +39,7 @@ class CollaborateurController extends Controller
      */
     public function newAction(Request $request)
     {
-        $collaborateur = new Collaborateur();
+        /*$collaborateur = new Collaborateur();
         $form = $this->createForm('AppBundle\Form\CollaborateurType', $collaborateur);
         $form->handleRequest($request);
 
@@ -54,7 +54,7 @@ class CollaborateurController extends Controller
         return $this->render('collaborateur/new.html.twig', array(
             'collaborateur' => $collaborateur,
             'form' => $form->createView(),
-        ));
+        ));*/
     }
 
     /**
@@ -65,11 +65,14 @@ class CollaborateurController extends Controller
      */
     public function showAction(Collaborateur $collaborateur)
     {
-        $deleteForm = $this->createDeleteForm($collaborateur);
+        //$deleteForm = $this->createDeleteForm($collaborateur);
+        $em = $this->getDoctrine()->getManager();
+        $lists = $em->getRepository('AppBundle:SurveyCollaborateur')->findBy(['customer'=>$collaborateur->getId()]);
+
 
         return $this->render('collaborateur/show.html.twig', array(
             'collaborateur' => $collaborateur,
-            'delete_form' => $deleteForm->createView(),
+            'lists' => $lists,
         ));
     }
 
