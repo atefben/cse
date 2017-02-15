@@ -246,18 +246,18 @@ class SurveyCollaborateurController extends Controller
     /**
      * genereate pdf for page html.
      *
-     * @Route("/{id}/pdf", name="survey_pdf")
+     * @Route("/{id}/pdf", name="survey_collaborateur_pdf")
      * @Method({"GET"})
      */
     public function downloadPdfAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $id = $request->get('id');
-        $survey = $em->getRepository('AppBundle:Survey')->find($id);
+        $survey = $em->getRepository('AppBundle:SurveyCollaborateur')->find($id);
         if ($request->get('html')) {
-            return $this->render('survey/pdf.html.twig', array('survey' => $survey));
+            return $this->render('collaborateur/pdf.html.twig', array('survey' => $survey));
         } else {
-            $html = $this->renderView('survey/pdf.html.twig', array('survey' => $survey));
+            $html = $this->renderView('collaborateur/pdf.html.twig', array('survey' => $survey));
 
             $filename = urlencode($survey->getCustomer()->getName() . '-' . $survey->getCollaborateur()->getFirstname() . '-' . $survey->getCollaborateur()->getLastname() . '-' . $survey->getDateSurvey()->format('YmdHis'));
             $path = $this->getParameter('parsed_files_pdf').DIRECTORY_SEPARATOR.$filename = urlencode($survey->getCustomer()->getName() . '-' . $survey->getCollaborateur()->getFirstname() . '-' . $survey->getCollaborateur()->getLastname() . '-' . $survey->getDateSurvey()->format('YmdHis').'.pdf');

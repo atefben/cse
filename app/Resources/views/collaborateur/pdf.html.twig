@@ -54,7 +54,7 @@
                     <td ><b>Coefficient</b></td>
                 </tr>
                 {%  set note =0 %} {%  set totalCoef =0 %} {%  set total =0 %}
-                {% for critere in survey.surveys %}
+                {% for critere in survey.surveysCollaborateur %}
                 <tr  >
 
                     <td width="40%">{{ critere.criteria.label }}</td>
@@ -91,7 +91,7 @@
 
             </tr>
             <tr  >
-                <td> {{ survey.commentairesClient}} </td>
+                <td> {{ survey.commentairesCollaborateur}} </td>
 
             </tr>
 
@@ -110,7 +110,7 @@
 
                 </tr>
                 <tr style="text-align: center">
-                    <td> <img src="{{ survey.signatureClient}}" /> </td>
+                    <td> <img src="{{ survey.signatureCollaborateur}}" /> </td>
 
                 </tr>
 

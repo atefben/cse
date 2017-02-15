@@ -42,7 +42,7 @@
                 <td>{{ survey.id }}</td>
                 <td>{{  survey.collaborateur.firstname }}</td>
                 <td>{{  survey.dateSurvey|date }}</td>
-                <td><a href="{{ path('survey_pdf', {'id':survey.id}) }}">Télécharger le pdf</a> </td>
+                <td><a href="{{ path('survey_collaborateur_pdf', {'id':survey.id}) }}">Télécharger le pdf</a> </td>
             </tr>
         {% endfor %}
         </tbody>
