@@ -1,0 +1,145 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+     evaluation : Suivit
+{% endblock %}
+
+{% block content %}</h1>
+
+    {{ form_start(form,  { 'attr': {'class': 'form', 'id':'nextevalclient'} }) }}
+        <div class="form-body">
+
+            <h4 class="form-section">
+                <i class="icon-head"></i> Information
+            </h4>
+
+             <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="companyName">Collaborateur</label>
+                            {{ form_widget(form.collaborateur,  { 'attr': {'class': 'ac-combobox', 'placeholder':"First Name", 'id':"combobox" }}) }}
+                        </div>
+                    </div>
+            </div>
+            <h4 class="form-section">
+                <i class="icon-quill"></i> Choix des critères
+            </h4>
+
+            {% for criteria in form.surveys %}
+
+            <div class="row">
+                <h5 class="form-section" style="text-align:center">Critère</h5>
+                <div class="col-md-3">
+                    <div class="form-group">
+                            <label for="">Critère</label>
+                            {{ form_widget(criteria.criteria,  { 'attr': {'class': 'form-control', 'disabled': 'disabled' }}) }}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="">Score</label>
+                        {{ form_widget(criteria.score,  { 'attr': {'class': 'form-control score' }}) }}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="">coefficient</label>
+                        {{ form_widget(criteria.coefficient,  { 'attr': {'class': 'form-control coeff' }}) }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {#<div class="criterias" data-prototype='{{ form_widget( form.surveys.vars.prototype.criteria)|e('html_attr') }}'></div>
+            <div class="scores" data-prototype='{{ form_widget( form.surveys.vars.prototype.score)|e('html_attr') }}'></div>
+            <div class="coefficients" data-prototype='{{ form_widget( form.surveys.vars.prototype.coefficient)|e('html_attr') }}'></div>
+#}
+            
+            {#<div class="row">
+                <div class="col-md-6">
+
+                    <div class="tags" data-prototype='{{ form_widget( form.surveys.vars.prototype)|e('html_attr') }}'>
+                    </div>
+                </div>
+            </div>#}
+
+                <h4 class="form-section"><i class="icon-clipboard4"></i> Complement et signature</h4>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="companyName">Notes <span id='scoreTotal'></span> / 10</label>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="companyName">Commentaire</label>
+                            {{ form_widget(form.commentairesClient,  { 'attr': {'class': 'form-control', 'placeholder':"Commentaire du client"}}) }}                               
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="companyName">Signature</label>
+
+                            <style type="text/css">
+
+
+
+
+
+    
+    /*This is the div within which the signature canvas is fitted*/
+    #signature {
+        border: 2px dotted black;
+        background-color:lightgrey;
+    }
+
+    /* Drawing the 'gripper' for touch-enabled devices */ 
+    html.touch #content {
+        float:left;
+        width:92%;
+    }
+    html.touch #scrollgrabber {
+        float:right;
+        width:4%;
+        margin-right:2%;
+        background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAFCAAAAACh79lDAAAAAXNSR0IArs4c6QAAABJJREFUCB1jmMmQxjCT4T/DfwAPLgOXlrt3IwAAAABJRU5ErkJggg==)
+    }
+    html.borderradius #scrollgrabber {
+        border-radius: 1em;
+    }
+     
+</style>
+
+                            <div id='signature'></div>
+                            {{ form_widget(form.signatureClient) }}                               
+                        </div>
+                    </div>
+                </div>
+
+                {{ form_widget(form.surveys) }}  
+
+                <div class="form-actions">
+                    <button type="submit" id="addSurveyNext" class="btn btn-primary">
+                        <i class="icon-check2"></i> Save
+                     </button>
+                </div>
+    {{ form_end(form) }}
+
+
+
+
+    
+
+    <ul>
+        <li>
+            <a href="{{ path('survey_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}
