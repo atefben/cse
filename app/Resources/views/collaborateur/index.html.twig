@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block content_title %}
-    Collaborateurs
+    Mes Collaborateurs
 {% endblock %}
 
 
@@ -37,4 +37,68 @@
         </tbody>
     </table>
 
+{% if app.user.roles[0] == "ROLE_RESPONSABLE_AGENCE" %}
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+</section>
+</div>
+
+</div>
+</div>
+<!-- container content - BEGIN -->
+<div class="robust-content content container-fluid">
+    <div class="content-wrapper">
+        <div class="content-body">
+            <section id="configuration">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Les collaborateurs de mes commerciaux</h4>
+                                <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                            </div>
+                            <div class="card-body collapse in">
+                                <div class="card-block card-dashboard">
+
+                                    <table class="table table-striped table-bordered zero-configuration">
+                                        <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>SX</th>
+                                            <th>Nom</th>
+                                            <th>Prenom</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for collaborateur in ListCollaborateurForBusiness %}
+                                            <tr>
+                                                <td><a href="{{ path('collaborateur_show', { 'id': collaborateur.id }) }}">{{ collaborateur.id }}</a></td>
+                                                <td>{{ collaborateur.code }}</td>
+                                                <td>{{ collaborateur.firstName }}</td>
+                                                <td>{{ collaborateur.lastName }}</td>
+                                                <td>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="{{ path('collaborateur_show', { 'id': collaborateur.id }) }}">show</a>
+                                                        </li>
+
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+
+
+
+                                    {% endif %}
 {% endblock %}
+
+

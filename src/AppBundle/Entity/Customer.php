@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class Criteria
  * @package AppBundle\Entity
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CustomerRepository");
  * @ORM\Table(name="CST_CUSTOMER")
  */
 class Customer

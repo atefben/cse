@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Collaborateur
  * @package AppBundle\Entity
  * @ORM\Table(name="CLR_COLLABORATEUR")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CollaborateurRepository");
  */
 class Collaborateur
 {

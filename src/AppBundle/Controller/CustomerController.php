@@ -5,7 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Customer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Customer controller.
@@ -24,11 +25,32 @@ class CustomerController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $customers = $em->getRepository('AppBundle:Customer')->findAll();
+        $idUser = $this->getUser()->getId();
 
-        return $this->render('customer/index.html.twig', array(
-            'customers' => $customers,
-        ));
+        $TabTwig = array();
+
+
+        if ($this->getUser()->getRoles()[0] == "ROLE_RESPONSABLE_AGENCE") {
+            $MyCustomers = $em->getRepository('AppBundle:Customer')->findBy(['user'=>$idUser]);
+            $TabTwig['MyCustomers'] =  $MyCustomers;
+
+
+            $ListCustomerForBusiness = $MyCustomers = $em->getRepository('AppBundle:Customer')->getCustomerForBusiness($idUser);
+            $TabTwig['ListCustomerForBusiness'] =  $ListCustomerForBusiness;
+
+        } else if ($this->getUser()->getRoles()[0] == "ROLE_ADMIN" ||$this->getUser()->getRoles()[0] == "ROLE_SUPER_ADMIN") {
+
+            $MyCustomers = $em->getRepository('AppBundle:Customer')->findAll();
+            $TabTwig['MyCustomers'] =  $MyCustomers;
+
+        } else {
+            $MyCustomers = $em->getRepository('AppBundle:Customer')->findBy(['user'=>$idUser]);
+            $TabTwig['MyCustomers'] =  $MyCustomers;
+
+
+        }
+
+        return $this->render('customer/index.html.twig', $TabTwig);
     }
 
     /**
@@ -67,7 +89,7 @@ class CustomerController extends Controller
     {
         //$deleteForm = $this->createDeleteForm($customer);
         $em = $this->getDoctrine()->getManager();
-        $lists = $em->getRepository('AppBundle:Survey')->findBy(['customer'=>$customer->getId()]);
+        $lists = $em->getRepository('AppBundle:Survey')->findBy(['customer' => $customer->getId()]);
 
         return $this->render('customer/show.html.twig', array(
             'customer' => $customer,
@@ -132,7 +154,6 @@ class CustomerController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('customer_delete', array('id' => $customer->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }
