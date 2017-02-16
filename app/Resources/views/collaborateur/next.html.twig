@@ -25,14 +25,14 @@
             <h4 class="form-section">
                 <i class="icon-quill"></i> Choix des critères
             </h4>
-
+            {% set cpt = 0 %}
             {% for criteria in form.surveysCollaborateur %}
 
             <div class="row">
                 <h5 class="form-section" style="text-align:center">Critère</h5>
                 <div class="col-md-3">
                     <div class="form-group">
-                            <label for="">Critère</label>
+                            <label for="">Critère <i class="icon-help" id="help{{ cpt }}" data-toggle="modal" data-target="#default"></i></label>
                             {{ form_widget(criteria.criteria,  { 'attr': {'class': 'form-control', 'disabled': 'disabled' }}) }}
                     </div>
                 </div>
@@ -49,6 +49,7 @@
                     </div>
                 </div>
             </div>
+                {% set cpt = cpt + 1 %}
             {% endfor %}
 
 
@@ -123,11 +124,40 @@
     {{ form_end(form) }}
 
 
+            <div class="modal fade text-xs-left" id="default" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel1"></h4>
+                        </div>
+                        <div class="modal-body" id="myModalDescription1">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
-    
+            <ul style="display: none;">
+                {% for criteria in criterias %}
+                    <li >
+                        <div id="criteriaLabel{{ criteria.id }}">{{ criteria.label }}</div>
+                        <div id="criteriaDescription{{ criteria.id }}">{{ criteria.description }}</div>
+                    </li>
+                {% endfor %}
+            </ul>
 
-    <ul>
+
+
+
+
+
+            <ul>
         <li>
             <a href="{{ path('survey_index') }}">Back to the list</a>
         </li>

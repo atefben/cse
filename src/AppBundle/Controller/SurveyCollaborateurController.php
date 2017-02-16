@@ -55,6 +55,9 @@ class SurveyCollaborateurController extends Controller
         $form = $this->createForm(SurveyCollaborateurType::class, $survey, ['idUser' => $idUser, 'criteriaType' => 1]);
         $form->handleRequest($request);
 
+
+        $criterias = $this->getDoctrine()->getRepository('AppBundle:Criteria')->findBy(['criteriaType'=> 1]);
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
@@ -95,6 +98,7 @@ class SurveyCollaborateurController extends Controller
         return $this->render('collaborateur/new.html.twig', array(
             'survey' => $survey,
             'form' => $form->createView(),
+            'criterias' =>$criterias
         ));
     }
 
@@ -120,7 +124,7 @@ class SurveyCollaborateurController extends Controller
         $form = $this->createForm('AppBundle\Form\SurveyCollaborateurType', $survey, ['idUser' => $idUser, 'criteriaType' => 1]);
         $form->handleRequest($request);
 
-
+        $criterias = $this->getDoctrine()->getRepository('AppBundle:Criteria')->findBy(['criteriaType'=> 1]);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -162,6 +166,7 @@ class SurveyCollaborateurController extends Controller
         return $this->render('collaborateur/next.html.twig', array(
             'survey' => $survey,
             'form' => $form->createView(),
+            'criterias' =>$criterias
         ));
 
 
