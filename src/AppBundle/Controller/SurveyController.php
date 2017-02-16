@@ -52,6 +52,8 @@ class SurveyController extends Controller
         $form = $this->createForm(SurveyType::class, $survey, ['idUser' => $idUser, 'criteriaType' => 2]);
         $form->handleRequest($request);
 
+        $criterias = $this->getDoctrine()->getRepository('AppBundle:Criteria')->findBy(['criteriaType'=> 2]);
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
@@ -89,6 +91,7 @@ class SurveyController extends Controller
         return $this->render('survey/new.html.twig', array(
             'survey' => $survey,
             'form' => $form->createView(),
+            'criterias' =>$criterias
         ));
     }
 
@@ -108,6 +111,7 @@ class SurveyController extends Controller
         $idCollab = $request->get('idCollab');
 
         $em = $this->getDoctrine()->getManager();
+        $criterias = $this->getDoctrine()->getRepository('AppBundle:Criteria')->findBy(['criteriaType'=> 2]);
         $survey = $em->getRepository('AppBundle:Survey')->findBy(array('customer'=> $idClient, 'collaborateur'=>$idCollab));
         $index = count($survey) - 1;
         $survey = $em->getRepository('AppBundle:Survey')->find($survey[$index]->getId());
@@ -154,6 +158,7 @@ class SurveyController extends Controller
         return $this->render('survey/next.html.twig', array(
             'survey' => $survey,
             'form' => $form->createView(),
+            'criterias' =>$criterias
         ));
     }
 
