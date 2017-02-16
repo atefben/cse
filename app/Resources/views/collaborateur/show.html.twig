@@ -13,7 +13,7 @@
             </tr>
             <tr>
                 <th>Everwinid</th>
-                <td>{{ collaborateur.everwinId }}</td>
+                <td>{{ collaborateur.code }}</td>
             </tr>
             <tr>
                 <th>Firstname</th>
@@ -23,24 +23,40 @@
                 <th>Lastname</th>
                 <td>{{ collaborateur.lastName }}</td>
             </tr>
-            <tr>
-                <th>Deleted</th>
-                <td>{% if collaborateur.deleted %}Yes{% else %}No{% endif %}</td>
-            </tr>
+
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('collaborateur_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('collaborateur_edit', { 'id': collaborateur.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <table class="table table-striped table-bordered zero-configuration">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Fait</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for survey in lists %}
+            <tr>
+                <td>{{ survey.id }}</td>
+                <td>{{  survey.collaborateur.firstname }}</td>
+                <td>{{  survey.dateSurvey|date }}</td>
+                <td><a href="{{ path('survey_collaborateur_pdf', {'id':survey.id}) }}">Télécharger le pdf</a> </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Fait</th>
+            <th>Actions</th>
+        </tr>
+        </tfoot>
+    </table>
+
+    <div>
+        <a href="{{ path('survey_collaborateur_new', { 'id': collaborateur.id }) }}">Ajouter une évaluation</a>
+    </div>
 {% endblock %}

@@ -24,8 +24,8 @@ class MailGroup
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="MGP_ID", type="integer")
-     * @ORM\GeneratedValue
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 

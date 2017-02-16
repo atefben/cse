@@ -350,8 +350,8 @@
                         <span data-i18n="nav.dash.main" class="menu-title">Client</span>
                     </a>
                 </li>
-                <li class=" nav-item" {% if current_path == path('userapp_index') %}class="active"{% endif %}>
-                    <a href="#"><i class="icon-user"></i>
+                <li class=" nav-item" {% if current_path == path('collaborateur_index') %}class="active"{% endif %}>
+                    <a href="{{ path('collaborateur_index')  }}"><i class="icon-user"></i>
                         <span data-i18n="nav.dash.main" class="menu-title">Collaborateur</span>
                     </a>
                 </li>
