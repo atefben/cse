@@ -24,11 +24,34 @@ class CollaborateurController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $collaborateurs = $em->getRepository('AppBundle:Collaborateur')->findAll();
+        //$collaborateurs = $em->getRepository('AppBundle:Collaborateur')->findAll();
 
-        return $this->render('collaborateur/index.html.twig', array(
-            'collaborateurs' => $collaborateurs,
-        ));
+        $idUser = $this->getUser()->getId();
+
+        $TabTwig = array();
+
+
+        if ($this->getUser()->getRoles()[0] == "ROLE_RESPONSABLE_AGENCE") {
+            $collaborateurs = $em->getRepository('AppBundle:Collaborateur')->findBy(['user'=>$idUser]);
+            $TabTwig['collaborateurs'] =  $collaborateurs;
+
+
+            $ListCustomerForBusiness = $MyCustomers = $em->getRepository('AppBundle:Collaborateur')->getCollaboratorForBusiness($idUser);
+            $TabTwig['ListCollaborateurForBusiness'] =  $ListCustomerForBusiness;
+
+        } else if ($this->getUser()->getRoles()[0] == "ROLE_ADMIN" ||$this->getUser()->getRoles()[0] == "ROLE_SUPER_ADMIN") {
+
+            $collaborateurs = $em->getRepository('AppBundle:Collaborateur')->findAll();
+            $TabTwig['collaborateurs'] =  $collaborateurs;
+
+        } else {
+            $collaborateurs = $em->getRepository('AppBundle:Collaborateur')->findBy(['user'=>$idUser]);
+            $TabTwig['collaborateurs'] =  $collaborateurs;
+
+
+        }
+
+        return $this->render('collaborateur/index.html.twig', $TabTwig);
     }
 
     /**
