@@ -103,23 +103,69 @@ class SurveyCollaborateurController extends Controller
     /**
      * Creates a new survey entity.
      *
-     * @Route("/new-eval/{id}/{idCollab}", name="survey_next")
+     * @Route("/new-eval/{id}/{idClient}", name="survey_collaborateur_next")
      * @Method({"GET", "POST"})
      */
     public function nextAction(Request $request)
     {
 
         $idUser = $this->getUser()->getId();
-        $idClient = $request->get('id');
-        $idCollab = $request->get('idCollab');
+        $idCollab = $request->get('id');
+        $idClient  = $request->get('idClient');
 
         $em = $this->getDoctrine()->getManager();
-        $survey = $em->getRepository('AppBundle:Survey')->findBy(array('customer'=> $idClient, 'collaborateur'=>$idCollab));
+        $survey = $em->getRepository('AppBundle:SurveyCollaborateur')->findBy(array('customer'=> $idClient, 'collaborateur'=>$idCollab));
         $index = count($survey) - 1;
-        $survey = $em->getRepository('AppBundle:Survey')->find($survey[$index]->getId());
-        $form = $this->createForm('AppBundle\Form\SurveyType', $survey, ['idUser' => $idUser, 'criteriaType' => 2]);
+        $survey = $em->getRepository('AppBundle:SurveyCollaborateur')->find($survey[$index]->getId());
+        $form = $this->createForm('AppBundle\Form\SurveyCollaborateurType', $survey, ['idUser' => $idUser, 'criteriaType' => 1]);
         $form->handleRequest($request);
 
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+
+            $ObjetSurveyCriteria = $survey->getSurveysCollaborateur();
+
+            $NewSurvey = new SurveyCollaborateur();
+            $NewSurvey->setCommentairesCollaborateur($survey->getCommentairesCollaborateur());
+            $NewSurvey->setSignatureCollaborateur($survey->getSignatureCollaborateur());
+            $repository = $this->getDoctrine()->getRepository('AppBundle:Collaborateur');
+
+            $Collaborateur = $repository->find($request->get('id'));
+            $NewSurvey->setCollaborateur($Collaborateur);
+
+
+            $NewSurvey->setUser($this->getUser());
+
+            $NewSurvey->setCustomer($survey->getCustomer());
+
+            $em->persist($NewSurvey);
+
+            foreach ($ObjetSurveyCriteria as $key => $value) {
+                $SurveyCriteria = new SurveyCollaborateurCriteria();
+                $SurveyCriteria->setScore($value->getScore());
+                $SurveyCriteria->setCoefficient($value->getCoefficient());
+                $SurveyCriteria->setSurveyCollaborateur($NewSurvey);
+                $SurveyCriteria->setCriteria($value->getCriteria());
+                $em->persist($SurveyCriteria);
+            }
+
+            $em->flush($NewSurvey);
+
+            return $this->redirectToRoute('collaborateur_show', array('id' => $request->get('id')));
+        }
+
+
+        return $this->render('collaborateur/next.html.twig', array(
+            'survey' => $survey,
+            'form' => $form->createView(),
+        ));
+
+
+        /*
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -163,7 +209,7 @@ class SurveyCollaborateurController extends Controller
         return $this->render('collaborateur/next.html.twig', array(
             'survey' => $survey,
             'form' => $form->createView(),
-        ));
+        ));*/
     }
 
     /**
@@ -292,7 +338,7 @@ class SurveyCollaborateurController extends Controller
     /**
      * Verification si le client a déjà évalué le collab !
      *
-     * @Route("/new-eval/{id}/getEval/{idCollab}", name="survey_collaborateur_get_eval")
+     * @Route("/new-eval/{id}/getEval/{idClient}", name="survey_collaborateur_get_eval")
      * @Method({"GET"})
      */
     public function getEvalAction(Request $request)
@@ -300,8 +346,8 @@ class SurveyCollaborateurController extends Controller
         if($request->isXmlHttpRequest())
         {
 
-            $idClient = $request->get('id');
-            $idCollab = $request->get('idCollab');
+            $idCollab = $request->get('id');
+            $idClient  = $request->get('idClient');
 
             $em = $this->getDoctrine()->getManager();
             $surveys = $em->getRepository('AppBundle:SurveyCollaborateur')->findBy(array('customer'=> $idClient, 'collaborateur'=>$idCollab));
