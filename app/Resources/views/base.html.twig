@@ -333,7 +333,7 @@
                             <a href="{{ path('user_list') }}" data-i18n="nav.dash.project" class="menu-item">Utilisateur</a>
                         </li>
 
-                        <li {% if current_path == path('userapp_index')  %}class="active"{% endif %}><a href="#" data-i18n="nav.dash.ecommerce" class="menu-item">Alerte</a>
+                        <li {#{% if current_path == path('user_list')  %}class="active"{% endif %}#}><a href="#" data-i18n="nav.dash.ecommerce" class="menu-item">Alerte</a>
                         </li>
                         <li {% if current_path == path('criteria_index')  %}class="active"{% endif %}><a href="{{ path('criteria_index') }}" data-i18n="nav.dash.analytics" class="menu-item">Critère</a>
                         </li>
