@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 use FOS\UserBundle\Util\LegacyFormHelper;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,7 +25,7 @@ class UserType  extends AbstractType
             ->add('email')
             ->add('username')
             ->add('codeSX')
-            ->add('plainPassword')
+            ->add('plainPassword',PasswordType::class)
             ->add('enabled', HiddenType::class, array('data' => true ))
             ->add('userReponsable', EntityType::class, array(
               'class' => 'UserBundle:User',
@@ -34,6 +35,7 @@ class UserType  extends AbstractType
 
            ->add('roles',  CollectionType::class, array(
                'entry_type'   => ChoiceType::class,
+               'allow_delete' => true,
                'entry_options'  => array(
                    'label' => false,
                    'choices'  => array(

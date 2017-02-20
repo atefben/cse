@@ -91,7 +91,8 @@ class SurveyController extends Controller
         return $this->render('survey/new.html.twig', array(
             'survey' => $survey,
             'form' => $form->createView(),
-            'criterias' =>$criterias
+            'criterias' =>$criterias,
+            'id'  => $request->get('id')
         ));
     }
 
