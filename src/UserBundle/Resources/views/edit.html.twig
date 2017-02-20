@@ -72,13 +72,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="projectinput3">Mot de passe</label>
-                                                        {{ form_widget(form.plainPassword,  { 'attr': {'class': 'form-control', 'placeholder':"Mot de passe"}}) }}
-                                                        {#<input type="text" id="projectinput3" class="form-control" placeholder="E-mail" name="email">#}
-                                                    </div>
-                                                </div>
+
                                             </div>
 
                                         </div>
@@ -91,11 +85,22 @@
                                                 <i class="icon-check2"></i> Save
                                             </button>
                                         </div>
-                                        <div style="display: none">
+                                        <div style="visibility: hidden" class="collectionRoles">
                                             {{ form_widget(form.roles[1]) }}
                                             {#{{ form_widget(form.roles[2]) }}#}
                                         </div>
                                         {{ form_end(form) }}
 
 
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function()
+        {
+           $('.collectionRoles').remove();
+           $('#user_roles').remove();
+        })
+    </script>
 {% endblock %}

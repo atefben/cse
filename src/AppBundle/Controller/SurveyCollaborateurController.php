@@ -98,7 +98,8 @@ class SurveyCollaborateurController extends Controller
         return $this->render('collaborateur/new.html.twig', array(
             'survey' => $survey,
             'form' => $form->createView(),
-            'criterias' =>$criterias
+            'criterias' =>$criterias,
+            'id'=>$request->get('id')
         ));
     }
 

@@ -54,31 +54,6 @@ class CollaborateurController extends Controller
         return $this->render('collaborateur/index.html.twig', $TabTwig);
     }
 
-    /**
-     * Creates a new collaborateur entity.
-     *
-     * @Route("/new", name="collaborateur_new")
-     * @Method({"GET", "POST"})
-     */
-    public function newAction(Request $request)
-    {
-        /*$collaborateur = new Collaborateur();
-        $form = $this->createForm('AppBundle\Form\CollaborateurType', $collaborateur);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($collaborateur);
-            $em->flush($collaborateur);
-
-            return $this->redirectToRoute('collaborateur_show', array('id' => $collaborateur->getId()));
-        }
-
-        return $this->render('collaborateur/new.html.twig', array(
-            'collaborateur' => $collaborateur,
-            'form' => $form->createView(),
-        ));*/
-    }
 
     /**
      * Finds and displays a collaborateur entity.

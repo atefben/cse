@@ -54,32 +54,6 @@ class CustomerController extends Controller
     }
 
     /**
-     * Creates a new customer entity.
-     *
-     * @Route("/new", name="customer_new")
-     * @Method({"GET", "POST"})
-     */
-    public function newAction(Request $request)
-    {
-        $customer = new Customer();
-        $form = $this->createForm('AppBundle\Form\CustomerType', $customer);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($customer);
-            $em->flush($customer);
-
-            return $this->redirectToRoute('customer_show', array('id' => $customer->getId()));
-        }
-
-        return $this->render('customer/new.html.twig', array(
-            'customer' => $customer,
-            'form' => $form->createView(),
-        ));
-    }
-
-    /**
      * Finds and displays a customer entity.
      *
      * @Route("/{id}", name="customer_show")
