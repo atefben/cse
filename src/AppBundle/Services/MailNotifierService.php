@@ -20,9 +20,9 @@ class MailNotifierService
     private $subject;
     private $mailGroupService;
 
-    public function __construct(Swift_Mailer $mailer,Logger $logger,MailGroupService $mailGroupService)
+    public function __construct(Swift_Mailer $mailer,Logger $logger)
     {
-        $this->mailGroupService = $mailGroupService;
+        //$this->mailGroupService = $mailGroupService;
         $this->receivers = [];
         $this->mailer = $mailer;
         $this->logger = $logger;

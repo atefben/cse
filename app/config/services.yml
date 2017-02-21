@@ -4,9 +4,17 @@ parameters:
 #    parameter_name: value
 
 services:
-#    app.mail_notifier:
-#        class: AppBundle\Services\MailNotifierService
-#        arguments: ["@mailer", "@logger"]
+    cse.mail_notifier:
+        class: AppBundle\Services\MailNotifierService
+        arguments: ["@mailer", "@logger"]
+    cse.notification:
+        class: AppBundle\Services\SurveyNotification
+        arguments: ["@cse.mail_notifier"]
+    cse.notification.Listerner:
+        class: AppBundle\EventListener\SurveySubscriber
+        arguments: ["@cse.notification"]
+        tags:
+            - { name: doctrine.event_subscriber}
 #    app.csv_parser:
 #        class: AppBundle\Services\CsvFileParserService
 #    app.file_upload_handler:
