@@ -6,7 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use UserBundle\Entity\User;
 use UserBundle\Form\UserType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+
+/**
+ * Class UserController
+ * @package UserBundle\Controller
+ * @Security("has_role('ROLE_ADMIN')")
+ */
 class UserController extends Controller
 {
 
@@ -45,11 +52,11 @@ class UserController extends Controller
         $User =  $repository->find($id);
 
         $form = $this->createForm(UserType::class, $User);
+        $form->remove('plainPassword');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($User);
             $em->flush($User);
 
             return $this->redirectToRoute('user_edit', array('id' => $User->getId()));
