@@ -337,6 +337,8 @@
                         </li>
                         <li {% if current_path == path('criteria_index')  %}class="active"{% endif %}><a href="{{ path('criteria_index') }}" data-i18n="nav.dash.analytics" class="menu-item">Critère</a>
                         </li>
+                        <li {% if current_path == path('maillist_index')  %}class="active"{% endif %}><a href="{{ path('maillist_index') }}" data-i18n="nav.dash.analytics" class="menu-item">Liste d'envoi</a>
+                        </li>
 
                         <li {% if current_path == path('import_customer')  %}class="active"{% endif %}><a href="{{ path('import_customer') }}" data-i18n="nav.dash.crm" class="menu-item">Update client</a>
                         </li>

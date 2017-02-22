@@ -10,10 +10,10 @@ use AppBundle\Services\SurveyNotification;
 
 class SurveySubscriber implements EventSubscriber
 {
-    private $survyNotification;
-    public function __construct(SurveyNotification $survyNotification)
+    private $surveyNotification;
+    public function __construct(SurveyNotification $surveyNotification)
     {
-        $this->survyNotification = $survyNotification;
+        $this->surveyNotification = $surveyNotification;
     }
 
     public function getSubscribedEvents()
@@ -39,11 +39,11 @@ class SurveySubscriber implements EventSubscriber
 
         if ($entity instanceof Survey)
         {
-            $this->survyNotification->notifyEvalCustomer($entity);
+            $this->surveyNotification->notifyEvalCustomer($entity);
         }
         elseif ($entity instanceof SurveyCollaborateur)
         {
-            $this->survyNotification->notifyEvalCollab($entity);
+            $this->surveyNotification->notifyEvalCollab($entity);
         }
     }
 }

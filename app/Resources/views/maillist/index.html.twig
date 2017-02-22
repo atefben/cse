@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    Liste d'envoi
+{% endblock %}
+
+{% block content %}
+    <a href="{{ path('maillist_new') }}">
+        <button type="button" class="btn btn-success btn-min-width btn-round mr-1 mb-1">Ajouter un nouveau Email</button>
+    </a>
+    <table class="table table-striped table-bordered zero-configuration">
+        <thead>
+            <tr>
+                <th>NOM</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for email in emails %}
+            <tr>
+                <td>{{ email.name }}</td>
+                <td>{{ email.email }}</td>
+                <td>
+
+                            <a href="{{ path('maillist_delete', { 'id': email.id }) }}">
+                                <button type="button" class="btn btn-info btn-min-width btn-round mr-1 mb-1">Supprimer</button>
+                            </a>
+
+                            <a href="{{ path('maillist_edit', { 'id': email.id }) }}">
+                                <button type="button" class="btn btn-primary btn-min-width btn-round mr-1 mb-1">Edition</button>
+                            </a>
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
