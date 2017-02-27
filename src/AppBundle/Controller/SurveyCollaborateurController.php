@@ -80,7 +80,7 @@ class SurveyCollaborateurController extends Controller
 
             $NewSurvey->setCustomer($survey->getCustomer());
 
-            $em->persist($NewSurvey);
+
 
             foreach ($ObjetSurveyCriteria as $key => $value) {
                 $SurveyCriteria = new SurveyCollaborateurCriteria();
@@ -88,8 +88,10 @@ class SurveyCollaborateurController extends Controller
                 $SurveyCriteria->setCoefficient($value->getCoefficient());
                 $SurveyCriteria->setSurveyCollaborateur($NewSurvey);
                 $SurveyCriteria->setCriteria($value->getCriteria());
-                $em->persist($SurveyCriteria);
+                $NewSurvey->addSurveyCollaborateur($SurveyCriteria);
             }
+
+            $em->persist($NewSurvey);
 
             $em->flush($NewSurvey);
 
@@ -149,7 +151,7 @@ class SurveyCollaborateurController extends Controller
 
             $NewSurvey->setCustomer($survey->getCustomer());
 
-            $em->persist($NewSurvey);
+
 
             foreach ($ObjetSurveyCriteria as $key => $value) {
                 $SurveyCriteria = new SurveyCollaborateurCriteria();
@@ -157,12 +159,10 @@ class SurveyCollaborateurController extends Controller
                 $SurveyCriteria->setCoefficient($value->getCoefficient());
                 $SurveyCriteria->setSurveyCollaborateur($NewSurvey);
                 $SurveyCriteria->setCriteria($value->getCriteria());
-                $em->persist($SurveyCriteria);
+                $NewSurvey->addSurveyCollaborateur($SurveyCriteria);
             }
-
+            $em->persist($NewSurvey);
             $em->flush($NewSurvey);
-
-            $subscriber = new SurveySubscriber($this->get('cse.notification'));
 
             return $this->redirectToRoute('collaborateur_show', array('id' => $request->get('id')));
         }

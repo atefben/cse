@@ -40,20 +40,22 @@ class SurveySubscriber implements EventSubscriber
 
     public function postPersist(LifecycleEventArgs $args)
     {
-
+        $entity = $args->getEntity();
+        $entityManager = $args->getEntityManager();
+        $this->notify($entity,$entityManager);
     }
 
-    public function notify($entity)
+    public function notify($entity,$entityManager)
     {
 
 
         if ($entity instanceof Survey)
         {
-            $this->surveyNotification->notifyEvalCustomer($entity);
+            $this->surveyNotification->notifyEvalCustomer($entity,$entityManager);
         }
         elseif ($entity instanceof SurveyCollaborateur)
         {
-            $this->surveyNotification->notifyEvalCollab($entity);
+            $this->surveyNotification->notifyEvalCollab($entity,$entityManager);
         }
     }
 }
