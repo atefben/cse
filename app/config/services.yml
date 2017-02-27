@@ -9,7 +9,8 @@ services:
         arguments: ["@mailer", "@logger"]
     cse.notification:
         class: AppBundle\Services\SurveyNotification
-        arguments: ["@cse.mail_notifier"]
+        arguments:
+            - '@cse.mail_notifier'
     cse.notification.Listerner:
         class: AppBundle\EventListener\SurveySubscriber
         arguments: ["@cse.notification"]

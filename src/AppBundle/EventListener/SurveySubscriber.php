@@ -3,9 +3,13 @@ namespace AppBundle\EventListener;
 
 use AppBundle\Entity\Survey;
 use AppBundle\Entity\SurveyCollaborateur;
+use AppBundle\Entity\SurveyCollaborateurCriteria;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use AppBundle\Services\SurveyNotification;
+use Doctrine\ORM\Event\OnFlushEventArgs;
+use Doctrine\ORM\Event\PostFlushEventArgs;
+
 // for Doctrine 2.4: Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 
 class SurveySubscriber implements EventSubscriber
@@ -14,6 +18,7 @@ class SurveySubscriber implements EventSubscriber
     public function __construct(SurveyNotification $surveyNotification)
     {
         $this->surveyNotification = $surveyNotification;
+
     }
 
     public function getSubscribedEvents()
@@ -28,14 +33,19 @@ class SurveySubscriber implements EventSubscriber
        // $this->index($args);
     }
 
+    /*public function postPersist(LifecycleEventArgs $args)
+    {
+        //$this->index($args);
+    }*/
+
     public function postPersist(LifecycleEventArgs $args)
     {
-        $this->index($args);
+
     }
 
-    public function index(LifecycleEventArgs $args)
+    public function notify($entity)
     {
-        $entity = $args->getEntity();
+
 
         if ($entity instanceof Survey)
         {

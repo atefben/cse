@@ -6,10 +6,12 @@ use AppBundle\Entity\Survey;
 use AppBundle\Entity\SurveyCollaborateur;
 use AppBundle\Entity\SurveyCollaborateurCriteria;
 use AppBundle\Entity\SurveyCriteria;
+use AppBundle\EventListener\SurveySubscriber;
 use AppBundle\Repository\SurveyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\SurveyCollaborateurType;
 use Symfony\Component\HttpFoundation\Response;
@@ -159,6 +161,8 @@ class SurveyCollaborateurController extends Controller
             }
 
             $em->flush($NewSurvey);
+
+            $subscriber = new SurveySubscriber($this->get('cse.notification'));
 
             return $this->redirectToRoute('collaborateur_show', array('id' => $request->get('id')));
         }
