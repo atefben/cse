@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @package AppBundle\Entity
  * @ORM\Table(name="CLR_COLLABORATEUR")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CollaborateurRepository");
+ * @ORM\HasLifecycleCallbacks
  */
 class Collaborateur
 {
@@ -70,6 +71,24 @@ class Collaborateur
      * @ORM\Column(name="CRT_PHONE", type="string")
      **/
     protected $phone;
+
+    /**
+     * @var date
+     * @ORM\Column(name="UPDATED_AT", type="date")
+     **/
+    protected  $updated_at;
+
+    /**
+     * @var date
+     * @ORM\Column(name="CREATED_AT", type="date")
+     **/
+    protected $created_at;
+
+    /**
+     * @var date
+     * @ORM\Column(name="LAST_EVAL_DATE", type="date")
+     **/
+    protected $last_eval_date;
 
 
 
@@ -218,6 +237,54 @@ class Collaborateur
     }
 
     /**
+     * @return date
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
+    }
+
+    /**
+     * @param date $updated_at
+     */
+    public function setUpdatedAt($updated_at)
+    {
+        $this->updated_at = $updated_at;
+    }
+
+    /**
+     * @return date
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * @param date $created_at
+     */
+    public function setCreatedAt($created_at)
+    {
+        $this->created_at = $created_at;
+    }
+
+    /**
+     * @return date
+     */
+    public function getLastEvalDate()
+    {
+        return $this->last_eval_date;
+    }
+
+    /**
+     * @param date $last_eval_date
+     */
+    public function setLastEvalDate($last_eval_date)
+    {
+        $this->last_eval_date = $last_eval_date;
+    }
+
+    /**
      * Get emailPerso
      *
      * @return string
@@ -321,5 +388,20 @@ class Collaborateur
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updatedTimestamps()
+    {
+        $this->setUpdatedAt(new \DateTime('now'));
+
+        if ($this->getCreatedAt() == null) {
+            $this->setCreatedAt(new \DateTime('now'));
+            $this->setLastEval(new \DateTime('now'));
+        }
     }
 }
