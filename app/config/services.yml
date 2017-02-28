@@ -11,6 +11,7 @@ services:
         class: AppBundle\Services\SurveyNotification
         arguments:
             - '@cse.mail_notifier'
+            - '@service_container'
     cse.notification.Listerner:
         class: AppBundle\EventListener\SurveySubscriber
         arguments: ["@cse.notification"]

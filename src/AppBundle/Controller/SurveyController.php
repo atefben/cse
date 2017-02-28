@@ -80,9 +80,11 @@ class SurveyController extends Controller
                 $SurveyCriteria->setCoefficient($value->getCoefficient());
                 $SurveyCriteria->setSurvey($NewSurvey);
                 $SurveyCriteria->setCriteria($value->getCriteria());
-                $em->persist($SurveyCriteria);
+                //$em->persist($SurveyCriteria);
+                $NewSurvey->addSurvey($SurveyCriteria);
             }
 
+            $em->persist($NewSurvey);
             $em->flush($NewSurvey);
 
             return $this->redirectToRoute('customer_show', array('id' => $request->get('id')));
@@ -138,8 +140,6 @@ class SurveyController extends Controller
             $customer = $repository->find($request->get('id'));
             $NewSurvey->setCustomer($customer);
 
-            $em->persist($NewSurvey);
-
 
             foreach ($ObjetSurveyCriteria as $key => $value) {
                 $SurveyCriteria = new SurveyCriteria();
@@ -147,10 +147,11 @@ class SurveyController extends Controller
                 $SurveyCriteria->setCoefficient($value->getCoefficient());
                 $SurveyCriteria->setSurvey($NewSurvey);
                 $SurveyCriteria->setCriteria($value->getCriteria());
-                $em->persist($SurveyCriteria);
+                //$em->persist($SurveyCriteria);
+                $NewSurvey->addSurvey($SurveyCriteria);
             }
 
-
+            $em->persist($NewSurvey);
             $em->flush($NewSurvey);
 
             return $this->redirectToRoute('customer_show', array('id' => $request->get('id')));

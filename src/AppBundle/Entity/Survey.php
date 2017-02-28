@@ -63,7 +63,7 @@ class Survey
     protected $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\SurveyCriteria", mappedBy="survey")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\SurveyCriteria", mappedBy="survey", cascade={"persist"})
      */
     protected $surveys;
 

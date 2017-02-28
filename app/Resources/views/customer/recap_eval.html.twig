@@ -1,0 +1,22 @@
+{% extends 'base_email.html.twig' %}
+
+{% block content_title %}
+
+{% endblock %}
+
+{% block content %}
+
+    <table width="100%"  class="table table-bordered">
+        <tr>
+            <td style="text-align: center" colspan="2">
+                <image src="{{ absolute_url(asset('Resources/logo.png')) }}"  />
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                L'évaluation du client {{ code }} a été faite avec une note de {{ note }}
+            </td>
+        </tr>
+    </table>
+{% endblock %}

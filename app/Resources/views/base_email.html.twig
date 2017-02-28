@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Evaluation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    {% block linkApple %}
+
+    {% endblock %}
+
+    {% block stylesheets %}
+
+
+        <link rel="stylesheet" href="{{ absolute_url(asset('robust-assets/css/vendors.css')) }}" type="text/css" />
+        <link rel="stylesheet" href="{{ absolute_url(asset('robust-assets/fonts/icomoon.css')) }}" type="text/css" />
+        <link rel="stylesheet" href="{{ absolute_url(asset('robust-assets/fonts/flag-icon-css/css/flag-icon.min.css')) }}" type="text/css" />
+        <link rel="stylesheet" href="{{ absolute_url(asset('robust-assets/css/plugins/sliders/slick/slick.css')) }}" type="text/css" />
+        <link rel="stylesheet" href="{{ absolute_url(asset('robust-assets/css/app.min.css')) }}" type="text/css" />
+        {#<link rel="stylesheet" href="{{ absolute_url(asset('Resources/bootstrap.min.css')) }}" type="text/css" />#}
+        <link rel="stylesheet" href="{{ absolute_url(asset('assets/css/style.css')) }}" type="text/css" />
+
+
+    {% endblock %}
+</head>
+<body>
+
+
+{% block loader %}
+
+
+{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+    {#Content of the page#}
+{% endblock %}
+
+
+{% block footer %}
+    <footer class="footer">
+        <p class="clearfix text-muted text-sm-center mb-0 px-2">
+            <span class="float-md-left d-xs-block d-md-inline-block">Copyright  &copy; 2017 ALTIMATE, All rights reserved.</span>
+        </p>
+    </footer>
+{% endblock footer %}
+
+{% block javascripts %}
+{% endblock %}
+
+</body>
+</html>
