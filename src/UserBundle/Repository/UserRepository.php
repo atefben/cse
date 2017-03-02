@@ -10,5 +10,15 @@ namespace UserBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByRole($role1,$role2)
+    {
+        $qb = $this
+            ->createQueryBuilder('u')
+            ->where('u.roles LIKE :role1')
+            ->orWhere('u.roles LIKE :role2')
+            ->setParameter('role1', '%"'.$role1.'"%')
+            ->setParameter('role2', '%"'.$role2.'"%');
 
+        return $qb->getQuery()->getResult();
+    }
 }

@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    Mes Clients
+{% endblock %}
+
+
+{% block content %}
+
+        <table class="table table-striped table-bordered zero-configuration">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Date dernière évaluation</th>
+                <th>Date prochaine évaluation prévu</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for customer in customers %}
+            <tr>
+                <td>{{ customer.id }}</td>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.address }}</td>
+                <td>{{ customer.lastEvalDate|date('d-m-Y') }}</td>
+                <td>{{ customer.lastEvalDate|date_modify("+90 day")|date('d-m-Y') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% if app.user.roles[0] == "ROLE_RESPONSABLE_AGENCE" %}
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+</section>
+</div>
+
+</div>
+</div>
+<!-- container content - BEGIN -->
+<div class="robust-content content container-fluid">
+    <div class="content-wrapper">
+        <div class="content-body">
+            <section id="configuration">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Les clients de mes commerciaux</h4>
+                                <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                            </div>
+                            <div class="card-body collapse in">
+                                <div class="card-block card-dashboard">
+
+                                    <table class="table table-striped table-bordered zero-configuration">
+                                        <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Address</th>
+                                            <th>Date dernière évaluation</th>
+                                            <th>Date prochaine évaluation prévu</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for customer in ListCustomerForBusiness %}
+                                            <tr>
+                                                <td>{{ customer.id }}</td>
+                                                <td>{{ customer.name }}</td>
+                                                <td>{{ customer.address }}</td>
+                                                <td>{{ customer.lastEvalDate|date('d-m-Y') }}</td>
+                                                <td>{{ customer.lastEvalDate|date_modify("+90 day")|date('d-m-Y') }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+
+
+
+                                    {% endif %}
+{% endblock %}
+
+

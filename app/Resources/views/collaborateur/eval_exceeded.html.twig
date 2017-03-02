@@ -1,0 +1,38 @@
+{% extends 'base_email.html.twig' %}
+
+{% block content_title %}
+
+{% endblock %}
+
+{% block content %}
+
+    <table width="100%"  class="table table-bordered">
+        <tr>
+            <td style="text-align: center" colspan="2">
+                <image src="{{ absolute_url(asset('Resources/logo.png')) }}"  />
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                L'évaluation de ces collaborateurs a été dépassée
+            </td>
+            <td>
+                <table width="100%"  class="table table-bordered">
+                    <tr>
+                        <td>Nom</td>
+                        <th>Prenom</th>
+                        <td>Date prochaine évaluation prévu</td>
+                    </tr>
+                    {% for collaborateur in all_collaborateur %}
+                        <tr>
+                            <td>{{ collaborateur.firstName }}</td>
+                            <td>{{ collaborateur.lastName }}</td>
+                            <td>{{ collaborateur.lastEvalDate|date_modify("+90 day")|date('d-m-Y') }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

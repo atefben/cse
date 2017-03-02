@@ -7,6 +7,11 @@ services:
     cse.mail_notifier:
         class: AppBundle\Services\MailNotifierService
         arguments: ["@mailer", "@logger"]
+    cse.alert:
+            class: AppBundle\Services\AlertListService
+            arguments:
+                - '@cse.mail_notifier'
+                - '@service_container'
     cse.notification:
         class: AppBundle\Services\SurveyNotification
         arguments:

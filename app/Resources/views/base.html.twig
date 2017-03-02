@@ -332,9 +332,6 @@
                         <li class="active">
                             <a href="{{ path('user_list') }}" data-i18n="nav.dash.project" class="menu-item">Utilisateur</a>
                         </li>
-
-                        <li {#{% if current_path == path('user_list')  %}class="active"{% endif %}#}><a href="#" data-i18n="nav.dash.ecommerce" class="menu-item">Alerte</a>
-                        </li>
                         <li {% if current_path == path('criteria_index')  %}class="active"{% endif %}><a href="{{ path('criteria_index') }}" data-i18n="nav.dash.analytics" class="menu-item">Critère</a>
                         </li>
                         <li {% if current_path == path('maillist_index')  %}class="active"{% endif %}><a href="{{ path('maillist_index') }}" data-i18n="nav.dash.analytics" class="menu-item">Liste d'envoi</a>
@@ -347,6 +344,19 @@
                     </ul>
                 </li>
                 {% endif %}
+                <li class=" nav-item">
+                    <a href="#"><i class="icon-android-laptop"></i>
+                        <span data-i18n="nav.dash.main" class="menu-title">Alerte</span>
+                    </a>
+                    <ul class="menu-content">
+                        <li {% if current_path == path('alert_collaborateur_index')  %}class="active"{% endif %}>
+                            <a href="{{ path('alert_collaborateur_index') }}" data-i18n="nav.dash.project" class="menu-item">Alertes collaborateur</a>
+                        </li>
+                        <li {% if current_path == path('alert_customer_index')  %}class="active"{% endif %}>
+                            <a href="{{ path('alert_customer_index') }}" data-i18n="nav.dash.project" class="menu-item">Alertes clients</a>
+                        </li>
+                    </ul>
+                </li>
                 <li {% if current_path == path('customer_index')  %}class="active"{% endif %} class=" nav-item">
                     <a href="{{ path('customer_index')}}"><i class="icon-address-book"></i>
                         <span data-i18n="nav.dash.main" class="menu-title">Client</span>

@@ -1,0 +1,36 @@
+{% extends 'base_email.html.twig' %}
+
+{% block content_title %}
+
+{% endblock %}
+
+{% block content %}
+
+    <table width="100%"  class="table table-bordered">
+        <tr>
+            <td style="text-align: center" colspan="2">
+                <image src="{{ absolute_url(asset('Resources/logo.png')) }}"  />
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                L'évaluation de ces clients a été dépassée
+            </td>
+            <td>
+                <table width="100%"  class="table table-bordered">
+                    <tr>
+                        <td>Nom</td>
+                        <td>Date prochaine évaluation prévu</td>
+                    </tr>
+                    {% for customer in all_customer %}
+                        <tr>
+                            <td>{{ customer.name }}</td>
+                            <td>{{ customer.lastEvalDate|date_modify("+90 day")|date('d-m-Y') }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

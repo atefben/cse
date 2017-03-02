@@ -15,37 +15,13 @@ class SendEmailCommand extends ContainerAwareCommand
         $this
             ->setName('atef:sendemail')
             ->setDescription('Send email')
-            ->addArgument('emailfrom', InputArgument::REQUIRED, 'What\'s the sender email address?')
-            ->addArgument('emailto', InputArgument::REQUIRED, 'What\'s the recipient email address?')
-            ->addArgument('subject', InputArgument::REQUIRED, 'What\'s the email subject?')
 
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $emailfrom = $input->getArgument('emailfrom');
-        $emailto = $input->getArgument('emailto');
-
-        $subject = $input->getArgument('subject');
-
-
-        if ($emailfrom && $emailto) {
-
-            $message = \Swift_Message::newInstance()
-                ->setSubject($subject)
-                ->setFrom($emailfrom)
-                ->setTo($emailto)
-                ->setBody('test')
-            ;
-            $this->getContainer()->get('mailer')->send($message);
-
-            $text = "Email sent!";
-        } else {
-            $text = 'Email not sent';
-        }
-
-
-        $output->writeln($text);
+        $this->getContainer()->get('cse.alert')->notifyEvalExceededCollaborateur();
+        $this->getContainer()->get('cse.alert')->notifyEvalExceededCustomer();
     }
 }
