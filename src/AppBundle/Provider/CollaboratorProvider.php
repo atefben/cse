@@ -16,10 +16,11 @@ class CollaboratorProvider implements IProvider
     /**
      * CollaboratorProvider constructor.
      * @param EntityManager $entityManager
+     * @param string $repositoryID
      */
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManager $entityManager, $repositoryID)
     {
-        $this->collaboratorRepository = $entityManager->getRepository('AppBundle:Collaborateur');
+        $this->collaboratorRepository = $entityManager->getRepository($repositoryID);
     }
 
     /**

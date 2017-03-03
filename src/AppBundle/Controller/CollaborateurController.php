@@ -37,10 +37,7 @@ class CollaborateurController extends Controller
      */
     public function showAction(Collaborateur $collaborateur)
     {
-        //$deleteForm = $this->createDeleteForm($collaborateur);
-        $em = $this->getDoctrine()->getManager();
-        $lists = $em->getRepository('AppBundle:SurveyCollaborateur')->findBy(['collaborateur'=>$collaborateur->getId()]);
-
+        $lists = $this->get('cse.collab.manager')->showCollaboratorDetails($collaborateur);
 
         return $this->render('collaborateur/show.html.twig', array(
             'collaborateur' => $collaborateur,

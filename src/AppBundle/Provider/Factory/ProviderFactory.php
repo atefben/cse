@@ -8,9 +8,14 @@ use Doctrine\ORM\EntityManager;
 
 class ProviderFactory
 {
+    /**
+     * @param EntityManager $entityManager
+     * @param string $repositoryID
+     *
+     * @return CollaboratorProvider
+     */
+    public function createCollaboratorProvider(EntityManager $entityManager, $repositoryID) {
 
-    public function createCollaboratorProvider(EntityManager $entityManager) {
-
-        return new CollaboratorProvider($entityManager);
+        return new CollaboratorProvider($entityManager, $repositoryID);
     }
 }

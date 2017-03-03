@@ -2,10 +2,13 @@
 
 namespace AppBundle\Manager;
 
+use AppBundle\Entity\Collaborateur;
 use AppBundle\Provider\Factory\CollaboratorProviderFactory;
 use AppBundle\Provider\Factory\ProviderFactory;
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Model\User;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
@@ -13,7 +16,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
  */
 class CollaboratorManager implements IManager
 {
-
     /**
      * @var User
      */
@@ -28,6 +30,16 @@ class CollaboratorManager implements IManager
      * @var ProviderFactory
      */
     private $providerFactory;
+
+    /**
+     * @var FormFactory $formFactory
+     */
+    private $formFactory;
+
+    /**
+     * @var Router
+     */
+    private $router;
 
     /**
      * @param TokenStorage $tokenStorage
@@ -61,6 +73,22 @@ class CollaboratorManager implements IManager
     }
 
     /**
+     * @param FormFactory $formFactory
+     */
+    public function setFormFactory(FormFactory $formFactory)
+    {
+        $this->formFactory = $formFactory;
+    }
+
+    /**
+     * @param Router $router
+     */
+    public function setRouter(Router $router)
+    {
+        $this->router = $router;
+    }
+
+    /**
      * 
      */
     public function getCollaborators()
@@ -70,12 +98,17 @@ class CollaboratorManager implements IManager
         }
 
         $collaboratorTab = array();
-        $collaboratorProvider = $this->providerFactory->createCollaboratorProvider($this->entityManager);
+
+        $collaboratorProvider = $this->providerFactory->createCollaboratorProvider(
+            $this->entityManager,
+            'AppBundle:Collaborateur'
+        );
 
         if ($this->user->getRoles()[0] == "ROLE_RESPONSABLE_AGENCE") {
 
-            $collaboratorTab['collaborateurs']               = $collaboratorProvider
+            $collaboratorTab['collaborateurs'] = $collaboratorProvider
                 ->getCollaboratorsByUserID($this->user->getId());
+
             $collaboratorTab['ListCollaborateurForBusiness'] = $collaboratorProvider
                 ->getCollaboratorForBusiness($this->user->getId());
 
@@ -90,5 +123,17 @@ class CollaboratorManager implements IManager
         }
         
         return $collaboratorTab;
+    }
+
+
+    public function showCollaboratorDetails(Collaborateur $collaborateur)
+    {
+        $collaboratorProvider = $this->providerFactory->createCollaboratorProvider(
+            $this->entityManager,
+            'AppBundle:SurveyCollaborateur'
+        );
+
+        return $collaboratorProvider->findBy(['collaborateur'=>$collaborateur->getId()]);
+
     }
 }
