@@ -1,0 +1,7 @@
+services:
+    cse.collab.manager:
+        class: AppBundle\Manager\CollaboratorManager
+        calls:
+            - [ 'setUserFromSecurityContext', [ '@security.token_storage' ]]
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ]]
+            - [ 'setProviderFactory', [ '@cse.provider.factory' ]]

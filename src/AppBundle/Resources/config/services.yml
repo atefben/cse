@@ -1,4 +1,10 @@
+imports:
+- { resource: 'services/collaborator.yml' }
+
 services:
+    cse.provider.factory:
+        class: AppBundle\Provider\Factory\ProviderFactory
+
     cse.mail_notifier:
         class: AppBundle\Services\MailNotifierService
         arguments:
