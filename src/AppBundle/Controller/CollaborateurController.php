@@ -50,15 +50,24 @@ class CollaborateurController extends Controller
      *
      * @Route("/{id}/edit", name="collaborateur_edit")
      * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @param Collaborateur $collaborateur
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, Collaborateur $collaborateur)
     {
+        $collaboratorManager = $this->get('cse.collab.manager');
+
         $deleteForm = $this->createDeleteForm($collaborateur);
-        $editForm = $this->createForm('AppBundle\Form\CollaborateurType', $collaborateur);
+        $editForm   = $collaboratorManager->createForm('AppBundle\Form\CollaboratorType', $collaborateur);
+
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+
+            $collaboratorManager->saveDatas();
 
             return $this->redirectToRoute('collaborateur_edit', array('id' => $collaborateur->getId()));
         }

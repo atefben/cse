@@ -35,7 +35,7 @@ class UserController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($User);
-            $em->flush($User);
+            $em->flush();
 
             return $this->redirectToRoute('user_edit', array('id' => $User->getId()));
         }
@@ -57,7 +57,7 @@ class UserController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->flush($User);
+            $em->flush();
 
             return $this->redirectToRoute('user_edit', array('id' => $User->getId()));
         }
@@ -70,7 +70,7 @@ class UserController extends Controller
     public function DeleteAction(Request $request) {
 
         $em = $this->getDoctrine()->getManager();
-        $em->getEventManager()->addEventSubscriber(new \Gedmo\SoftDeleteable\SoftDeleteableListener());
+        $em->getEventManager()->addEventSubscriber(new SoftDeleteableListener());
 
         $id = $request->get('id');
 
@@ -78,7 +78,7 @@ class UserController extends Controller
         $User =  $repository->find($id);
 
         $em->remove($User);
-        $em->flush($User);
+        $em->flush();
 
         return $this->redirectToRoute('user_list');
     }

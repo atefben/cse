@@ -49,13 +49,13 @@ class Collaborateur
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Customer")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", nullable=true)
      **/
-    protected $Customer;
+    protected $customer;
 
     /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      **/
     protected $user;
 
@@ -73,20 +73,20 @@ class Collaborateur
     protected $phone;
 
     /**
-     * @var date
-     * @ORM\Column(name="UPDATED_AT", type="date")
+     * @var \DateTime
+     * @ORM\Column(name="UPDATED_AT", type="datetime")
      **/
     protected  $updatedAt;
 
     /**
-     * @var date
-     * @ORM\Column(name="CREATED_AT", type="date")
+     * @var \DateTime
+     * @ORM\Column(name="CREATED_AT", type="datetime")
      **/
     protected $createdAt;
 
     /**
-     * @var date
-     * @ORM\Column(name="LAST_EVAL_DATE", type="date")
+     * @var \DateTime
+     * @ORM\Column(name="LAST_EVAL_DATE", type="datetime")
      **/
     protected $lastEvalDate;
 
@@ -175,39 +175,39 @@ class Collaborateur
     }
 
     /**
-     * Set responsable
+     * Set manager
      *
-     * @param string $responsable
+     * @param string $manager
      *
      * @return Collaborateur
      */
-    public function setResponsable($responsable)
+    public function setUserManager($manager)
     {
-        $this->responsable = $responsable;
+        $this->user = $manager;
 
         return $this;
     }
 
     /**
-     * Get responsable
+     * Get manager
      *
      * @return string
      */
-    public function getResponsable()
+    public function getUserManager()
     {
-        return $this->responsable;
+        return $this->user;
     }
 
     /**
      * Set emailPro
      *
-     * @param string $emailPro
+     * @param string $email
      *
      * @return Collaborateur
      */
-    public function setEmailPro($emailPro)
+    public function setEmail($email)
     {
-        $this->email_pro = $emailPro;
+        $this->email = $email;
 
         return $this;
     }
@@ -217,34 +217,11 @@ class Collaborateur
      *
      * @return string
      */
-    public function getEmailPro()
+    public function getEmail()
     {
-        return $this->email_pro;
+        return $this->email;
     }
 
-    /**
-     * Set emailPerso
-     *
-     * @param string $emailPerso
-     *
-     * @return Collaborateur
-     */
-    public function setEmailPerso($emailPerso)
-    {
-        $this->email_perso = $emailPerso;
-
-        return $this;
-    }
-
-    /**
-     * Get emailPerso
-     *
-     * @return string
-     */
-    public function getEmailPerso()
-    {
-        return $this->email_perso;
-    }
 
     /**
      * Set phone
@@ -279,7 +256,7 @@ class Collaborateur
      */
     public function setCustomer($customer)
     {
-        $this->Customer = $customer;
+        $this->customer = $customer;
 
         return $this;
     }
@@ -291,55 +268,7 @@ class Collaborateur
      */
     public function getCustomer()
     {
-        return $this->Customer;
-    }
-
-    /**
-     * Set user
-     *
-     * @param string $user
-     *
-     * @return Collaborateur
-     */
-    public function setUser($user)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return string
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return Collaborateur
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
+        return $this->customer;
     }
 
     /**

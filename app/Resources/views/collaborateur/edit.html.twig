@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    Modifier un Collaborateur
+{% endblock %}
+
+{% block content %}
+
+
+    {{ form_start(edit_form,  { 'attr': {'class': 'form'} }) }}
+    <div class="form-body">
+        <h4 class="form-section"><i class="icon-head"></i> Information de l'utilisateur</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="projectinput1">First Name</label>
+                    {{ form_widget(edit_form.firstname,  { 'attr': {'class': 'form-control', 'placeholder':"First Name"}}) }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="projectinput2">Last Name</label>
+                    {{ form_widget(edit_form.lastname,  { 'attr': {'class': 'form-control', 'placeholder':"Last Name"}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="projectinput3">E-mail</label>
+                    {{ form_widget(edit_form.email,  { 'attr': {'class': 'form-control', 'placeholder':"E-mail"}}) }}
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="projectinput3">Username</label>
+                    {{ form_widget(edit_form.phone,  { 'attr': {'class': 'form-control', 'placeholder':"User Name"}}) }}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="projectinput3">Responsable</label>
+                    {{ form_widget(edit_form.userManager,  { 'attr': {'class': 'form-control', 'placeholder':"Responsable"}}) }}
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="projectinput3">Code SX</label>
+                    {{ form_widget(edit_form.code,  { 'attr': {'class': 'form-control', 'placeholder':"Code SX"}}) }}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="projectinput3">Responsable</label>
+                    {{ form_widget(edit_form.id,  { 'attr': {'style':"display=none"}}) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <a href="{{ path('collaborateur_index') }}">
+            <button type="button" class="btn btn-warning mr-1">
+                <i class="icon-cross2"></i> Retour
+            </button>
+        </a>
+        <button type="submit" class="btn btn-primary">
+            <i class="icon-check2"></i> Save
+        </button>
+        <a href="{{ path('collaborateur_delete', {'id': edit_form.id }) }}">
+            <button type="button" class="btn btn-danger btn-min-width btn-round mr-1 mb-1">Supprimer</button>
+        </a>
+    </div>
+    {{ form_end(edit_form) }}
+
+
+
+{% endblock %}

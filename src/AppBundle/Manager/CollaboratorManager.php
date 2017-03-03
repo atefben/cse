@@ -136,4 +136,16 @@ class CollaboratorManager implements IManager
         return $collaboratorProvider->findBy(['collaborateur'=>$collaborateur->getId()]);
 
     }
+
+    public function createForm($formTypeClass, $datas = null, $options = array())
+    {
+
+        return $this->formFactory->create($formTypeClass, $datas, $options);
+
+    }
+
+    public function saveDatas()
+    {
+        $this->entityManager->flush();
+    }
 }
