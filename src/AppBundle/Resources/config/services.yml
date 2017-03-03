@@ -1,0 +1,36 @@
+services:
+    cse.mail_notifier:
+        class: AppBundle\Services\MailNotifierService
+        arguments:
+            - '@mailer'
+            - '@logger'
+
+    cse.alert:
+        class: AppBundle\Services\AlertListService
+        arguments:
+            - '@cse.mail_notifier'
+            - '@service_container'
+
+    cse.notification:
+        class: AppBundle\Services\SurveyNotification
+        arguments:
+            - '@cse.mail_notifier'
+            - '@service_container'
+
+    cse.notification.Listerner:
+        class: AppBundle\EventListener\SurveySubscriber
+        arguments: ["@cse.notification"]
+        tags:
+            - { name: doctrine.event_subscriber}
+
+#    app.csv_parser:
+#        class: AppBundle\Services\CsvFileParserService
+#    app.file_upload_handler:
+#        class: AppBundle\Handlers\FileUploadHandler
+#        arguments:
+#            - '%parsed_files_directory%'
+
+    app.evaluation_service:
+        class: AppBundle\Services\EvaluationService
+        arguments:
+            - '@doctrine.orm.entity_manager'
