@@ -3,6 +3,7 @@
 namespace AppBundle\Manager;
 
 use AppBundle\Entity\Collaborateur;
+use AppBundle\Enum\RoleType;
 use AppBundle\Provider\Factory\CollaboratorProviderFactory;
 use AppBundle\Provider\Factory\ProviderFactory;
 use Doctrine\ORM\EntityManager;
@@ -104,7 +105,7 @@ class CollaboratorManager implements IManager
             'AppBundle:Collaborateur'
         );
 
-        if ($this->user->getRoles()[0] == "ROLE_RESPONSABLE_AGENCE") {
+        if ($this->user->getRoles()[0] == RoleType::AGENCY_MANAGER) {
 
             $collaboratorTab['collaborateurs'] = $collaboratorProvider
                 ->getCollaboratorsByUserID($this->user->getId());
@@ -112,7 +113,9 @@ class CollaboratorManager implements IManager
             $collaboratorTab['ListCollaborateurForBusiness'] = $collaboratorProvider
                 ->getCollaboratorForBusiness($this->user->getId());
 
-        } else if ($this->user->getRoles()[0] == "ROLE_ADMIN" || $this->user->getRoles()[0] == "ROLE_SUPER_ADMIN") {
+        } else if (
+            $this->user->getRoles()[0] == RoleType::ADMIN ||
+            $this->user->getRoles()[0] == RoleType::SUPER_ADMIN) {
 
             $collaboratorTab['collaborateurs'] = $collaboratorProvider->findAll();
 

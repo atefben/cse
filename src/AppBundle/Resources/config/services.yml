@@ -1,6 +1,6 @@
 imports:
 - { resource: 'services/collaborator.yml' }
-
+- { resource: 'services/customer.yml'}
 services:
     cse.provider.factory:
         class: AppBundle\Provider\Factory\ProviderFactory

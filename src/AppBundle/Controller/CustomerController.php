@@ -23,34 +23,12 @@ class CustomerController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $customerManager = $this->get('cse.customer.manager');
 
-        $idUser = $this->getUser()->getId();
-
-        $TabTwig = array();
+        $tabTwig = $customerManager->getCustomers();
 
 
-        if ($this->getUser()->getRoles()[0] == "ROLE_RESPONSABLE_AGENCE") {
-            $MyCustomers = $em->getRepository('AppBundle:Customer')->findBy(['user'=>$idUser]);
-            $TabTwig['MyCustomers'] =  $MyCustomers;
-
-
-            $ListCustomerForBusiness = $MyCustomers = $em->getRepository('AppBundle:Customer')->getCustomerForBusiness($idUser);
-            $TabTwig['ListCustomerForBusiness'] =  $ListCustomerForBusiness;
-
-        } else if ($this->getUser()->getRoles()[0] == "ROLE_ADMIN" ||$this->getUser()->getRoles()[0] == "ROLE_SUPER_ADMIN") {
-
-            $MyCustomers = $em->getRepository('AppBundle:Customer')->findAll();
-            $TabTwig['MyCustomers'] =  $MyCustomers;
-
-        } else {
-            $MyCustomers = $em->getRepository('AppBundle:Customer')->findBy(['user'=>$idUser]);
-            $TabTwig['MyCustomers'] =  $MyCustomers;
-
-
-        }
-
-        return $this->render('customer/index.html.twig', $TabTwig);
+        return $this->render('customer/index.html.twig', $tabTwig);
     }
 
     /**
@@ -79,7 +57,7 @@ class CustomerController extends Controller
      */
     public function editAction(Request $request, Customer $customer)
     {
-        $deleteForm = $this->createDeleteForm($customer);
+        
         $editForm = $this->createForm('AppBundle\Form\CustomerType', $customer);
         $editForm->handleRequest($request);
 
@@ -92,42 +70,6 @@ class CustomerController extends Controller
         return $this->render('customer/edit.html.twig', array(
             'customer' => $customer,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
-    }
-
-    /**
-     * Deletes a customer entity.
-     *
-     * @Route("/{id}", name="customer_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, Customer $customer)
-    {
-        $form = $this->createDeleteForm($customer);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($customer);
-            $em->flush($customer);
-        }
-
-        return $this->redirectToRoute('customer_index');
-    }
-
-    /**
-     * Creates a form to delete a customer entity.
-     *
-     * @param Customer $customer The customer entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Customer $customer)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('customer_delete', array('id' => $customer->getId())))
-            ->setMethod('DELETE')
-            ->getForm();
     }
 }
