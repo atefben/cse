@@ -60,7 +60,6 @@ class CollaborateurController extends Controller
     {
         $collaboratorManager = $this->get('cse.collab.manager');
 
-        $deleteForm = $this->createDeleteForm($collaborateur);
         $editForm   = $collaboratorManager->createForm('AppBundle\Form\CollaboratorType', $collaborateur);
 
         $editForm->handleRequest($request);
@@ -75,43 +74,6 @@ class CollaborateurController extends Controller
         return $this->render('collaborateur/edit.html.twig', array(
             'collaborateur' => $collaborateur,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
-    }
-
-    /**
-     * Deletes a collaborateur entity.
-     *
-     * @Route("/{id}", name="collaborateur_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, Collaborateur $collaborateur)
-    {
-        $form = $this->createDeleteForm($collaborateur);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($collaborateur);
-            $em->flush($collaborateur);
-        }
-
-        return $this->redirectToRoute('collaborateur_index');
-    }
-
-    /**
-     * Creates a form to delete a collaborateur entity.
-     *
-     * @param Collaborateur $collaborateur The collaborateur entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Collaborateur $collaborateur)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('collaborateur_delete', array('id' => $collaborateur->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
     }
 }
