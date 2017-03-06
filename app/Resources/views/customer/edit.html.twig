@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block content_title %}
-    Modifier un Collaborateur
+    Modifier un Client
 {% endblock %}
 
 {% block content %}
@@ -9,33 +9,33 @@
 
     {{ form_start(edit_form,  { 'attr': {'class': 'form'} }) }}
     <div class="form-body">
-        <h4 class="form-section"><i class="icon-head"></i> Information du Collaborateur</h4>
+        <h4 class="form-section"><i class="icon-head"></i> Information du Client</h4>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="projectinput1">First Name</label>
-                    {{ form_widget(edit_form.firstname,  { 'attr': {'class': 'form-control', 'placeholder':"First Name"}}) }}
+                    <label for="projectinput1">Raison Sociale</label>
+                    {{ form_widget(edit_form.name,  { 'attr': {'class': 'form-control', 'placeholder':"Raison Sociale"}}) }}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="projectinput2">Last Name</label>
-                    {{ form_widget(edit_form.lastname,  { 'attr': {'class': 'form-control', 'placeholder':"Last Name"}}) }}
+                    <label for="projectinput2">Adresse</label>
+                    {{ form_widget(edit_form.address,  { 'attr': {'class': 'form-control', 'placeholder':"Adresse"}}) }}
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="projectinput3">E-mail</label>
-                    {{ form_widget(edit_form.email,  { 'attr': {'class': 'form-control', 'placeholder':"E-mail"}}) }}
+                    <label for="projectinput3">Code Postale</label>
+                    {{ form_widget(edit_form.zip_code,  { 'attr': {'class': 'form-control', 'placeholder':"Code Postale"}}) }}
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="projectinput3">Username</label>
-                    {{ form_widget(edit_form.phone,  { 'attr': {'class': 'form-control', 'placeholder':"User Name"}}) }}
+                    <label for="projectinput3">Ville</label>
+                    {{ form_widget(edit_form.city,  { 'attr': {'class': 'form-control', 'placeholder':"Ville"}}) }}
                 </div>
             </div>
 
@@ -45,14 +45,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="projectinput3">Responsable</label>
-                    {{ form_widget(edit_form.userManager,  { 'attr': {'class': 'form-control', 'placeholder':"Responsable"}}) }}
+                    {{ form_widget(edit_form.user,  { 'attr': {'class': 'form-control', 'placeholder':"Responsable"}}) }}
 
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="projectinput3">Code SX</label>
-                    {{ form_widget(edit_form.code,  { 'attr': {'class': 'form-control', 'placeholder':"Code SX"}}) }}
+                    {{ form_widget(edit_form.codeSX,  { 'attr': {'class': 'form-control', 'placeholder':"Code SX"}}) }}
                 </div>
             </div>
 
@@ -60,7 +60,7 @@
     </div>
 
     <div class="form-actions">
-        <a href="{{ path('collaborateur_index') }}">
+        <a href="{{ path('customer_index') }}">
             <button type="button" class="btn btn-warning mr-1">
                 <i class="icon-cross2"></i> Retour
             </button>

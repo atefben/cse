@@ -39,13 +39,14 @@ class CustomerController extends Controller
      */
     public function showAction(Customer $customer)
     {
-        //$deleteForm = $this->createDeleteForm($customer);
-        $em = $this->getDoctrine()->getManager();
-        $lists = $em->getRepository('AppBundle:Survey')->findBy(['customer' => $customer->getId()]);
+
+        $customerManager = $this->get('cse.customer.manager');
+
+        $surveyList = $customerManager->getCustomerSurvey($customer);
 
         return $this->render('customer/show.html.twig', array(
             'customer' => $customer,
-            'lists' => $lists,
+            'lists' => $surveyList,
         ));
     }
 
@@ -57,12 +58,15 @@ class CustomerController extends Controller
      */
     public function editAction(Request $request, Customer $customer)
     {
-        
-        $editForm = $this->createForm('AppBundle\Form\CustomerType', $customer);
+
+        $customerManager = $this->get('cse.customer.manager');
+
+        $editForm   = $customerManager->createForm('AppBundle\Form\CustomerType', $customer);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            
+            $customerManager->saveDatas();
 
             return $this->redirectToRoute('customer_edit', array('id' => $customer->getId()));
         }

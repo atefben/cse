@@ -3,10 +3,13 @@
 namespace AppBundle\Manager;
 
 
+use AppBundle\Entity\Customer;
 use AppBundle\Enum\RoleType;
 use AppBundle\Provider\Factory\ProviderFactory;
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Model\User;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class CustomerManager implements IManager
@@ -26,6 +29,12 @@ class CustomerManager implements IManager
      * @var ProviderFactory
      */
     private $providerFactory;
+
+    /**
+     * @var FormFactory $formFactory
+     */
+    private $formFactory;
+
 
     /**
      * @param TokenStorage $tokenStorage
@@ -56,6 +65,14 @@ class CustomerManager implements IManager
     public function setProviderFactory(ProviderFactory $providerFactory)
     {
         $this->providerFactory = $providerFactory;
+    }
+
+    /**
+     * @param FormFactory $formFactory
+     */
+    public function setFormFactory(FormFactory $formFactory)
+    {
+        $this->formFactory = $formFactory;
     }
 
 
@@ -89,7 +106,7 @@ class CustomerManager implements IManager
             $tabTwig['MyCustomers'] =  $myCustomers;
 
         } else {
-            $myCustomers = $customerProvider->findBy($this->user->getId());
+            $myCustomers = $customerProvider->findBy(['user' => $this->user->getId()]);
             $tabTwig['MyCustomers'] =  $myCustomers;
 
 
@@ -98,4 +115,31 @@ class CustomerManager implements IManager
         return $tabTwig;
     }
 
+    public function getCustomerSurvey(Customer $customer)
+    {
+        $surveyProvider = $this->providerFactory->createSurveyProvider(
+            $this->entityManager,
+            'AppBundle:Survey'
+        );
+
+        return $surveyProvider->findBy(['customer' => $customer->getId()]);
+
+    }
+
+    /**
+     * @param string $formTypeClass
+     * @param Object $datas
+     * @param array $options
+     *
+     * @return FormInterface
+     */
+    public function createForm($formTypeClass, $datas = null, $options = array())
+    {
+        return $this->formFactory->create($formTypeClass, $datas, $options);
+    }
+
+    public function saveDatas()
+    {
+        $this->entityManager->flush();
+    }
 }

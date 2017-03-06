@@ -41,6 +41,9 @@ class CollaboratorProvider implements IProvider
         return $this->collaboratorRepository->getCollaboratorForBusiness($userID);
     }
 
+    /**
+     * @return array
+     */
     public function findAll()
     {
         return $this->collaboratorRepository->findAll();

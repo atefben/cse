@@ -41,6 +41,9 @@ class CustomerProvider implements IProvider
         return $this->customerRepository->getCustomerForBusiness($userID);
     }
 
+    /**
+     * @return array
+     */
     public function findAll()
     {
         return $this->customerRepository->findAll();

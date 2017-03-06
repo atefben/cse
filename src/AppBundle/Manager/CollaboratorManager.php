@@ -9,7 +9,7 @@ use AppBundle\Provider\Factory\ProviderFactory;
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Model\User;
 use Symfony\Component\Form\FormFactory;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
@@ -36,11 +36,6 @@ class CollaboratorManager implements IManager
      * @var FormFactory $formFactory
      */
     private $formFactory;
-
-    /**
-     * @var Router
-     */
-    private $router;
 
     /**
      * @param TokenStorage $tokenStorage
@@ -79,14 +74,6 @@ class CollaboratorManager implements IManager
     public function setFormFactory(FormFactory $formFactory)
     {
         $this->formFactory = $formFactory;
-    }
-
-    /**
-     * @param Router $router
-     */
-    public function setRouter(Router $router)
-    {
-        $this->router = $router;
     }
 
     /**
@@ -140,6 +127,13 @@ class CollaboratorManager implements IManager
 
     }
 
+    /**
+     * @param string $formTypeClass
+     * @param Object $datas
+     * @param array $options
+     *
+     * @return FormInterface
+     */
     public function createForm($formTypeClass, $datas = null, $options = array())
     {
 
