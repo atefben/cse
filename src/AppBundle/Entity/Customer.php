@@ -63,19 +63,19 @@ class Customer
     protected $user;
 
     /**
-     * @var date
+     * @var \DateTime
      * @ORM\Column(name="UPDATED_AT", type="date")
      **/
     protected  $updatedAt;
 
     /**
-     * @var date
+     * @var \DateTime
      * @ORM\Column(name="CREATED_AT", type="date")
      **/
     protected $createdAt;
 
     /**
-     * @var date
+     * @var \DateTime
      * @ORM\Column(name="LAST_EVAL_DATE", type="date")
      **/
     protected $lastEvalDate;
@@ -176,7 +176,7 @@ class Customer
     /**
      * Set ciy
      *
-     * @param string $ciy
+     * @param string $city
      *
      * @return Customer
      */
