@@ -106,4 +106,18 @@ class CollaborateurRepository extends EntityRepository
             ->getResult()
             ;
     }
+
+    public function getAllCollaboratorsByCustomerID($customerID)
+    {
+        $qb = $this
+            ->createQueryBuilder('c')
+            ->where('c.customer = :customerID')
+            ->setParameter('customerID', $customerID)
+        ;
+
+        return $qb
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

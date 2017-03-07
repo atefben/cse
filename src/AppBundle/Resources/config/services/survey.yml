@@ -1,0 +1,8 @@
+services:
+    cse.survey.manager:
+        class: AppBundle\Manager\SurveyManager
+        calls:
+            - [ 'setUserFromSecurityContext', [ '@security.token_storage' ]]
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ]]
+            - [ 'setProviderFactory', [ '@cse.provider.factory' ]]
+            - [ 'setFormFactory', [ '@form.factory' ]]

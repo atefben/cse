@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Customer;
 use AppBundle\Entity\Survey;
 use AppBundle\Entity\SurveyCriteria;
 use AppBundle\Repository\SurveyRepository;
@@ -45,53 +46,24 @@ class SurveyController extends Controller
      * @Route("/new/{id}", name="survey_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, Customer $customer)
     {
-        $idUser = $this->getUser()->getId();
-        $survey = new Survey();
-        $form = $this->createForm(SurveyType::class, $survey, ['idUser' => $idUser, 'criteriaType' => 2]);
+        $surveyManager = $this->get('cse.survey.manager');
+
+        $form  = $surveyManager->addNewSurvey($customer);
+
         $form->handleRequest($request);
 
         $criterias = $this->getDoctrine()->getRepository('AppBundle:Criteria')->findBy(['criteriaType'=> 2]);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $em = $this->getDoctrine()->getManager();
-
-
-            $ObjetSurveyCriteria = $survey->getSurveys();
-
-            $NewSurvey = new Survey();
-            $NewSurvey->setCommentairesClient($survey->getCommentairesClient());
-            $NewSurvey->setSignatureClient($survey->getSignatureClient());
-            $NewSurvey->setCollaborateur($survey->getCollaborateur());
-
-            $NewSurvey->setUser($this->getUser());
-
-            $repository = $this->getDoctrine()->getRepository('AppBundle:Customer');
-            $customer = $repository->find($request->get('id'));
-            $NewSurvey->setCustomer($customer);
-
-            $em->persist($NewSurvey);
-
-            foreach ($ObjetSurveyCriteria as $key => $value) {
-                $SurveyCriteria = new SurveyCriteria();
-                $SurveyCriteria->setScore($value->getScore());
-                $SurveyCriteria->setCoefficient($value->getCoefficient());
-                $SurveyCriteria->setSurvey($NewSurvey);
-                $SurveyCriteria->setCriteria($value->getCriteria());
-                //$em->persist($SurveyCriteria);
-                $NewSurvey->addSurvey($SurveyCriteria);
-            }
-
-            $em->persist($NewSurvey);
-            $em->flush($NewSurvey);
+            $surveyManager->saveDatas($form);
 
             return $this->redirectToRoute('customer_show', array('id' => $request->get('id')));
         }
 
         return $this->render('survey/new.html.twig', array(
-            'survey' => $survey,
             'form' => $form->createView(),
             'criterias' =>$criterias,
             'id'  => $request->get('id')
