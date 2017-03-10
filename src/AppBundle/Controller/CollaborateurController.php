@@ -23,9 +23,9 @@ class CollaborateurController extends Controller
      */
     public function indexAction()
     {
-        $TabTwig = $this->get('cse.collab.manager')->getCollaborators();
+        $tabTwig = $this->get('cse.collab.manager')->getCollaborators();
 
-        return $this->render('collaborateur/index.html.twig', $TabTwig);
+        return $this->render('collaborateur/index.html.twig', $tabTwig);
     }
 
 
