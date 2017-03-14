@@ -24,10 +24,9 @@ class MailListController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->getEventManager()->addEventSubscriber(new \Gedmo\SoftDeleteable\SoftDeleteableListener());
+        $mailListManager = $this->get('cse.maillist.manager');
 
-        $emails = $em->getRepository('AppBundle:MailList')->findAll();
+        $emails = $mailListManager->getMailLists();
 
         return $this->render('maillist/index.html.twig', array(
             'emails' => $emails,
@@ -35,27 +34,28 @@ class MailListController extends Controller
     }
 
     /**
-     * All an email to the mailing list.
+     * Add an email to the mailing list.
      *
      * @Route("/new", name="maillist_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
     {
-        $maillist = new MailList();
-        $form = $this->createForm(MailListType::class, $maillist);
+        $mailList = new MailList();
+        $mailListManager = $this->get('cse.maillist.manager');
+
+        $form = $mailListManager->createForm('AppBundle\Form\MailListType', $mailList);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($maillist);
-            $em->flush($maillist);
+
+            $mailListManager->saveDatas($form);
 
             return $this->redirectToRoute('maillist_index');
         }
 
         return $this->render('maillist/new.html.twig', array(
-            'maillist' => $maillist,
+            'maillist' => $mailList,
             'form' => $form->createView(),
         ));
     }
@@ -66,19 +66,22 @@ class MailListController extends Controller
      * @Route("/{id}/edit", name="maillist_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, MailList $maillist)
+    public function editAction(Request $request, MailList $mailList)
     {
-        $editForm = $this->createForm(MailListType::class, $maillist);
+        $mailListManager = $this->get('cse.criteria.manager');
+
+        $editForm = $mailListManager->createForm('AppBundle\Form\MailListType', $mailList);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+
+            $mailListManager->saveDatas($editForm);
 
             return $this->redirectToRoute('maillist_index');
         }
 
         return $this->render('maillist/edit.html.twig', array(
-            'maillist' => $maillist,
+            'maillist' => $mailList,
             'form' => $editForm->createView(),
         ));
     }
@@ -91,16 +94,9 @@ class MailListController extends Controller
      */
     public function deleteAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->getEventManager()->addEventSubscriber(new \Gedmo\SoftDeleteable\SoftDeleteableListener());
-
+        $mailListManager = $this->get('cse.maillist.manager');
         $id = $request->get('id');
-
-        $repository = $this->getDoctrine()->getRepository('AppBundle:MailList');
-        $maillist =  $repository->find($id);
-
-        $em->remove($maillist);
-        $em->flush($maillist);
+        $mailListManager->deleteDatas($id);
 
         return $this->redirectToRoute('maillist_index');
     }

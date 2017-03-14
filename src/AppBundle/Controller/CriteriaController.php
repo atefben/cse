@@ -23,10 +23,9 @@ class CriteriaController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->getEventManager()->addEventSubscriber(new \Gedmo\SoftDeleteable\SoftDeleteableListener());
+        $criteriaManager = $this->get('cse.criteria.manager');
 
-        $criterias = $em->getRepository('AppBundle:Criteria')->findAll();
+        $criterias = $criteriaManager->getCriterias();
 
         return $this->render('criteria/index.html.twig', array(
             'criterias' => $criterias,
@@ -42,13 +41,14 @@ class CriteriaController extends Controller
     public function newAction(Request $request)
     {
         $criterion = new Criteria();
-        $form = $this->createForm('AppBundle\Form\CriteriaType', $criterion);
+        $criteriaManager = $this->get('cse.criteria.manager');
+
+        $form = $criteriaManager->createForm('AppBundle\Form\CriteriaType', $criterion);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($criterion);
-            $em->flush($criterion);
+
+            $criteriaManager->saveDatas($form);
 
             return $this->redirectToRoute('criteria_show', array('id' => $criterion->getId()));
         }
@@ -84,11 +84,14 @@ class CriteriaController extends Controller
     public function editAction(Request $request, Criteria $criterion)
     {
         $deleteForm = $this->createDeleteForm($criterion);
-        $editForm = $this->createForm('AppBundle\Form\CriteriaType', $criterion);
+        $criteriaManager = $this->get('cse.criteria.manager');
+
+        $editForm = $criteriaManager->createForm('AppBundle\Form\CriteriaType', $criterion);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+
+            $criteriaManager->saveDatas($editForm);
 
             return $this->redirectToRoute('criteria_edit', array('id' => $criterion->getId()));
         }
@@ -108,14 +111,12 @@ class CriteriaController extends Controller
      */
     public function deleteAction(Request $request, Criteria $criterion)
     {
+        $criteriaManager = $this->get('cse.criteria.manager');
         $form = $this->createDeleteForm($criterion);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->getEventManager()->addEventSubscriber(new \Gedmo\SoftDeleteable\SoftDeleteableListener());
-            $em->remove($criterion);
-            $em->flush($criterion);
+            $criteriaManager->delete($criterion);
         }
 
         return $this->redirectToRoute('criteria_index');

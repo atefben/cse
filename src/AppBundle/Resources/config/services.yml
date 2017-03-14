@@ -2,6 +2,8 @@ imports:
 - { resource: 'services/collaborator.yml' }
 - { resource: 'services/customer.yml'}
 - { resource: 'services/survey.yml'}
+- { resource: 'services/criteria.yml'}
+- { resource: 'services/maillist.yml'}
 
 services:
     cse.provider.factory:
